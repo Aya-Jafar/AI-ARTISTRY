@@ -33,38 +33,35 @@ function Nav(props) {
         <div className="menu-icon" onClick={toggleMenu}>
           <FaBars />
         </div>
-        <div
-          className="nav-links"
-          style={{ gap: currentUser ? "80px" : "10%" }}
-        >
+        <div className="nav-links" style={{ gap: currentUser ? "90px" : "7%" }}>
           <Link to="/dream" style={{ textDecoration: "none", color: "white" }}>
             <div className="nav-link">DREAM</div>
           </Link>
 
           <div className="nav-link">CONTACT US</div>
-          {/* {currentUser ? (
-            <></>
-          ) : ( */}
-          <div className="nav-btns">
-            <SignupBtn
-              path="/signup"
-              action={toggleSignupPopup}
-              text="SIGN UP"
-              id="sign-up"
-              setSignupPopup={setSignupPopup}
-              signupPopup={signupPopup}
-            />
+          {currentUser ? (
+            <UserSection />
+          ) : (
+            <div className="nav-btns">
+              <SignupBtn
+                path="/signup"
+                action={toggleSignupPopup}
+                text="SIGN UP"
+                id="sign-up"
+                setSignupPopup={setSignupPopup}
+                signupPopup={signupPopup}
+              />
 
-            <LoginBtn
-              path="/login"
-              action={toggleLoginPopup}
-              text="LOG IN"
-              id="login"
-              setLoginPopup={setLoginPopup}
-              loginPopup={loginPopup}
-            />
-          </div>
-          {/* )} */}
+              <LoginBtn
+                path="/login"
+                action={toggleLoginPopup}
+                text="LOG IN"
+                id="login"
+                setLoginPopup={setLoginPopup}
+                loginPopup={loginPopup}
+              />
+            </div>
+          )}
         </div>
       </div>
 
@@ -77,7 +74,8 @@ function Nav(props) {
         <li>
           <div href="#">CONTACT US</div>
         </li>
-        
+        {/* TODO: Fix mobile size auth buttons issue */}
+
         {!signupPopup && (
           <SignupBtn
             path="/signup"
