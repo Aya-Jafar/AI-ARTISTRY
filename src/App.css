@@ -1,3 +1,8 @@
+body {
+  background-color: black;
+  color: white;
+}
+
 .nav {
   display: flex;
 
@@ -7,9 +12,7 @@
   background-color: black;
   color: white;
   white-space: nowrap;
- 
 }
-
 
 .nav-links {
   display: flex;
@@ -18,15 +21,13 @@
   /* gap: 10%; */
   white-space: nowrap;
 }
-.nav-link{
+.nav-link {
   font-size: 18px;
 }
-.nav-link:hover{
-  color:#50D5FF;
+.nav-link:hover {
+  color: #50d5ff;
   font-weight: bold;
-
 }
-
 
 .nav-btns {
   display: flex;
@@ -161,6 +162,7 @@
 
 .about-us-pic {
   margin-right: 20px;
+  overflow: hidden;
 }
 
 .about-us-pic img {
@@ -180,16 +182,13 @@
   display: none;
 }
 
-
 .blur-background {
-  position: relative; 
-  filter: blur(5px); 
+  position: relative;
+  filter: blur(5px);
   margin: -10px;
-} 
+}
 
-
-
-#logo{
+#logo {
   width: 380px;
   height: 80px;
   padding-left: 10%;
@@ -197,51 +196,280 @@
   /* height: 2vh; */
 }
 
-.popup{
+.popup {
   position: absolute;
-  top: 10%; 
-  left: 30%; 
+  top: 10%;
+  left: 30%;
   height: 70vh;
   width: 40vw;
-  color:white;
+  color: white;
   margin-top: 3%;
   border-radius: 14px;
   transform: translate(-50%, -50%);
   background-color: #202024;
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.632);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.632);
   z-index: 1; /* Ensure it's on top of other elements */
 }
 
-
-.signup-content{
+.signup-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 }
 
+.signup-btns {
+  border-radius: 14px;
+  outline: none;
+  border: 0;
 
-.signup-btns{
+  font-style: normal;
+  line-height: normal;
+  font-weight: 500;
+  cursor: pointer;
+
   width: 400px;
   height: 50px;
   font-size: 20px;
   display: flex;
-  gap:5%;
+  gap: 5%;
   align-items: center;
   justify-content: center;
 
   margin-top: 30px;
 }
-.auth-icon{
+.signup-btns:hover {
+  background-color: rgb(224, 223, 223);
+}
+
+.auth-icon {
   width: 30px;
 }
 
-#facebook-btn{
-  background-color: #1278F2;
+#facebook-btn {
+  background-color: #1278f2;
+  color: white;
+}
+#facebook-btn:hover {
+  background-color: #1b7ffa;
+}
+
+#gmail-btn {
+  background-color: #535358;
+  color: white;
+}
+
+#gmail-btn:hover {
+  background-color: rgb(79, 79, 83);
+}
+
+.filter-tabs {
+  width: 90%;
+  /* background-color: #1278f2; */
+  height: 10vh;
+  margin: 5% 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap; /* Prevent line breaks */
+  /* overflow-x: scroll; */
+  margin-top: 15%;
+}
+
+.filter {
+  /* background-color: red; */
+  height: 100%;
+  width: 24vw;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.filter.clicked {
+  border: 1px solid rgb(255, 255, 255);
+}
+
+.filter.clicked > .filter-images {
+  filter: none;
+}
+
+.filter-images {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  filter: blur(1px);
+}
+
+.filter-images:hover {
+  filter: none;
+}
+
+.filter-text {
+  position: absolute;
+  /* left: 40%; */
+
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.imagine-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: start;
+  /* background-color: #1278f2; */
+  width: 90%;
+  height: 80vh;
+  margin: 3% 5%;
+}
+
+.prompt-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  /* background-color: rgb(81, 10, 143); */
+  width: 40%;
+  margin-top: 5%;
+  white-space: nowrap;
+}
+
+textarea {
+  width: 100%;
+  height: 10vh;
+  /* padding: 10px; */
+  padding: 0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  resize: vertical; /* Allow vertical resizing */
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Change the border color when the textarea is focused */
+textarea:focus {
+  border-color: #50d5ff;
+  outline: none;
+}
+
+#imagine-btn {
+  background-color: #50d5ff;
+}
+
+.close-btn {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+}
+
+.close-btn img {
+  width: 25px;
+  height: 25px;
+  margin-right: 5%;
+  /* margin-left: 14%; */
+  margin-top: 3%;
+  cursor: pointer;
+
+  /* align-self: end; */
+}
+
+.signup-form {
+  width: 70%;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  /* border: 1px solid #50D5FF; */
+  outline-color: #50d5ff;
+  /* border-color: #50D5FF;  */
+}
+
+input:focus.with-error {
+  outline-color: rgb(248, 92, 92);
+}
+
+.error {
+  color: rgb(248, 92, 92);
+  margin-top: 2%;
+}
+
+button[type="submit"] {
+  background-color: #50d5ff;
+  width: 200px;
 }
 
 
+
+.my-masonry-grid {
+  display: flex;
+  width: auto;
+  padding: 2% 7%;
+}
+
+.my-masonry-grid_column {
+  /* padding-left: 18px; */
+  background-clip: padding-box;
+}
+
+
+.image-container {
+  width: 100%;
+  margin-bottom: 16px;
+
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+
+}
+
+.profile{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.profile-image img{
+  width: 20vw;
+}
+
+
+
+
+button[type="submit"]:hover {
+  background-color: #8ddef7;
+}
 
 @media (max-width: 820px) {
   /* Styles for mobile screens */
@@ -271,7 +499,6 @@
     height: 60vh;
     /* background-color: red; */
   }
-
 
   .menu-icon {
     display: flex;
@@ -304,13 +531,13 @@
     font-size: 25px;
     justify-content: center;
   }
-  .nav-link{
-    color:black;
+  .nav-link {
+    color: black;
     font-size: 27px;
   }
-  .popup{
+  .popup {
     height: 40vh;
     width: 60vw;
-    left: 20%; 
+    left: 20%;
   }
 }
