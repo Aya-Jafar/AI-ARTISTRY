@@ -5,12 +5,23 @@ function useClickOutside(ref, showPopup, onClickOutside) {
   //   console.log(showPopup);
   const navigate = useNavigate();
 
+  console.log("from hook" , showPopup);
+
   useEffect(() => {
     const handleClick = (event) => {
       if (ref.current && !ref.current.contains(event.target) && showPopup) {
         onClickOutside();
+
         navigate("/");
       }
+      
+
+    //   if (!showPopup) {
+    //     setTimeout(() => {
+    //       navigate("/");
+    //     }, 10000);
+    //   }
+
     };
 
     document.addEventListener("click", handleClick);

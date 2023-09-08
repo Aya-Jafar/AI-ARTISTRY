@@ -1,16 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { popupVariants } from "../animation/motion";
+import { popupVariants } from "../utils/motion";
 import SignUpContent from "./SignupContent";
+import LoginContent from "./LoginContent";
 
 function Popup(props) {
-  const { loginPopup } = props;
+  const { loginPopup, setLoginPopup, signupPopup, setSignupPopup } = props;
 
-//   console.log(loginPopup, signupPopup);
-
-  return (
-    <AnimatePresence>
-      {loginPopup ? (
+  //   console.log(loginPopup, signupPopup);
+  const generateContent = () => {
+    if (loginPopup) {
+      return (
         <motion.div
           className="popup"
           initial="hidden"
@@ -18,9 +18,12 @@ function Popup(props) {
           exit="hidden"
           variants={popupVariants}
         >
-          <h1>LOG in</h1>
+          <LoginContent loginPopup={loginPopup} setLoginPopup={setLoginPopup} />
         </motion.div>
-      ) : (
+      );
+    }
+    if (signupPopup) {
+      return (
         <motion.div
           className="popup"
           initial="hidden"
@@ -28,11 +31,13 @@ function Popup(props) {
           exit="hidden"
           variants={popupVariants}
         >
-          <SignUpContent />
+          <SignUpContent setSignupPopup={setSignupPopup} />
         </motion.div>
-      )}
-    </AnimatePresence>
-  );
+      );
+    }
+  };
+
+  return <AnimatePresence>{generateContent()}</AnimatePresence>;
 }
 
 export default Popup;

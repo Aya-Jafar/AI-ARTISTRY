@@ -1,31 +1,74 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import googleIcon from "../images/google-icon.png";
 import facebookIcon from "../images/f-icon.png";
-import app from "../backend/config";
+import gmailIcon from "../images/g-icon.png";
 import AuthContext from "../providers/Auth";
+import { handleSignUp } from "../backend/auth";
+import CloseBtn from "./CloseBtn";
+import AuthBtn from "./AuthBtn";
+import SignUpForm from "./SignUpForm";
 
-function SignUpContent() {
-  const { currentUser, setCurrentUser } = useContext(AuthContext);
+function SignUpContent({ setSignupPopup }) {
+  const {
+    signInWithGoogle,
+    signInWithFacebook,
+    setCurrentUser,
+    signUpWithEmailAndPassword,
+  } = useContext(AuthContext);
+
+  const [showEmailForm, setShowEmailSignUp] = useState(false);
+
+  const handleEmailSignInClick = () => setShowEmailSignUp(true);
 
   return (
     <div className="signup-content">
+      <CloseBtn setPopup={setSignupPopup} />
+
       <motion.h1>Sign up</motion.h1>
       <br />
 
-      <button className="btn signup-btns" onClick={setCurrentUser}>
-        <div>
-          <img src={googleIcon} alt="" className="auth-icon" />
-        </div>
-        Sign up with Google
-      </button>
+      {showEmailForm ? (
+        <SignUpForm />
+      ) : (
+        <>
+          <AuthBtn
+            icon={googleIcon}
+            text="Sign up with Google"
+            onClick={signInWithGoogle}
+          />
 
-      <button className="btn signup-btns" id="facebook-btn">
-        <div>
-          <img src={facebookIcon} alt="" className="auth-icon" />
-        </div>
-        Sign up with Facebook
-      </button>
+          <AuthBtn
+            icon={facebookIcon}
+            text="Sign up with Facebook"
+            onClick={signInWithFacebook}
+            id="facebook-btn"
+          />
+
+          <AuthBtn
+            icon={gmailIcon}
+            text="Sign up with Email"
+            onClick={() => {
+              handleEmailSignInClick();
+            }}
+            id="gmail-btn"
+          />
+
+          {/* <button
+            className="btn signup-btns"
+            id="gmail-btn"
+            onClick={() => {
+              handleEmailSignInClick();
+              // handleSignUp(signUpWithEmailAndPassword)
+            }}
+          >
+            <div>
+              <img src={gmailIcon} alt="" className="auth-icon" />
+            </div>
+            Sign up with Email
+          </button> */}
+        </>
+      )}
     </div>
   );
 }
