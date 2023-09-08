@@ -7,7 +7,7 @@ import {
   headContentAnimation,
   headTextAnimation,
   slideAnimation,
-} from "../animation/motion";
+} from "../utils/motion";
 
 function Cover() {
   const fadeIn = {

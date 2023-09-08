@@ -4,30 +4,13 @@ import pic2 from "../images/girl.png";
 import pic3 from "../images/space2.png";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { stagger, fadeIn, scaleOnHover } from "../utils/motion";
 
 function AboutUs() {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.2,
   });
-
-  const fadeIn = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: "easeOut" },
-    },
-  };
-
-  const scaleOnHover = {
-    scale: 1.1,
-    transition: { duration: 0.3 },
-  };
-
-  const stagger = {
-    visible: { transition: { staggerChildren: 0.4 } },
-  };
 
   return (
     <div className="about-us" ref={ref}>
