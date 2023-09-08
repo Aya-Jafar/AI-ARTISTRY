@@ -1,16 +1,18 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { FaBars } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import LoginBtn from "./LoginBtn";
-import SignupBtn from "./SignupBtn";
+import NavBtn from "./NavBtn";
 import AuthContext from "../providers/Auth";
 import UserSection from "./UserSection";
 
 function Nav(props) {
   const { loginPopup, setLoginPopup, signupPopup, setSignupPopup } = props;
 
-  const { currentUser, setCurrentUser } = useContext(AuthContext);
-  //   console.log(currentUser && currentUser.displayName);
+  const { currentUser, signOutUser } = useContext(AuthContext);
+  const [showUserSection, setShowUserSection] = useState(false);
+
+  console.log(currentUser && currentUser.uid);
+
 
   const [menuActive, setMenuActive] = useState(false);
 
@@ -19,6 +21,10 @@ function Nav(props) {
   const toggleLoginPopup = () => setLoginPopup(!loginPopup);
 
   const toggleSignupPopup = () => setSignupPopup(!signupPopup);
+
+  useEffect(() => {
+    currentUser ? setShowUserSection(true) : setShowUserSection(false);
+  }, [currentUser]);
 
   return (
     <>
@@ -33,32 +39,43 @@ function Nav(props) {
         <div className="menu-icon" onClick={toggleMenu}>
           <FaBars />
         </div>
-        <div className="nav-links" style={{ gap: currentUser ? "90px" : "7%" }}>
-          <Link to="/dream" style={{ textDecoration: "none", color: "white" }}>
-            <div className="nav-link">DREAM</div>
+        <div
+          className="nav-links"
+          style={{ gap: currentUser ? "40px" : "50px" }}
+        >
+          <Link
+            to="/imagine"
+            style={{ textDecoration: "none", color: "white" }}
+          >
+            <div className="nav-link">{"Imagine".toUpperCase()}</div>
           </Link>
 
           <div className="nav-link">CONTACT US</div>
-          {currentUser ? (
-            <UserSection />
+          {showUserSection ? (
+            <>
+              <UserSection />
+              <button className="btn" onClick={signOutUser}>
+                SIGN OUT
+              </button>
+            </>
           ) : (
             <div className="nav-btns">
-              <SignupBtn
+              <NavBtn
                 path="/signup"
                 action={toggleSignupPopup}
                 text="SIGN UP"
                 id="sign-up"
-                setSignupPopup={setSignupPopup}
-                signupPopup={signupPopup}
+                setPopup={setSignupPopup}
+                popup={signupPopup}
               />
 
-              <LoginBtn
+              <NavBtn
                 path="/login"
                 action={toggleLoginPopup}
                 text="LOG IN"
                 id="login"
-                setLoginPopup={setLoginPopup}
-                loginPopup={loginPopup}
+                setPopup={setLoginPopup}
+                popup={loginPopup}
               />
             </div>
           )}
@@ -77,7 +94,7 @@ function Nav(props) {
         {/* TODO: Fix mobile size auth buttons issue */}
 
         {!signupPopup && (
-          <SignupBtn
+          <NavBtn
             path="/signup"
             action={toggleSignupPopup}
             text="SIGN UP"
