@@ -51,6 +51,7 @@ function LoginContent({ loginPopup, setLoginPopup }) {
                 icon={gmailIcon}
                 text="Log in with Email"
                 onClick={() => {
+                  setLoginPopup(true);
                   handleEmailSignInClick();
                 }}
                 id="gmail-btn"
