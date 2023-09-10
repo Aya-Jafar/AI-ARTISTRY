@@ -7,8 +7,7 @@ import LoginContent from "./LoginContent";
 function Popup(props) {
   const { loginPopup, setLoginPopup, signupPopup, setSignupPopup } = props;
 
-  //   console.log(loginPopup, signupPopup);
-  const generateContent = () => {
+  const generatePopupContent = () => {
     if (loginPopup) {
       return (
         <motion.div
@@ -37,7 +36,7 @@ function Popup(props) {
     }
   };
 
-  return <AnimatePresence>{generateContent()}</AnimatePresence>;
+  return <AnimatePresence>{generatePopupContent()}</AnimatePresence>;
 }
 
 export default Popup;
