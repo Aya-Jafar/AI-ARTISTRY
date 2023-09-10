@@ -1,36 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
-import Masonry from "react-masonry-css";
-import { getAllArtworks, saveArtwork } from "../backend/data";
-import AuthContext from "../providers/Auth";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import TabContext from "../providers/TabContent";
+import MainArtGrid from "./AllTab";
+import FantasyTab from "./FantasyTab";
 
 function ArtGrid() {
-  const [artworks, setArtworks] = useState([]);
+  const { currentTab } = useContext(TabContext);
 
-  const { currentUser } = useContext(AuthContext);
+  const generateTabContent = () => {
+    switch (currentTab) {
+      case "All":
+        return <MainArtGrid />;
+      case "Fantasy":
+        return <FantasyTab />;
+      case "SCI-FI":
+        return <h1>SCI-FI</h1>;
+    }
+  };
 
-  useEffect(() => {
-    getAllArtworks(setArtworks);
-  }, []);
-
-  return (
-    <Masonry
-      breakpointCols={3}
-      className="my-masonry-grid"
-      columnClassName="my-masonry-grid_column"
-    >
-      {artworks.map((artwork) => (
-        <Link
-          to={`/artwork/${artwork.id}`}
-          key={artwork.id}
-          className="image-container"
-          onClick={() => saveArtwork(currentUser, artwork.id)}
-        >
-          <img src={artwork.image} alt="" />
-        </Link>
-      ))}
-    </Masonry>
-  );
+  return <>{generateTabContent()}</>;
 }
 
 export default ArtGrid;
