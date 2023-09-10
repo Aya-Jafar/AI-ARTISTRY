@@ -7,9 +7,10 @@ function NavBtn({ path, action, text, id, popup, setPopup }) {
   const ref = useRef(null);
 
   // Close the popup when clicking outside
-  // useClickOutside(ref, popup, () => {
-  //   setPopup(false);
-  // });
+  useClickOutside(ref, popup, () => {
+    // console.log(popup);
+     setPopup(false);
+  });
 
   return (
     <Link to={path}>

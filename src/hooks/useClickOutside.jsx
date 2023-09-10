@@ -5,25 +5,21 @@ function useClickOutside(ref, showPopup, onClickOutside) {
   //   console.log(showPopup);
   const navigate = useNavigate();
 
-  console.log("from hook" , showPopup);
-
   useEffect(() => {
     const handleClick = (event) => {
-      if (ref.current && !ref.current.contains(event.target) && showPopup) {
+      if (
+        ref.current &&
+        !ref.current.contains(event.target) &&
+        showPopup &&
+        event.target.id !== "gmail-btn"
+      ) {
         onClickOutside();
+        console.log(ref, event.target);
 
         navigate("/");
       }
-      
-
-    //   if (!showPopup) {
-    //     setTimeout(() => {
-    //       navigate("/");
-    //     }, 10000);
-    //   }
-
     };
-
+    // The event.target is anything is clicked outsite of the popup
     document.addEventListener("click", handleClick);
 
     return () => {
