@@ -27,7 +27,7 @@ function Tab({ img, text, isActive, onClick }) {
 }
 
 function FilterTabs() {
-  const { currentTab, setCurrentTab } = useContext(TabContext);
+  const { setCurrentTab } = useContext(TabContext);
   const [activeTab, setActiveTab] = useState("All");
 
   const handleTabClick = (text) => {
