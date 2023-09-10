@@ -41,15 +41,22 @@ export const saveArtwork = async (currentUser, artId) => {
     const userData = userSavedPostsSnapshot.data();
 
     if (userData && userData.savedPosts) {
-      // Add the new favorite photo ID to the existing array
-      userData.savedPosts.push(artId);
+      // Check if the artwork ID is not already in the array
+      if (!userData.savedPosts.includes(artId)) {
+        // Add the new favorite photo ID to the existing array
+        userData.savedPosts.push(artId);
 
-      // Update the user's document with the updated favorite photo IDs
-      await setDoc(userSavedPostsRef, {
-        savedPosts: userData.savedPosts,
-      });
+        // Update the user's document with the updated favorite photo IDs
+        await setDoc(userSavedPostsRef, {
+          savedPosts: userData.savedPosts,
+        });
 
-      console.log("Favorite photo ID added to the user's saved-posts document");
+        console.log(
+          "Favorite photo ID added to the user's saved-posts document"
+        );
+      } else {
+        console.log("Artwork ID is already in the savedPosts array");
+      }
     } else {
       // Create a new document for the user if it doesn't exist
       await setDoc(userSavedPostsRef, {
@@ -70,7 +77,6 @@ const fetchPhotoData = async (photoId) => {
   const photoDoc = await getDoc(photoRef);
   return { id: photoDoc.id, ...photoDoc.data() };
 };
-
 
 export const getSavedArtworks = async (currentUser, setSavedPosts) => {
   if (currentUser) {
@@ -95,5 +101,23 @@ export const getSavedArtworks = async (currentUser, setSavedPosts) => {
     } catch (error) {
       console.error("Error fetching favorite photos:", error);
     }
+  }
+};
+
+export const getArtworkDetails = async (id, setArtworkDetail) => {
+  const documentRef = doc(db, "ai-art", id);
+  try {
+    const documentSnapshot = await getDoc(documentRef);
+
+    if (documentSnapshot.exists()) {
+      // The document exists
+      const documentData = documentSnapshot.data();
+      setArtworkDetail(documentData);
+      console.log("Document data:", documentData);
+    } else {
+      console.log("Document does not exist.");
+    }
+  } catch (error) {
+    console.error("Error getting document:", error);
   }
 };
