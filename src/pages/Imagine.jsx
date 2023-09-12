@@ -16,7 +16,7 @@ function Imagine() {
           <motion.h1 {...slideAnimation("left")}>
             Imagine Tomorrow, Create Today
           </motion.h1>
-          <textarea type="text" name="" id="" />
+          <textarea type="text" name="" id="" placeholder="Write your prompt here..."/>
           <br />
           <button className="btn" id="imagine-btn">
             Generate
