@@ -4,23 +4,20 @@ import { Link, useNavigate } from "react-router-dom";
 import NavBtn from "./NavBtn";
 import AuthContext from "../providers/Auth";
 import UserSection from "./UserSection";
+import AuthPopupContext from "../providers/AuthPopup";
+import logoutIcon from "../images/logout.png";
+import { linkStyles, navGapSetter } from "../utils/styleSetter";
 
-function Nav(props) {
-  const { loginPopup, setLoginPopup, signupPopup, setSignupPopup } = props;
-
+function Nav() {
   const { currentUser, signOutUser } = useContext(AuthContext);
+
   const [showUserSection, setShowUserSection] = useState(false);
-
-  console.log(currentUser && currentUser.uid);
-
 
   const [menuActive, setMenuActive] = useState(false);
 
+  const [hoveredLogout, setHoveredLogout] = useState(false);
+
   const toggleMenu = () => setMenuActive(!menuActive);
-
-  const toggleLoginPopup = () => setLoginPopup(!loginPopup);
-
-  const toggleSignupPopup = () => setSignupPopup(!signupPopup);
 
   useEffect(() => {
     currentUser ? setShowUserSection(true) : setShowUserSection(false);
@@ -30,7 +27,7 @@ function Nav(props) {
     <>
       <div className="nav">
         <div>
-          <Link to="/" style={{ textDecoration: "none" }}>
+          <Link to="/" style={{ ...linkStyles }}>
             {/* <img src={logo} alt="" id="logo"/> */}
             <strong className="nav-title">{"ai Artistry".toUpperCase()}</strong>
           </Link>
@@ -39,14 +36,10 @@ function Nav(props) {
         <div className="menu-icon" onClick={toggleMenu}>
           <FaBars />
         </div>
-        <div
-          className="nav-links"
-          style={{ gap: currentUser ? "40px" : "50px" }}
-        >
-          <Link
-            to="/imagine"
-            style={{ textDecoration: "none", color: "white" }}
-          >
+
+        <div className="nav-links" style={navGapSetter(currentUser)}>
+          
+          <Link to="/imagine" style={{ ...linkStyles }}>
             <div className="nav-link">{"Imagine".toUpperCase()}</div>
           </Link>
 
@@ -54,29 +47,24 @@ function Nav(props) {
           {showUserSection ? (
             <>
               <UserSection />
-              <button className="btn" onClick={signOutUser}>
-                SIGN OUT
-              </button>
+              <div
+                className="logout-section"
+                onMouseOver={() => setHoveredLogout(true)}
+                onMouseLeave={() => setHoveredLogout(false)}
+              >
+                <img
+                  src={logoutIcon}
+                  alt=""
+                  className="logout-btn"
+                  onClick={signOutUser}
+                />
+                {hoveredLogout && <p onClick={signOutUser}>Log out</p>}
+              </div>
             </>
           ) : (
             <div className="nav-btns">
-              <NavBtn
-                path="/signup"
-                action={toggleSignupPopup}
-                text="SIGN UP"
-                id="sign-up"
-                setPopup={setSignupPopup}
-                popup={signupPopup}
-              />
-
-              <NavBtn
-                path="/login"
-                action={toggleLoginPopup}
-                text="LOG IN"
-                id="login"
-                setPopup={setLoginPopup}
-                popup={loginPopup}
-              />
+              <NavBtn path="/signup" text="SIGN UP" id="sign-up" />
+              <NavBtn path="/login" text="LOG IN" id="login" />
             </div>
           )}
         </div>
@@ -84,8 +72,11 @@ function Nav(props) {
 
       <div class={menuActive ? "drop-down-menu open" : "drop-down-menu"}>
         <li>
-          <Link to="/dream" style={{ textDecoration: "none", color: "white" }}>
-            <div className="nav-link">DREAM</div>
+          <Link
+            to="/imagine"
+            style={{ textDecoration: "none", color: "white" }}
+          >
+            <div className="nav-link">IMAGINE</div>
           </Link>
         </li>
         <li>
@@ -93,16 +84,7 @@ function Nav(props) {
         </li>
         {/* TODO: Fix mobile size auth buttons issue */}
 
-        {!signupPopup && (
-          <NavBtn
-            path="/signup"
-            action={toggleSignupPopup}
-            text="SIGN UP"
-            id="sign-up"
-            setSignupPopup={setSignupPopup}
-            signupPopup={signupPopup}
-          />
-        )}
+        {/* <NavBtn path="/signup" text="SIGN UP" id="sign-up" /> */}
 
         {/* <li>
           <UserSection

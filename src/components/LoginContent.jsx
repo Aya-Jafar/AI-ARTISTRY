@@ -4,22 +4,23 @@ import googleIcon from "../images/google-icon.png";
 import facebookIcon from "../images/f-icon.png";
 import gmailIcon from "../images/g-icon.png";
 import AuthContext from "../providers/Auth";
-import closeIcon from "../images/close.png";
-import { handleSignIn } from "../backend/auth";
 import CloseBtn from "./CloseBtn";
 import AuthBtn from "./AuthBtn";
 import LoginForm from "./LoginForm";
+import AuthPopupContext from "../providers/AuthPopup";
 
-function LoginContent({ loginPopup, setLoginPopup }) {
+function LoginContent() {
   const {
     signInWithGoogle,
     signInWithFacebook,
-    setCurrentUser,
-    signInWithEmailAndPassword,
   } = useContext(AuthContext);
 
-  //   const [isEmailBtnClicked, setIsEmailBtnClicked] = useState(false);
+  
   const [showEmailForm, setShowEmailSignIn] = useState(false);
+
+  const { setLoginPopup } = useContext(AuthPopupContext);
+
+
 
   const handleEmailSignInClick = () => setShowEmailSignIn(true);
 
@@ -51,7 +52,6 @@ function LoginContent({ loginPopup, setLoginPopup }) {
                 icon={gmailIcon}
                 text="Log in with Email"
                 onClick={() => {
-                  setLoginPopup(true);
                   handleEmailSignInClick();
                 }}
                 id="gmail-btn"

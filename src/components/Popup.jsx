@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { popupVariants } from "../utils/motion";
 import SignUpContent from "./SignupContent";
 import LoginContent from "./LoginContent";
+import AuthPopupContext from "../providers/AuthPopup";
 
-function Popup(props) {
-  const { loginPopup, setLoginPopup, signupPopup, setSignupPopup } = props;
+function Popup() {
+  const { loginPopup, signupPopup } = useContext(AuthPopupContext);
 
   const generatePopupContent = () => {
     if (loginPopup) {
@@ -17,7 +18,7 @@ function Popup(props) {
           exit="hidden"
           variants={popupVariants}
         >
-          <LoginContent loginPopup={loginPopup} setLoginPopup={setLoginPopup} />
+          <LoginContent />
         </motion.div>
       );
     }
@@ -30,7 +31,7 @@ function Popup(props) {
           exit="hidden"
           variants={popupVariants}
         >
-          <SignUpContent setSignupPopup={setSignupPopup} />
+          <SignUpContent />
         </motion.div>
       );
     }

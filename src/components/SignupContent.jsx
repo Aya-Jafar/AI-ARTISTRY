@@ -8,8 +8,9 @@ import { handleSignUp } from "../backend/auth";
 import CloseBtn from "./CloseBtn";
 import AuthBtn from "./AuthBtn";
 import SignUpForm from "./SignUpForm";
+import AuthPopupContext from "../providers/AuthPopup";
 
-function SignUpContent({ setSignupPopup }) {
+function SignUpContent() {
   const {
     signInWithGoogle,
     signInWithFacebook,
@@ -18,12 +19,13 @@ function SignUpContent({ setSignupPopup }) {
   } = useContext(AuthContext);
 
   const [showEmailForm, setShowEmailSignUp] = useState(false);
+  const { setSignupPopup } = useContext(AuthPopupContext);
 
   const handleEmailSignInClick = () => setShowEmailSignUp(true);
 
   return (
     <div className="signup-content">
-      <CloseBtn setPopup={setSignupPopup} />
+      <CloseBtn setPopup={setSignupPopup}/>
 
       <motion.h1>Sign up</motion.h1>
       <br />

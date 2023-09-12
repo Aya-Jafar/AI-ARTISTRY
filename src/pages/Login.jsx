@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Popup from "../components/Popup";
+import AuthPopupContext from "../providers/AuthPopup";
 
-function Login({ loginPopup, setLoginPopup }) {
-  return <Popup loginPopup={loginPopup} setLoginPopup={setLoginPopup} />;
+function Login() {
+  const { loginPopup, setLoginPopup } = useContext(AuthPopupContext);
+
+  useEffect(()=>{
+    setLoginPopup(true)
+  },[])
+
+  return <Popup />;
 }
 
 export default Login;
