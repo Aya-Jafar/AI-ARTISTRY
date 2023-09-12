@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import Cover from "../components/Cover";
 import Nav from "../components/Nav";
 import AboutUs from "../components/AboutUs";
@@ -6,7 +6,8 @@ import { useLocation } from "react-router-dom";
 import FilterTabs from "../components/FilterTabs";
 import { TabContentProvider } from "../providers/TabContent";
 import { motion } from "framer-motion";
-import ArtGrid from "../components/ArtGrid";
+import HomeTabContent from "../components/HomeTabContent";
+import AuthPopupContext from "../providers/AuthPopup";
 
 function Home() {
   const location = useLocation();
@@ -28,7 +29,7 @@ function Home() {
 
         <TabContentProvider>
           <FilterTabs />
-          <ArtGrid />
+          <HomeTabContent />
         </TabContentProvider>
       </motion.div>
     </>
