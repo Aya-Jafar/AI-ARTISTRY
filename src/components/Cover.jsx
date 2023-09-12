@@ -1,30 +1,18 @@
 import React from "react";
 import { motion } from "framer-motion";
 import logo from "../images/logo-without-bg.png";
-
 import {
   headContainerAnimation,
   headContentAnimation,
   headTextAnimation,
   slideAnimation,
+  fadeIn,
+  stagger,
+  scaleOnHover,
 } from "../utils/motion";
+import { Link as ScrollLink } from "react-scroll";
 
 function Cover() {
-  const fadeIn = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { duration: 1 } },
-  };
-
-  const stagger = {
-    visible: {
-      transition: { staggerChildren: 0.3 },
-    },
-  };
-
-  const scaleOnHover = {
-    hover: { scale: 1.05 },
-  };
-
   return (
     <motion.div
       className="cover"
@@ -49,9 +37,17 @@ function Cover() {
         <motion.div
           id="explore-btn"
           variants={fadeIn}
-          whileHover={scaleOnHover}
         >
-          <button className="btn">{"explore".toUpperCase()}</button>
+          <ScrollLink
+            to="art-grid-section"
+            spy={true}
+            smooth={true}
+            offset={-70}
+            duration={1000}
+          >
+            <button className="btn">{"explore".toUpperCase()}</button>
+          </ScrollLink>
+
         </motion.div>
       </motion.div>
     </motion.div>
