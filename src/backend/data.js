@@ -12,16 +12,54 @@ const db = getFirestore();
 const allArtworksCollection = collection(db, "ai-art");
 
 export const getAllArtworks = (setArtworks) => {
+  let allDocuments = [];
   getDocs(allArtworksCollection)
     .then((querySnapshot) => {
       // console.log(querySnapshot);
-      const documents = [];
       querySnapshot.forEach((doc) => {
         // doc.data() is the data of each document
-        documents.push({ id: doc.id, ...doc.data() });
+        allDocuments.push({ id: doc.id, ...doc.data() });
       });
-      setArtworks(documents);
-      console.log("All documents:", documents);
+      setArtworks(allDocuments);
+      console.log("All documents:", allDocuments);
+    })
+    .catch((error) => {
+      console.error("Error getting documents:", error);
+    });
+};
+
+export const getFantasyArtworks = (setArtworks) => {
+  getDocs(allArtworksCollection)
+    .then((querySnapshot) => {
+      // console.log(querySnapshot);
+      const fantasyDocs = [];
+      querySnapshot.forEach((doc) => {
+        // doc.data() is the data of each document
+        if (doc.data().type === "fantasy") {
+          fantasyDocs.push({ id: doc.id, ...doc.data() });
+        }
+      });
+      setArtworks(fantasyDocs);
+      console.log("All documents:", fantasyDocs);
+    })
+    .catch((error) => {
+      console.error("Error getting documents:", error);
+    });
+};
+
+export const getSciFiArtworks = (setArtworks) => {
+  getDocs(allArtworksCollection)
+    .then((querySnapshot) => {
+      // console.log(querySnapshot);
+      const sciFiDocs = [];
+      querySnapshot.forEach((doc) => {
+        // doc.data() is the data of each document
+        if (doc.data().type === "SCI-FI") {
+          sciFiDocs.push({ id: doc.id, ...doc.data() });
+        }
+      });
+      setArtworks(sciFiDocs);
+      console.log("All documents:", sciFiDocs);
     })
     .catch((error) => {
       console.error("Error getting documents:", error);
