@@ -1,14 +1,15 @@
 import AuthContext from "../providers/Auth";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { linkStyles } from "../utils/styleSetter";
 
 export default function UserSection() {
-  const { currentUser, setCurrentUser } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
 
   return (
     <>
       {currentUser && currentUser.displayName && (
-        <Link to="/profile" style={{ textDecoration: "none", color: "white" }}>
+        <Link to="/profile" style={{ ...linkStyles }}>
           <div className="nav-link">
             {currentUser.displayName.toUpperCase()}
           </div>
