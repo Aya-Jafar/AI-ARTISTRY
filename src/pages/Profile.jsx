@@ -1,9 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
-import profileImg from "../images/profile-img.jpeg";
+import profileImg from "../images/profile-user.png";
 import AuthContext from "../providers/Auth";
-import Masonry from "react-masonry-css";
 import { motion } from "framer-motion";
 import { getSavedArtworks } from "../backend/data";
+import ArtGrid from "../components/ArtGrid";
+import { ProfileTabProvider } from "../providers/ProfileTabContent";
+import ProfileTabContext from "../providers/ProfileTabContent";
+import ProfileTabs from "../components/ProfileTabs";
 
 function Profile() {
   const { currentUser } = useContext(AuthContext);
@@ -14,26 +17,18 @@ function Profile() {
     getSavedArtworks(currentUser, setSavedArtworks);
   }, [currentUser]);
 
+  // console.log(savedArtworks);
+
   return (
     <div className="profile">
       <div className="profile-image">
         <img src={profileImg} alt="" />
       </div>
-      <Masonry
-        breakpointCols={3}
-        className="my-masonry-grid"
-        columnClassName="my-masonry-grid_column"
-      >
-        {savedArtworks.map((artwork) => (
-          <motion.div className="image-container">
-            <motion.img
-              src={artwork.image}
-              alt=""
-              className="artwork-image"
-            />
-          </motion.div>
-        ))}
-      </Masonry>
+      <h1>{currentUser && currentUser.displayName}</h1>
+      <ProfileTabProvider>
+        <ProfileTabs />
+      </ProfileTabProvider>
+      {savedArtworks && <ArtGrid artworks={savedArtworks} />}
     </div>
   );
 }
