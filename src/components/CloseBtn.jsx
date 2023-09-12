@@ -5,8 +5,6 @@ import { useNavigate } from "react-router-dom";
 function CloseBtn({ setPopup }) {
   const navigate = useNavigate();
 
-  
-
 
   return (
     <div
@@ -16,7 +14,6 @@ function CloseBtn({ setPopup }) {
         navigate("/");
       }}
     >
-
       <img src={closeIcon} alt="" />
     </div>
   );
