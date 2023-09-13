@@ -5,6 +5,7 @@ import { textVariants } from "../utils/motion";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { useInView } from "react-intersection-observer";
 import { Link } from "react-router-dom";
+import Skeleton from "@mui/material/Skeleton";
 
 function ArtGrid({ artworks }) {
   const [hoveredArtwork, setHoveredArtwork] = useState(null);
@@ -15,6 +16,24 @@ function ArtGrid({ artworks }) {
 
   return (
     <>
+      {/* {artworks.length === 0 && (
+        <>
+          {[...Array(artworks.length)].map((_, index) => (
+            <Skeleton
+              key={index}
+              variant="rectangular"
+              width={400} // Set width dynamically
+              height={500} // Set height dynamically
+              animate="wave"
+              sx={{
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                color: "#FFFFFF",
+              }}
+            />
+          ))}
+        </>
+      )} */}
+
       {artworks && (
         <ResponsiveMasonry
           style={{ width: "100%" }}
