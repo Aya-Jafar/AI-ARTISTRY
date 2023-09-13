@@ -68,45 +68,159 @@ export const getSciFiArtworks = (setArtworks) => {
 
 export const saveArtwork = async (currentUser, artId) => {
   // Get the current user's UID
-  const currentUserUid = currentUser.uid;
+  if (currentUser) {
+    const currentUserUid = currentUser.uid;
 
-  // Create a reference to the user's document in the saved-posts collection
-  const userSavedPostsRef = doc(db, "saved-posts", currentUserUid);
+    // Create a reference to the user's document in the saved-posts collection
+    const userSavedPostsRef = doc(db, "saved-posts", currentUserUid);
 
-  try {
-    // Fetch the user's document to get the current favorite photo IDs
-    const userSavedPostsSnapshot = await getDoc(userSavedPostsRef);
-    const userData = userSavedPostsSnapshot.data();
+    try {
+      // Fetch the user's document to get the current saved artwork IDs
+      const userSavedPostsSnapshot = await getDoc(userSavedPostsRef);
+      const userData = userSavedPostsSnapshot.data();
 
-    if (userData && userData.savedPosts) {
-      // Check if the artwork ID is not already in the array
-      if (!userData.savedPosts.includes(artId)) {
-        // Add the new favorite photo ID to the existing array
-        userData.savedPosts.push(artId);
+      if (userData && userData.savedPosts) {
+        // Check if the artwork ID is already in the array
+        const index = userData.savedPosts.indexOf(artId);
 
-        // Update the user's document with the updated favorite photo IDs
+        if (index !== -1) {
+          // If the artwork ID is found, remove it from the array
+          userData.savedPosts.splice(index, 1);
+
+          // Update the user's document with the updated saved artwork IDs
+          await setDoc(userSavedPostsRef, {
+            savedPosts: userData.savedPosts,
+          });
+
+          console.log("Artwork removed from saved-posts");
+        } else {
+          // If the artwork ID is not found, add it to the array
+          userData.savedPosts.push(artId);
+
+          // Update the user's document with the updated saved artwork IDs
+          await setDoc(userSavedPostsRef, {
+            savedPosts: userData.savedPosts,
+          });
+
+          console.log("Artwork added to saved-posts");
+        }
+      } else {
+        // Create a new document for the user if it doesn't exist
         await setDoc(userSavedPostsRef, {
-          savedPosts: userData.savedPosts,
+          savedPosts: [artId],
         });
 
-        console.log(
-          "Favorite photo ID added to the user's saved-posts document"
-        );
-      } else {
-        console.log("Artwork ID is already in the savedPosts array");
+        console.log("User's saved-posts document created with the artwork ID");
       }
-    } else {
-      // Create a new document for the user if it doesn't exist
-      await setDoc(userSavedPostsRef, {
-        savedPosts: [artId],
-      });
-
-      console.log(
-        "User's saved-posts document created with the favorite photo ID"
-      );
+    } catch (error) {
+      console.error("Error updating saved-posts:", error);
     }
-  } catch (error) {
-    console.error("Error adding favorite photo ID:", error);
+  }
+};
+
+export const addToLikedArtworks = async (currentUser, artId) => {
+  if (currentUser) {
+    // Get the current user's UID
+    const currentUserUid = currentUser.uid;
+
+    // Create a reference to the user's document in the saved-posts collection
+    const userLikedArtworksRef = doc(db, "liked-artworks", currentUserUid);
+
+    try {
+      // Fetch the user's document to get the current saved artwork IDs
+      const userLikedDoc = await getDoc(userLikedArtworksRef);
+      const userData = userLikedDoc.data();
+
+      if (userData && userData.likedArtworks) {
+        // Check if the artwork ID is already in the array
+        const index = userData.likedArtworks.indexOf(artId);
+
+        if (index !== -1) {
+          // If the artwork ID is found, remove it from the array
+          userData.likedArtworks.splice(index, 1);
+
+          // Update the user's document with the updated saved artwork IDs
+          await setDoc(userLikedArtworksRef, {
+            likedArtworks: userData.likedArtworks,
+          });
+
+          console.log("Artwork removed from liked-artworks");
+        } else {
+          // If the artwork ID is not found, add it to the array
+          userData.likedArtworks.push(artId);
+
+          // Update the user's document with the updated saved artwork IDs
+          await setDoc(userLikedArtworksRef, {
+            likedArtworks: userData.likedArtworks,
+          });
+
+          console.log("Artwork added to saved-posts");
+        }
+      } else {
+        // Create a new document for the user if it doesn't exist
+        await setDoc(userLikedArtworksRef, {
+          likedArtworks: [artId],
+        });
+
+        console.log("User's saved-posts document created with the artwork ID");
+      }
+    } catch (error) {
+      console.error("Error updating saved-posts:", error);
+    }
+  }
+};
+
+export const isArtworkSaved = async (currentUser, artId) => {
+  if (currentUser) {
+    // Get the current user's UID
+    const currentUserUid = currentUser.uid;
+
+    // Create a reference to the user's document in the saved-posts collection
+    const userSavedPostsRef = doc(db, "saved-posts", currentUserUid);
+
+    try {
+      // Fetch the user's document to get the current savedPosts array
+      const userSavedPostsSnapshot = await getDoc(userSavedPostsRef);
+      const userData = userSavedPostsSnapshot.data();
+
+      if (userData && userData.savedPosts) {
+        // Check if the artwork ID exists in the savedPosts array
+        return userData.savedPosts.includes(artId);
+      } else {
+        // User document or savedPosts array doesn't exist, so the artwork is not saved
+        return false;
+      }
+    } catch (error) {
+      console.error("Error checking if artwork is saved:", error);
+      return false; // Handle the error gracefully
+    }
+  }
+};
+
+export const isArtworkLiked = async (currentUser, artId) => {
+  if (currentUser) {
+    // Get the current user's UID
+    const currentUserUid = currentUser.uid;
+
+    // Create a reference to the user's document in the saved-posts collection
+    const userSavedPostsRef = doc(db, "liked-artworks", currentUserUid);
+
+    try {
+      // Fetch the user's document to get the current savedPosts array
+      const userLikedSnapshot = await getDoc(userSavedPostsRef);
+      const userData = userLikedSnapshot.data();
+
+      if (userData && userData.likedArtworks) {
+        // Check if the artwork ID exists in the savedPosts array
+        return userData.likedArtworks.includes(artId);
+      } else {
+        // User document or savedPosts array doesn't exist, so the artwork is not saved
+        return false;
+      }
+    } catch (error) {
+      console.error("Error checking if artwork is saved:", error);
+      return false; // Handle the error gracefully
+    }
   }
 };
 
