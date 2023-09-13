@@ -5,19 +5,26 @@ import { motion } from "framer-motion";
 import AuthContext from "../providers/Auth";
 import { saveArtwork } from "../backend/data";
 import AuthPopupContext from "../providers/AuthPopup";
+import saveIcon from "../images/save-instagram (1).png";
+import heartIcon from "../images/heart (3).png";
+import ArtworkDetailBtn from "../components/ArtworkDetailBtn";
+import filledSaved from "../images/bookmark.png";
+import filledHeart from "../images/heart (4).png";
+import {
+  isArtworkSaved,
+  addToLikedArtworks,
+  isArtworkLiked,
+} from "../backend/data";
 
 const ArtworkDetail = () => {
   const { id } = useParams();
   const [currentArtwork, setCurrentArtwork] = useState(null);
-  const { currentUser } = useContext(AuthContext);
-  const { loginPopup, setLoginPopup } = useContext(AuthPopupContext);
-
-  const navigate = useNavigate();
 
   // Fetch the artwork details using the "id" parameter
   useEffect(() => {
     getArtworkDetails(id, setCurrentArtwork);
   }, [id]);
+
 
   return (
     <>
@@ -43,25 +50,16 @@ const ArtworkDetail = () => {
                 <motion.p>Prompt was created by Aya</motion.p>
                 <br />
                 <div className="artwork-detail-btns">
-                  <button className="btn" id="like-btn">
-                    Like
-                  </button>
-                  <button
-                    className="btn"
-                    onClick={() => {
-                      if (currentUser) {
-                        saveArtwork(currentUser, id);
-                      } else {
-                        // setLoginPopup(true)
-                        navigate("/login");
-                        // if (currentUser) {
-                        //   navigate(`/artwork/${id}`);
-                        // }
-                      }
-                    }}
-                  >
-                    Save
-                  </button>
+                  <ArtworkDetailBtn
+                    text="Like"
+                    artId={id}
+                    id="like-btn"
+                  />
+                  <ArtworkDetailBtn
+                    text="Save"
+                    artId={id}
+                    id="save-btn"
+                  />
                 </div>
               </motion.div>
             </>
