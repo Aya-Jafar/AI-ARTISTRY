@@ -390,15 +390,20 @@ body {
   height: 33px;
 }
 
-
-.active-tab{
-  border-bottom: 7px solid #50D5FF;
+.active-tab {
+  border-bottom: 7px solid #50d5ff;
   padding: 0 5%;
 }
 
-
-
-
+.artwork-detail-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7%;
+}
+.artwork-detail-btn img {
+  width: 25px;
+}
 /* .active-tab:after {
   content:'';
   position:absolute;
@@ -410,9 +415,6 @@ body {
   width: 5vw;
   border-radius:10px;
 } */
-
-
-
 
 textarea {
   width: 100%;
@@ -574,12 +576,20 @@ button[type="submit"] {
 
 .artwork-detail-btns {
   display: flex;
-  /* justify-content: space-between;
-  align-items: start; */
+  justify-content: space-between;
+  align-items: start;
   margin-top: 5%;
 }
 #like-btn {
   margin-right: 25px;
+  background-color: #50d5ff;
+}
+#like-btn:hover {
+  background-color: #8ddef7(13, 198, 255);
+}
+
+#save-btn:hover {
+  background-color: #ccc;
 }
 
 .profile {
