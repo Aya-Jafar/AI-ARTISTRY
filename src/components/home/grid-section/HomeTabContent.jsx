@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import TabContext from "../providers/TabContent";
+import TabContext from "../../../providers/TabContent";
 import MainArtGrid from "./AllTab";
 import FantasyTab from "./FantasyTab";
 import SciFiTab from "./SciFiTab";

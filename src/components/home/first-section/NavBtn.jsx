@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import useClickOutside from "../hooks/useClickOutside";
-import AuthPopupContext from "../providers/AuthPopup";
+import useClickOutside from "../../../hooks/useClickOutside";
+import AuthPopupContext from "../../../providers/AuthPopup";
 
 
 function NavBtn({ path, text, id }) {

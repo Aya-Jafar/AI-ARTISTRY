@@ -1,7 +1,7 @@
-import AuthContext from "../providers/Auth";
+import AuthContext from "../../../providers/Auth";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { linkStyles } from "../utils/styleSetter";
+import { linkStyles } from "../../../utils/styleSetter";
 
 export default function UserSection() {
   const { currentUser } = useContext(AuthContext);

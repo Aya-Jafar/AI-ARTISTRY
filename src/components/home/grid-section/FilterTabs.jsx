@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
-import allPic from "../images/all-tab.png";
+import allPic from "../../../images/all-tab.png";
 import { motion } from "framer-motion";
-import { fadeIn, scaleOnHover } from "../utils/motion";
-import TabContext from "../providers/TabContent";
-import fantasyTab from "../images/fantasy-tab.png";
-import { alignTabText } from "../utils/styleSetter";
-import scifiPic from "../images/sci-fi-tab.webp";
+import { fadeIn, scaleOnHover } from "../../../utils/motion";
+import TabContext from "../../../providers/TabContent";
+import fantasyTab from "../../../images/fantasy-tab.png";
+import { alignTabText } from "../../../utils/styleSetter";
+import scifiPic from "../../../images/sci-fi-tab.webp";
 
 
 function Tab({ img, text, isActive, onClick }) {

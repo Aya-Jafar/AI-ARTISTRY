@@ -1,10 +1,11 @@
 import React from "react";
-import pic1 from "../images/space.jpg";
-import pic2 from "../images/girl.png";
-import pic3 from "../images/space2.png";
+import pic1 from "../../../images/space.jpg";
+import pic2 from "../../../images/girl.png";
+import pic3 from "../../../images/space2.png";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { stagger, fadeIn, scaleOnHover } from "../utils/motion";
+import { stagger, fadeIn, scaleOnHover } from "../../../utils/motion";
+
 
 function AboutUs() {
   const [ref, inView] = useInView({

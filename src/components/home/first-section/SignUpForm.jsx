@@ -1,8 +1,9 @@
 import React, { useState, useContext } from "react";
-import AuthContext from "../providers/Auth";
-import { handleSignUp } from "../backend/auth";
-import { validateSignUpForm } from "../utils/validators";
+import AuthContext from "../../../providers/Auth";
+import { handleSignUp } from "../../../backend/auth";
+import { validateSignUpForm } from "../../../utils/validators";
 import { useNavigate } from "react-router-dom";
+
 
 function SignUpForm() {
   const { signUpWithEmailAndPassword } = useContext(AuthContext);

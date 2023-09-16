@@ -1,16 +1,18 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../providers/Auth";
-import saveIcon from "../images/save-instagram (1).png";
-import heartIcon from "../images/heart (3).png";
+import AuthContext from "../../../providers/Auth";
+import saveIcon from "../../../images/save-instagram (1).png";
+import heartIcon from "../../../images/heart (3).png";
 import {
   isArtworkSaved,
   addToLikedArtworks,
   isArtworkLiked,
   saveArtwork,
-} from "../backend/data";
-import filledSaved from "../images/bookmark.png";
-import filledHeart from "../images/heart (4).png";
+} from "../../../backend/data";
+import filledSaved from "../../../images/bookmark.png";
+import filledHeart from "../../../images/heart (4).png";
+
+
 
 function ArtworkDetailBtn({ text, artId, id }) {
   const { currentUser } = useContext(AuthContext);

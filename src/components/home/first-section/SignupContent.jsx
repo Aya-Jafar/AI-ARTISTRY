@@ -1,14 +1,15 @@
 import React, { useContext, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import googleIcon from "../images/google-icon.png";
-import facebookIcon from "../images/f-icon.png";
-import gmailIcon from "../images/g-icon.png";
-import AuthContext from "../providers/Auth";
-import { handleSignUp } from "../backend/auth";
+import googleIcon from "../../../images/google-icon.png";
+import facebookIcon from "../../../images/f-icon.png";
+import gmailIcon from "../../../images/g-icon.png";
+import AuthContext from "../../../providers/Auth";
+import { handleSignUp } from "../../../backend/auth";
 import CloseBtn from "./CloseBtn";
 import AuthBtn from "./AuthBtn";
 import SignUpForm from "./SignUpForm";
-import AuthPopupContext from "../providers/AuthPopup";
+import AuthPopupContext from "../../../providers/AuthPopup";
+
 
 function SignUpContent() {
   const {
@@ -25,7 +26,7 @@ function SignUpContent() {
 
   return (
     <div className="signup-content">
-      <CloseBtn setPopup={setSignupPopup}/>
+      <CloseBtn setPopup={setSignupPopup} />
 
       <motion.h1>Sign up</motion.h1>
       <br />

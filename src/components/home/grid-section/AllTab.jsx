@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { getAllArtworks } from "../backend/data";
+import { getAllArtworks } from "../../../backend/data";
 import ArtGrid from "./ArtGrid";
 
 function MainArtGrid() {

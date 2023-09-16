@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { getSciFiArtworks, saveArtwork } from "../backend/data";
+import { getSciFiArtworks, saveArtwork } from "../../../backend/data";
 import ArtGrid from "./ArtGrid";
 
 function MainArtGrid() {

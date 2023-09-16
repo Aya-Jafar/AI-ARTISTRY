@@ -1,19 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { fadeIn, scaleOnHover } from "../utils/motion";
-import { alignTabText } from "../utils/styleSetter";
-import ProfileTabContext from "../providers/ProfileTabContent";
-import AuthContext from "../providers/Auth";
-import { getSavedArtworks } from "../backend/data";
-import saveIcon from "../images/save-instagram.png";
-import likeIcon from '../images/heart (2).png'
-import cart from '../images/shopping-cart.png'
+import ProfileTabContext from "../../providers/ProfileTabContent";
+import { ProfileTabProvider } from "../../providers/ProfileTabContent";
+import AuthContext from "../../providers/Auth";
+import { getSavedArtworks } from "../../backend/data";
+import saveIcon from "../../images/save-instagram.png";
+import likeIcon from "../../images/heart (2).png";
+import cart from "../../images/shopping-cart.png";
 
 
-
-function Tab({ text,icon, isActive, onClick }) {
+function Tab({ text, icon, isActive, onClick }) {
   return (
-    <div className={isActive ? "active-tab":""} onClick={onClick}>
+    <div className={isActive ? "active-tab" : ""} onClick={onClick}>
       <motion.div className="profile-tab">
         <img src={icon} alt="" />
         <h3>{text}</h3>
@@ -25,7 +23,7 @@ function Tab({ text,icon, isActive, onClick }) {
 function ProfileTabs() {
   const { currentProfileTab, setProfileTab } = useContext(ProfileTabContext);
   const { currentUser } = useContext(AuthContext);
-  const [activeTab, setActiveTab] = useState("saved");
+  const [activeTab, setActiveTab] = useState("Saved");
 
   const [defaultImage, setActiveImage] = useState("");
 
@@ -37,6 +35,8 @@ function ProfileTabs() {
     getSavedArtworks(currentUser, setActiveImage);
   }, [currentUser]);
 
+  // console.log(currentProfileTab);
+
   //   console.log(defaultImage[0].image);
   return (
     <>
@@ -44,8 +44,8 @@ function ProfileTabs() {
         <Tab
           text="Saved"
           icon={saveIcon}
-          isActive={activeTab === "saved"}
-          onClick={() => handleTabClick("saved")}
+          isActive={activeTab === "Saved"}
+          onClick={() => handleTabClick("Saved")}
         />
         <Tab
           text="Liked"
@@ -59,7 +59,6 @@ function ProfileTabs() {
           isActive={activeTab === "Cart"}
           onClick={() => handleTabClick("Cart")}
         />
-
       </div>
     </>
   );

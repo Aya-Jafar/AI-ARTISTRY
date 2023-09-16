@@ -1,26 +1,21 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import googleIcon from "../images/google-icon.png";
-import facebookIcon from "../images/f-icon.png";
-import gmailIcon from "../images/g-icon.png";
-import AuthContext from "../providers/Auth";
+import googleIcon from "../../../images/google-icon.png";
+import facebookIcon from "../../../images/f-icon.png";
+import gmailIcon from "../../../images/g-icon.png";
+import AuthContext from "../../../providers/Auth";
 import CloseBtn from "./CloseBtn";
 import AuthBtn from "./AuthBtn";
 import LoginForm from "./LoginForm";
-import AuthPopupContext from "../providers/AuthPopup";
+import AuthPopupContext from "../../../providers/AuthPopup";
+
 
 function LoginContent() {
-  const {
-    signInWithGoogle,
-    signInWithFacebook,
-  } = useContext(AuthContext);
+  const { signInWithGoogle, signInWithFacebook } = useContext(AuthContext);
 
-  
   const [showEmailForm, setShowEmailSignIn] = useState(false);
 
   const { setLoginPopup } = useContext(AuthPopupContext);
-
-
 
   const handleEmailSignInClick = () => setShowEmailSignIn(true);
 

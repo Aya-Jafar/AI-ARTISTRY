@@ -2,11 +2,13 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { FaBars } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import NavBtn from "./NavBtn";
-import AuthContext from "../providers/Auth";
+import AuthContext from "../../../providers/Auth";
 import UserSection from "./UserSection";
-import AuthPopupContext from "../providers/AuthPopup";
-import logoutIcon from "../images/logout.png";
-import { linkStyles, navGapSetter } from "../utils/styleSetter";
+import AuthPopupContext from "../../../providers/AuthPopup";
+import logoutIcon from "../../../images/logout.png";
+import { linkStyles, navGapSetter } from "../../../utils/styleSetter";
+
+
 
 function Nav() {
   const { currentUser, signOutUser } = useContext(AuthContext);
@@ -19,9 +21,12 @@ function Nav() {
 
   const toggleMenu = () => setMenuActive(!menuActive);
 
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
-    currentUser ? setShowUserSection(true) : setShowUserSection(false);
-  }, [currentUser]);
+    // currentUser ? setShowUserSection(true) : setShowUserSection(false);
+    token ? setShowUserSection(true) : setShowUserSection(false);
+  }, [token]);
 
   return (
     <>
@@ -38,7 +43,6 @@ function Nav() {
         </div>
 
         <div className="nav-links" style={navGapSetter(currentUser)}>
-          
           <Link to="/imagine" style={{ ...linkStyles }}>
             <div className="nav-link">{"Imagine".toUpperCase()}</div>
           </Link>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { fadeIn, scaleOnHover } from "../utils/motion";
-import { textVariants } from "../utils/motion";
+import { fadeIn, scaleOnHover } from "../../../utils/motion";
+import { textVariants } from "../../../utils/motion";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { useInView } from "react-intersection-observer";
 import { Link } from "react-router-dom";

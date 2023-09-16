@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { popupVariants } from "../utils/motion";
+import { popupVariants } from "../../../utils/motion";
 import SignUpContent from "./SignupContent";
 import LoginContent from "./LoginContent";
-import AuthPopupContext from "../providers/AuthPopup";
+import AuthPopupContext from "../../../providers/AuthPopup";
+
 
 function Popup() {
   const { loginPopup, signupPopup } = useContext(AuthPopupContext);

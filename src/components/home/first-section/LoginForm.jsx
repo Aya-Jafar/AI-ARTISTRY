@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
-import AuthContext from "../providers/Auth";
-import { handleSignIn } from "../backend/auth";
-import { validateLoginForm } from "../utils/validators";
+import AuthContext from "../../../providers/Auth";
+import { handleSignIn } from "../../../backend/auth";
+import { validateLoginForm } from "../../../utils/validators";
 import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
