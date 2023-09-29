@@ -4,11 +4,10 @@ import googleIcon from "../../../images/google-icon.png";
 import facebookIcon from "../../../images/f-icon.png";
 import gmailIcon from "../../../images/g-icon.png";
 import AuthContext from "../../../providers/Auth";
-import CloseBtn from "./CloseBtn";
+import CloseButton from "./CloseButton";
 import AuthBtn from "./AuthBtn";
 import LoginForm from "./LoginForm";
 import AuthPopupContext from "../../../providers/AuthPopup";
-
 
 function LoginContent() {
   const { signInWithGoogle, signInWithFacebook } = useContext(AuthContext);
@@ -22,7 +21,7 @@ function LoginContent() {
   return (
     <>
       <div className="signup-content">
-        <CloseBtn setPopup={setLoginPopup} />
+        <CloseButton setPopup={setLoginPopup} />
         <h1>Log in</h1>
         <br />
         <>
@@ -51,6 +50,19 @@ function LoginContent() {
                 }}
                 id="gmail-btn"
               />
+              <br />
+              <br />
+              <br />
+              {/* <h4>
+                Don't have an account yet?{" "}
+                <Link
+                  to="/signup"
+                  style={{ color: "#50d5ff" }}
+                  id="signup-from-login"
+                >
+                  Sign up now
+                </Link>
+              </h4> */}
             </>
           )}
         </>

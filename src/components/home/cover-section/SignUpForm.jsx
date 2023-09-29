@@ -122,7 +122,7 @@ function SignUpForm() {
         </div>
         <br />
         <center>
-          <button type="submit" className="btn">
+          <button type="submit" className="btn" id="signup-btn">
             {loading ? "Loading..." : "Sign Up"}
           </button>
         </center>

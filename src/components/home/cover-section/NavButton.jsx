@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import useClickOutside from "../../../hooks/useClickOutside";
 import AuthPopupContext from "../../../providers/AuthPopup";
 
-
-function NavBtn({ path, text, id }) {
+function NavButton({ path, text, id }) {
   const { loginPopup, signupPopup, setLoginPopup, setSignupPopup } =
     useContext(AuthPopupContext);
 
@@ -24,4 +23,4 @@ function NavBtn({ path, text, id }) {
     </Link>
   );
 }
-export default NavBtn;
+export default NavButton;

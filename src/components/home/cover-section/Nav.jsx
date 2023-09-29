@@ -1,14 +1,13 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FaBars } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import NavBtn from "./NavBtn";
+import NavButton from "./NavButton";
 import AuthContext from "../../../providers/Auth";
 import UserSection from "./UserSection";
-import AuthPopupContext from "../../../providers/AuthPopup";
 import logoutIcon from "../../../images/logout.png";
 import { linkStyles, navGapSetter } from "../../../utils/styleSetter";
-
-
+import { motion } from "framer-motion";
+import { Link as ScrollLink } from "react-scroll";
 
 function Nav() {
   const { currentUser, signOutUser } = useContext(AuthContext);
@@ -47,7 +46,18 @@ function Nav() {
             <div className="nav-link">{"Imagine".toUpperCase()}</div>
           </Link>
 
-          <div className="nav-link">CONTACT US</div>
+          <motion.div className="nav-link">
+            <ScrollLink
+              to="contact"
+              spy={true}
+              smooth={true}
+              offset={-70}
+              duration={1000}
+            >
+              CONTACT US
+            </ScrollLink>
+          </motion.div>
+
           {showUserSection ? (
             <>
               <UserSection />
@@ -67,8 +77,8 @@ function Nav() {
             </>
           ) : (
             <div className="nav-btns">
-              <NavBtn path="/signup" text="SIGN UP" id="sign-up" />
-              <NavBtn path="/login" text="LOG IN" id="login" />
+              <NavButton path="/signup" text="SIGN UP" id="sign-up" />
+              <NavButton path="/login" text="LOG IN" id="login" />
             </div>
           )}
         </div>

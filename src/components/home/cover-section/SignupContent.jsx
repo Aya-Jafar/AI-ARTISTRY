@@ -5,11 +5,10 @@ import facebookIcon from "../../../images/f-icon.png";
 import gmailIcon from "../../../images/g-icon.png";
 import AuthContext from "../../../providers/Auth";
 import { handleSignUp } from "../../../backend/auth";
-import CloseBtn from "./CloseBtn";
+import CloseButton from "./CloseButton";
 import AuthBtn from "./AuthBtn";
 import SignUpForm from "./SignUpForm";
 import AuthPopupContext from "../../../providers/AuthPopup";
-
 
 function SignUpContent() {
   const {
@@ -26,7 +25,7 @@ function SignUpContent() {
 
   return (
     <div className="signup-content">
-      <CloseBtn setPopup={setSignupPopup} />
+      <CloseButton setPopup={setSignupPopup} />
 
       <motion.h1>Sign up</motion.h1>
       <br />

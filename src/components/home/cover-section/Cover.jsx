@@ -1,17 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import logo from "../../../images/logo-without-bg.png";
-import {
-  headContainerAnimation,
-  headContentAnimation,
-  headTextAnimation,
-  slideAnimation,
-  fadeIn,
-  stagger,
-  scaleOnHover,
-} from "../../../utils/motion";
+import { slideAnimation, fadeIn, stagger } from "../../../utils/motion";
 import { Link as ScrollLink } from "react-scroll";
-
 
 function Cover() {
   return (
@@ -35,6 +26,7 @@ function Cover() {
         >
           Create & Collect
         </motion.h2>
+        
         <motion.div id="explore-btn" variants={fadeIn}>
           <ScrollLink
             to="art-grid-section"
@@ -46,6 +38,8 @@ function Cover() {
             <button className="btn">{"explore".toUpperCase()}</button>
           </ScrollLink>
         </motion.div>
+
+
       </motion.div>
     </motion.div>
   );

@@ -2,9 +2,8 @@ import React from "react";
 import closeIcon from "../../../images/close.png";
 import { useNavigate } from "react-router-dom";
 
-function CloseBtn({ setPopup }) {
+function CloseButton({ setPopup }) {
   const navigate = useNavigate();
-
 
   return (
     <div
@@ -19,4 +18,4 @@ function CloseBtn({ setPopup }) {
   );
 }
 
-export default CloseBtn;
+export default CloseButton;

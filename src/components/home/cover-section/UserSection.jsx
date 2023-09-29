@@ -9,7 +9,7 @@ export default function UserSection() {
   return (
     <>
       {currentUser && currentUser.displayName && (
-        <Link to="/profile" style={{ ...linkStyles }}>
+        <Link to={`/profile/${currentUser.uid}`} style={{ ...linkStyles }}>
           <div className="nav-link">
             {currentUser.displayName.toUpperCase()}
           </div>

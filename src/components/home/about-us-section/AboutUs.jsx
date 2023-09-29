@@ -5,7 +5,7 @@ import pic3 from "../../../images/space2.png";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { stagger, fadeIn, scaleOnHover } from "../../../utils/motion";
-
+import AboutUsPic from "./AboutUsPic";
 
 function AboutUs() {
   const [ref, inView] = useInView({
@@ -31,36 +31,9 @@ function AboutUs() {
           stroke of genius
         </motion.p>
         <div className="about-us-pics">
-          <motion.div className="about-us-pic" variants={fadeIn}>
-            <motion.img
-              src={pic1}
-              alt=""
-              initial="hidden"
-              animate={inView ? "visible" : "hidden"} // Animate when in view
-              variants={fadeIn}
-              whileHover={scaleOnHover}
-            />
-          </motion.div>
-          <motion.div className="about-us-pic" variants={fadeIn}>
-            <motion.img
-              src={pic2}
-              alt=""
-              initial="hidden"
-              animate={inView ? "visible" : "hidden"} // Animate when in view
-              variants={fadeIn}
-              whileHover={scaleOnHover}
-            />
-          </motion.div>
-          <motion.div className="about-us-pic" variants={fadeIn}>
-            <motion.img
-              src={pic3}
-              alt=""
-              initial="hidden"
-              animate={inView ? "visible" : "hidden"} // Animate when in view
-              variants={fadeIn}
-              whileHover={scaleOnHover}
-            />
-          </motion.div>
+          <AboutUsPic src={pic1} inView={inView} />
+          <AboutUsPic src={pic2} inView={inView} />
+          <AboutUsPic src={pic3} inView={inView} />
         </div>
       </motion.div>
     </div>
