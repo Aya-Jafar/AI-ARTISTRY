@@ -1,13 +1,15 @@
 import React, { useContext } from "react";
-import Cover from "../components/Cover";
-import Nav from "../components/Nav";
-import AboutUs from "../components/AboutUs";
+import Cover from "../components/home/cover-section/Cover";
+import AboutUs from "../components/home/about-us-section/AboutUs";
 import { useLocation } from "react-router-dom";
-import FilterTabs from "../components/FilterTabs";
+import FilterTabs from "../components/common/filters/FilterTabs";
 import { TabContentProvider } from "../providers/TabContent";
 import { motion } from "framer-motion";
-import HomeTabContent from "../components/HomeTabContent";
-import AuthPopupContext from "../providers/AuthPopup";
+import HomeTabContent from "../components/common/filters/HomeTabContent";
+import ContactForm from "../components/home/contact-section/ContactForm";
+import Quote from "../components/home/Quote";
+import Footer from "../components/home/Footer";
+
 
 function Home() {
   const location = useLocation();
@@ -29,8 +31,13 @@ function Home() {
 
         <TabContentProvider>
           <FilterTabs />
-          <HomeTabContent />
+          <HomeTabContent isHomePage={true} />
         </TabContentProvider>
+
+        <ContactForm />
+        <Quote />
+
+        <Footer/>
       </motion.div>
     </>
   );
