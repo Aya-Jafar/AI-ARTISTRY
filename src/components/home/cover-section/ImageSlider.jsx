@@ -2,34 +2,29 @@ import React, { useState, useEffect } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import firstCover from "../../../images/cover.png";
-import secondCover from '../../../images/2.png'
-import thirdCover from '../../../images/Untitled design (16).png'
+import secondCover from "../../../images/2.png";
+import thirdCover from "../../../images/Untitled design (16).png";
 
 export default function ImageSlider(props) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const slides = [firstCover, secondCover, thirdCover];
-  const slideInterval = 7000; // Time between slides in milliseconds
+  //   const slideInterval = 5000; // Time between slides in milliseconds
+
+  const slideIntervals = [3000, 9000, 9000];
 
   useEffect(() => {
     // Automatically advance to the next slide at a specified interval
-    const interval = setInterval(goToNext, slideInterval);
+    const interval = setInterval(goToNext, slideIntervals[currentIndex]);
 
     // Clear the interval when the component unmounts
     return () => clearInterval(interval);
   }, [currentIndex]);
-
-  const goToPrevious = () => {
-    const isFirstSlide = currentIndex === 0;
-    const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1;
-    setCurrentIndex(newIndex);
-  };
 
   const goToNext = () => {
     const isLastSlide = currentIndex === slides.length - 1;
     const newIndex = isLastSlide ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
   };
-
 
   return (
     <div className="slider-container">
