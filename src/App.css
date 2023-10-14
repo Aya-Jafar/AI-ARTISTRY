@@ -944,6 +944,7 @@ button[type="submit"] {
 .artwork-detail-img {
   object-fit: contain;
   margin-left: 90px;
+  width: 60%
 }
 
 .artwork-info {
@@ -1581,6 +1582,7 @@ blockquote:before {
     height: auto;
     width: auto;
     margin: 0;
+    width: 100%;
   }
 
   .artwork-info {

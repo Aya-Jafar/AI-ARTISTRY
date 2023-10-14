@@ -87,7 +87,6 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
                 alt=""
                 className="artwork-detail-img"
                 style={{
-                  width: "60%",
                   filter: `brightness(${currentArtwork.brightness}%) contrast(${currentArtwork.contrast}%)`,
                 }}
               />
