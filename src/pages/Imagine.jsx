@@ -29,14 +29,11 @@ function Imagine() {
   const hangleGenerateClick = async (e) => {
     e.preventDefault();
     setIsClicked(true);
-    if (currentUser) {
-      try {
-        await generateArt(setGeneratedImage, prompt);
-      } catch (e) {
-        console.log(e);
-      }
-    } else {
-      navigate("/login");
+
+    try {
+      await generateArt(setGeneratedImage, prompt);
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -102,7 +99,7 @@ function Imagine() {
                 <button
                   className="btn"
                   onClick={() =>
-                    postArtwork(currentUser, generatedImage, prompt)
+                    postArtwork(currentUser, generatedImage, prompt,navigate)
                   }
                 >
                   Post
@@ -116,7 +113,8 @@ function Imagine() {
                       generatedImage,
                       prompt,
                       customOptions.brightness,
-                      customOptions.contrast
+                      customOptions.contrast,
+                      navigate
                     )
                   }
                 >
@@ -156,14 +154,12 @@ function Imagine() {
             </>
           )}
         </div>
-
-        <footer>
-          <div class="song-copyright">
-            &copy; Imagine-John Lennon. All rights reserved.
-          </div>
-        </footer>
-
       </motion.div>
+      <footer className="footer-copywrite">
+        <div class="song-copyright">
+          &copy; Imagine-John Lennon. All rights reserved.
+        </div>
+      </footer>
     </>
   );
 }
