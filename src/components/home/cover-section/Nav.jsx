@@ -64,7 +64,7 @@ function Nav() {
               offset={-70}
               duration={1000}
               onClick={contactNavigate}
-              onClickCapture={() => console.log("Contact")}
+              // onClickCapture={() => console.log("Contact")}
             >
               CONTACT US
             </ScrollLink>

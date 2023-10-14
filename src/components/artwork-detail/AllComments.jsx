@@ -26,9 +26,11 @@ function AllComments({ comments, artId }) {
 
   const [activeCommentId, setActiveCommentId] = useState(null);
 
+  // console.log(comments);
+
   return (
     <>
-      {comments.length > 0 && (
+      {comments && (
         <div className="comments">
           {comments.map((comment, index) => {
             return (
@@ -49,7 +51,9 @@ function AllComments({ comments, artId }) {
                       <h4>{comment.userName}</h4>
                     </Link>
 
-                    {currentUser.uid === comment.userId ? (
+                    {currentUser &&
+                    currentUser.accessToken ===
+                      localStorage.getItem("token") ? (
                       <div className="edit-comment-icon">
                         <img
                           src={moreIcon}
@@ -91,7 +95,7 @@ function AllComments({ comments, artId }) {
                       <></>
                     )}
                   </div>
-                  {editCommentId === comment.id  ? (
+                  {editCommentId === comment.id ? (
                     <input
                       type="text"
                       className="comment-editor"

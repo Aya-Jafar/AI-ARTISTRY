@@ -54,8 +54,10 @@ body {
 .song-copyright {
   display: flex;
   align-items: end;
-  justify-content: end;
-  margin-top: 45%;
+  justify-content: center;
+  /* position: fixed; */
+  flex-shrink: 0;
+  /* background-color: red; */
   color: #818181;
 }
 
@@ -355,7 +357,10 @@ body {
   /* background-color: #1278f2; */
   width: 90%;
   height: 80vh;
-  margin: 3% 5%;
+  max-height: 80vh;
+  margin: 0 5%;
+  margin-top: 3%;
+  flex:1
 }
 
 .prompt-section {
@@ -388,6 +393,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   width: auto;
+
 }
 
 .imagine-image-container {
@@ -1192,6 +1198,9 @@ blockquote:before {
   /* font-weight: 100; */
 }
 
+
+
+
 .comment-icon {
   position: absolute;
   top: 50%;
@@ -1433,16 +1442,16 @@ blockquote:before {
     background-image: url("./images/ai-generated-7881509_1280.jpg");
     background-repeat: no-repeat;
     background-position: center top;
-    background-size: 100% 40%;
-    height: 90vh;
+    background-size: 100% 30%;
+    /* height: 100vh; */
     /* width: 135%; */
-    margin-bottom: 35%;
+    margin-bottom: 0;
     /* width: 135%; */
   }
 
   .about-us-container {
-    margin-top: 10%;
-    width: 75%;
+    margin-top: 40%;
+    width: 80%;
     padding: 0 4%;
     height: 90vh;
 
@@ -1458,11 +1467,14 @@ blockquote:before {
     overflow: hidden;
   }
   .about-us-pic img {
-    width: 30vw;
+    width: 100px;
+    height: 150px;
   }
-
+  .about-us-container h1{
+    font-size: 30px;
+  }
   .about-us-container p {
-    font-size: 20px;
+    font-size: 17px;
   }
 
   .menu-icon {
