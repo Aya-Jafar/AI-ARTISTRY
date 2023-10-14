@@ -138,7 +138,8 @@ export const saveGeneratedImage = async (
   generatedImageUrl,
   prompt,
   brightness,
-  contrast
+  contrast,
+  navigate
 ) => {
   // Get the current user's UID
   if (currentUser) {
@@ -193,6 +194,8 @@ export const saveGeneratedImage = async (
     } catch (error) {
       console.error("Error updating saved-images:", error);
     }
+  } else {
+    navigate("/login");
   }
 };
 
@@ -420,69 +423,71 @@ export const getArtworkDetails = async (
 };
 
 export const addCommentToActivity = async (currentUser, artId, newComment) => {
-  const docRef = doc(db, "ai-art", artId);
-  const userRefInActivity = doc(db, "activity", currentUser.uid);
+  if (currentUser) {
+    const docRef = doc(db, "ai-art", artId);
+    const userRefInActivity = doc(db, "activity", currentUser.uid);
 
-  try {
-    // Get the current document data
-    const docSnapshot = await getDoc(docRef);
+    try {
+      // Get the current document data
+      const docSnapshot = await getDoc(docRef);
 
-    const activityRef = doc(db, "activity", currentUser.uid);
+      const activityRef = doc(db, "activity", currentUser.uid);
 
-    const activitySnapshot = await getDoc(activityRef);
+      const activitySnapshot = await getDoc(activityRef);
 
-    // Create a new comment object
-    const commentObject = {
-      text: newComment,
-      userName: currentUser.displayName,
-      userId: currentUser.uid,
-    };
+      // Create a new comment object
+      const commentObject = {
+        text: newComment,
+        userName: currentUser.displayName,
+        userId: currentUser.uid,
+      };
 
-    const commentsCollectionRef = collection(docRef, "comments");
+      const commentsCollectionRef = collection(docRef, "comments");
 
-    const commentCollectionRefInActivity = collection(
-      userRefInActivity,
-      "comments"
-    );
+      const commentCollectionRefInActivity = collection(
+        userRefInActivity,
+        "comments"
+      );
 
-    await addDoc(commentCollectionRefInActivity, commentObject);
+      await addDoc(commentCollectionRefInActivity, commentObject);
 
-    await addDoc(commentsCollectionRef, commentObject);
+      await addDoc(commentsCollectionRef, commentObject);
 
+      const artData = await fetchPhotoData(artId);
 
-    const artData = await fetchPhotoData(artId);
+      const newActivityObject = {
+        artData: artData,
+        activityType: "comment",
+        commentText: newComment,
+        userName: currentUser.displayName,
+        timestamp: new Date().toISOString(), // You can add a timestamp for the activity
+      };
+      if (
+        !activitySnapshot.data() ||
+        !activitySnapshot.data().activities ||
+        activitySnapshot.data().activities.length === 0
+      ) {
+        // If the activities array is empty, add the new activity
+        await setDoc(activityRef, {
+          activities: [newActivityObject],
+        });
+        console.log("Comment added to empty activity list successfully");
+      } else {
+        // If the user hasn't liked the artwork, add the new activity
+        await updateDoc(activityRef, {
+          activities: [
+            ...activitySnapshot.data().activities,
+            newActivityObject,
+          ],
+        });
 
-    const newActivityObject = {
-      artData: artData,
-      activityType: "comment",
-      commentText: newComment,
-      userName: currentUser.displayName,
-      timestamp: new Date().toISOString(), // You can add a timestamp for the activity
-    };
-    if (
-      !activitySnapshot.data() ||
-      !activitySnapshot.data().activities ||
-      activitySnapshot.data().activities.length === 0
-    ) {
-      // If the activities array is empty, add the new activity
-      await setDoc(activityRef, {
-        activities: [newActivityObject],
-      });
-      console.log("Comment added to empty activity list successfully");
-    } else {
-      // If the user hasn't liked the artwork, add the new activity
-      await updateDoc(activityRef, {
-        activities: [...activitySnapshot.data().activities, newActivityObject],
-      });
-
-      console.log("Activity added successfully");
+        console.log("Activity added successfully");
+      }
+    } catch (error) {
+      console.error("Error adding comment: ", error);
     }
-  } catch (error) {
-    console.error("Error adding comment: ", error);
   }
 };
-
-
 
 export const getUserActivity = async (currentUser, setActivity) => {
   if (currentUser) {
@@ -513,7 +518,6 @@ export const getUserActivity = async (currentUser, setActivity) => {
 export const deleteComment = async (artId, commentId) => {
   const commentDocRef = doc(db, "ai-art", artId, "comments", commentId);
 
-
   try {
     await deleteDoc(commentDocRef);
     console.log("Comment deleted successfully");
@@ -521,10 +525,6 @@ export const deleteComment = async (artId, commentId) => {
     console.error("Error deleting comment: ", error);
   }
 };
-
-
-
-
 
 export const editComment = async (artId, commentId, newComment) => {
   try {
@@ -549,7 +549,7 @@ export const editComment = async (artId, commentId, newComment) => {
   }
 };
 
-export const postArtwork = async (currentUser, postUrl, prompt) => {
+export const postArtwork = async (currentUser, postUrl, prompt, navigate) => {
   // Get the current user's UID
   if (currentUser) {
     const currentUserUid = currentUser.uid;
@@ -603,6 +603,8 @@ export const postArtwork = async (currentUser, postUrl, prompt) => {
     } catch (error) {
       console.error("Error updating saved-images:", error);
     }
+  } else {
+    navigate("/login");
   }
 };
 

@@ -1,5 +1,6 @@
 import { HfInference } from "@huggingface/inference";
 
+
 const generateArt = async (setGeneratedImage, prompt) => {
   const huggingFace = new HfInference(process.env.REACT_APP_HF_TOKEN);
   const model = "Lykon/art-diffusion-xl-0.9";
@@ -26,11 +27,3 @@ const generateArt = async (setGeneratedImage, prompt) => {
 
 export default generateArt;
 
-
-
-// const reader = new FileReader();
-// reader.onload = function (e) {
-//   const myDataUrl = e.target.result;
-//   setOutputImage(myDataUrl);
-// };
-// reader.readAsDataURL(response);
