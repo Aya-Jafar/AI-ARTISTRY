@@ -2,7 +2,7 @@ import React from "react";
 import igIcon from "../../images/instagram (2).png";
 import fbIcon from "../../images/facebook-circular-logo.png";
 import emailIcon from "../../images/email (1).png";
-import { linkStyles } from "../../utils/styleSetter";
+import { linkStyles } from "../../utils/formaters";
 
 function Footer() {
   return (
@@ -21,10 +21,7 @@ function Footer() {
           </a>
         </div>
       </div>
-      <p>
-        &copy; {new Date().getFullYear()} AI ARTISTRY. All Rights
-        Reserved.
-      </p>
+      <p>&copy; {new Date().getFullYear()} AI ARTISTRY. All Rights Reserved.</p>
     </div>
   );
 }

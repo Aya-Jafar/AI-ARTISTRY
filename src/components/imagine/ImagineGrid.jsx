@@ -1,5 +1,5 @@
 import React from "react";
-import images from "../../images/imagine-grid";
+import images from "../../images/imagine-grid/index";
 import Masonry from "react-responsive-masonry";
 import { motion } from "framer-motion";
 import { scaleOnHover } from "../../utils/motion";

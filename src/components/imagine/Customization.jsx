@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import { CustomSlider } from "../../utils/styleSetter";
+import { CustomSlider } from "../../utils/formaters";
 
-function CustomizationSliders({
-  option,
-  setOption,
-}) {
+function CustomizationSliders({ option, setOption }) {
   const handleSliderChange = (newValue) => {
     setOption((prevCustomOptions) => ({
       ...prevCustomOptions,

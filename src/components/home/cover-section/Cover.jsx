@@ -3,8 +3,10 @@ import { motion } from "framer-motion";
 import logo from "../../../images/logo-without-bg.png";
 import { slideAnimation, fadeIn, stagger } from "../../../utils/motion";
 import { Link as ScrollLink } from "react-scroll";
+import ImageSlider from "./ImageSlider";
 
 function Cover() {
+ 
   return (
     <motion.div
       className="cover"
@@ -12,6 +14,8 @@ function Cover() {
       animate="visible"
       variants={fadeIn}
     >
+      <ImageSlider/>
+
       <motion.div className="cover-text" variants={stagger}>
         <motion.div variants={fadeIn} {...slideAnimation("left")}>
           <img src={logo} alt="" id="logo" />
@@ -38,8 +42,6 @@ function Cover() {
             <button className="btn">{"explore".toUpperCase()}</button>
           </ScrollLink>
         </motion.div>
-
-
       </motion.div>
     </motion.div>
   );

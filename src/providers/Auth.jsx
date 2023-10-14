@@ -19,25 +19,32 @@ import {
   getDoc,
 } from "firebase/firestore";
 import { serverTimestamp } from "firebase/firestore";
-import app from "../backend/config";
+import db from "../backend/firebaseConfig";
+import { app } from "../backend/firebaseConfig";
 
-const db = getFirestore(); // Initialize your Firestore instance
 const AuthContext = createContext();
-
-
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-  
-  const auth = getAuth();
+
+  // console.log(currentUser && currentUser.accessToken);
+  //  console.log(currentUser && currentUser.getIdToken());
+
+  const auth = getAuth(app);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
+      if (user) {
+        localStorage.setItem("token", user.accessToken);
+      }
+      // console.log(user);
     });
 
     return unsubscribe;
   }, [auth]);
+
+  // console.log(localStorage.getItem("token"));
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -64,9 +71,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-
-
-
   const signInWithFacebook = async () => {
     const provider = new FacebookAuthProvider();
     try {
@@ -86,17 +90,23 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logInWithEmailAndPassword = async (email, password) => {
+  const logInWithEmailAndPassword = async (
+    email,
+    password,
+    setErrorMessage
+  ) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
-      console.error("Email sign-in error:", error);
+      setErrorMessage(error.message.split("/")[1]);
+      // console.error(error.message.split("/")[1]);
     }
   };
 
   const signOutUser = async () => {
     try {
       await signOut(auth);
+      localStorage.removeItem("token");
     } catch (error) {
       console.error("Sign-out error:", error);
     }

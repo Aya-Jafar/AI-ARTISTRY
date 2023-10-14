@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import AuthContext from "../../providers/Auth";
-import { motion } from "framer-motion";
-import { getLikedArtworks, getSavedArtworks } from "../../backend/data";
+import { addToLikedActivity, getSavedArtworks } from "../../backend/data";
 import ArtGrid from "../home/grid-section/ArtGrid";
 
 function LikedArtworks() {
@@ -10,7 +9,7 @@ function LikedArtworks() {
   const [likedArtworks, setLikedArtworks] = useState([]);
 
   useEffect(() => {
-    getLikedArtworks(currentUser, setLikedArtworks);
+    addToLikedActivity(currentUser, setLikedArtworks);
   }, [currentUser]);
 
   // console.log(savedArtworks);

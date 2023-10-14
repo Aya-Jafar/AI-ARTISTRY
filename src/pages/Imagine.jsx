@@ -6,10 +6,11 @@ import AuthContext from "../providers/Auth";
 import { Skeleton } from "@mui/material";
 import generateArt from "../backend/huggingFace";
 import CustomizationSliders from "../components/imagine/Customization";
-import { saveGeneratedImage } from "../backend/data";
+import { saveGeneratedImage, postArtwork } from "../backend/data";
 import ImagineGrid from "../components/imagine/ImagineGrid";
 import GeneratedImage from "../components/imagine/GeneratedImage";
-
+import getRandomPropmt from "../backend/prompts";
+import CustomizedProgressBars from "../components/imagine/Loading";
 
 function Imagine() {
   const { currentUser } = useContext(AuthContext);
@@ -24,10 +25,6 @@ function Imagine() {
     brightness: 100,
     contrast: 100,
   });
-
-  // useEffect(() => {
-  //   console.log(generatedImage);
-  // }, [generatedImage]);
 
   const hangleGenerateClick = async (e) => {
     e.preventDefault();
@@ -45,6 +42,13 @@ function Imagine() {
 
   return (
     <>
+      <audio autoPlay loop>
+        <source
+          src={require("../components/imagine/imagine.m4a")}
+          type="audio/mpeg"
+        />
+      </audio>
+
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -58,20 +62,32 @@ function Imagine() {
           </motion.h1>
           <textarea
             type="text"
-            name=""
-            id=""
             placeholder="Write your prompt here..."
+            value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
           />
           <br />
+          <div className="imagine-btns">
+            <button
+              className="btn"
+              id="random-prompt-btn"
+              onClick={() => {
+                const randomPrompt = getRandomPropmt();
+                setPrompt(randomPrompt);
+              }}
+            >
+              Random prompt
+            </button>
 
-          <button
-            className="btn"
-            id="imagine-btn"
-            onClick={(e) => hangleGenerateClick(e)}
-          >
-            Generate
-          </button>
+            <button
+              className="btn"
+              id="imagine-btn"
+              onClick={(e) => hangleGenerateClick(e)}
+            >
+              Generate
+            </button>
+          </div>
+
           {generatedImage && (
             <>
               <CustomizationSliders
@@ -83,11 +99,25 @@ function Imagine() {
                 setOption={setCustomOptions}
               />
               <div className="artwork-detail-btn" id="imagine-custome-btns">
-                <button className="btn">Post</button>
                 <button
                   className="btn"
                   onClick={() =>
-                    saveGeneratedImage(currentUser, generatedImage, prompt)
+                    postArtwork(currentUser, generatedImage, prompt)
+                  }
+                >
+                  Post
+                </button>
+
+                <button
+                  className="btn"
+                  onClick={() =>
+                    saveGeneratedImage(
+                      currentUser,
+                      generatedImage,
+                      prompt,
+                      customOptions.brightness,
+                      customOptions.contrast
+                    )
                   }
                 >
                   Save
@@ -97,9 +127,12 @@ function Imagine() {
           )}
         </div>
 
+        {/* !isClicked  && !generatedImage */}
         <div className="image-section">
-          {!isClicked ? (
-            <ImagineGrid />
+          {!isClicked && !generatedImage ? (
+            <>
+              <ImagineGrid />
+            </>
           ) : (
             <>
               {generatedImage ? (
@@ -108,16 +141,28 @@ function Imagine() {
                   customOptions={customOptions}
                 />
               ) : (
-                <Skeleton
-                  sx={{ bgcolor: "grey.700" }}
-                  variant="rectangular"
-                  width={600}
-                  height={600}
-                />
+                <div className="progress-bg">
+                  <div className="grid-container">
+                    <ImagineGrid />
+                  </div>
+
+                  <CustomizedProgressBars />
+                </div>
+                // <>
+                //   <h1 class="title">This may take a while...</h1>
+                //   <div class="rainbow-marker-loader"></div>
+                // </>
               )}
             </>
           )}
         </div>
+
+        <footer>
+          <div class="song-copyright">
+            &copy; Imagine-John Lennon. All rights reserved.
+          </div>
+        </footer>
+
       </motion.div>
     </>
   );

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { getAllArtworks } from "../../../backend/data";
-import ArtGrid from "../grid-section/ArtGrid";
+import ArtGrid from "../ArtGrid";
 import moreIcon from "../../../images/maximize.png";
 import ButtonWithIcon from "../ButtonWithIcon";
 import generateIcon from "../../../images/noun-generate-6053204.png";
@@ -16,7 +16,7 @@ function MainArtGrid({ isHomePage }) {
   return (
     <>
       <div id="art-grid-section">
-        {artworks && <ArtGrid artworks={artworks} />}
+        {artworks && <ArtGrid artworks={artworks} label="home" />}
       </div>
       {isHomePage && (
         <div className="art-grid-btns">

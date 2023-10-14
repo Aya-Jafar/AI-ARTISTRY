@@ -69,8 +69,6 @@ export const headContainerAnimation = {
   exit: { x: -100, opacity: 0, transition: { ...transition, delay: 0 } },
 };
 
-
-
 export const popupVariants = {
   hidden: {
     y: "100%", // Start the popup below the viewport
@@ -112,9 +110,24 @@ export const stagger = {
   visible: { transition: { staggerChildren: 0.4 } },
 };
 
-
-
 export const textVariants = {
   hidden: { opacity: 0, y: 10 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.2 } },
+};
+
+
+export const handleMouseMove = (e, id) => {
+  const { clientX, clientY } = e;
+  const card = document.getElementById(id);
+  const { left, top, width, height } = card.getBoundingClientRect();
+  const mouseX = clientX - left;
+  const mouseY = clientY - top;
+  const rotationX = 5 - (10 * mouseY) / height;
+  const rotationY = (10 * mouseX) / width - 5;
+  card.style.transform = `perspective(1000px) rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+};
+
+export const handleMouseLeave = (e, id) => {
+  const card = document.getElementById(id);
+  card.style.transform = "perspective(1000px) rotateX(0) rotateY(0)";
 };

@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { FaBars } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import NavButton from "./NavButton";
 import AuthContext from "../../../providers/Auth";
 import UserSection from "./UserSection";
 import logoutIcon from "../../../images/logout.png";
-import { linkStyles, navGapSetter } from "../../../utils/styleSetter";
+import { linkStyles, navGapSetter } from "../../../utils/formaters";
 import { motion } from "framer-motion";
 import { Link as ScrollLink } from "react-scroll";
 
@@ -22,8 +22,18 @@ function Nav() {
 
   const token = localStorage.getItem("token");
 
+  const currentLocation = useLocation();
+  const navigate = useNavigate();
+
+  const [isContactClicked, setIsContactClicked] = useState(false);
+
+  const contactNavigate = () => {
+    if (currentLocation.pathname !== "/") {
+      navigate("/");
+    }
+  };
+
   useEffect(() => {
-    // currentUser ? setShowUserSection(true) : setShowUserSection(false);
     token ? setShowUserSection(true) : setShowUserSection(false);
   }, [token]);
 
@@ -53,6 +63,8 @@ function Nav() {
               smooth={true}
               offset={-70}
               duration={1000}
+              onClick={contactNavigate}
+              onClickCapture={() => console.log("Contact")}
             >
               CONTACT US
             </ScrollLink>

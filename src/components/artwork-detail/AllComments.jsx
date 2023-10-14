@@ -1,64 +1,36 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import miniProfile from "../../images/profile-user.png";
 import { Link } from "react-router-dom";
-import { linkStyles } from "../../utils/styleSetter";
+import { linkStyles } from "../../utils/formaters";
 import { motion } from "framer-motion";
 import { slideAnimation } from "../../utils/motion";
 import moreIcon from "../../images/more.png";
 import AuthContext from "../../providers/Auth";
-import MenuItem from "@mui/material/MenuItem";
-import Grow from "@mui/material/Grow";
-import Paper from "@mui/material/Paper";
-import Popper from "@mui/material/Popper";
-import MenuList from "@mui/material/MenuList";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
+import { deleteComment, editComment } from "../../backend/data";
+import deleteIcon from "../../images/trash.png";
+import editIcon from "../../images/edit.png";
 
-
-
-
-
-function AllComments({ comments }) {
+function AllComments({ comments, artId }) {
+  // console.log(comments );
   const { currentUser } = useContext(AuthContext);
+
   const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef(null);
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
 
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-    setOpen(false);
-  };
+  const [editCommentId, setEditCommentId] = useState("");
 
-  const handleListKeyDown = (event) => {
-    if (event.key === "Tab") {
-      event.preventDefault();
-      setOpen(false);
-    } else if (event.key === "Escape") {
-      setOpen(false);
-    }
-  };
+  const [editedComment, setEditedComment] = useState("");
 
-  const prevOpen = React.useRef(open);
-  React.useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current.focus();
-    }
-
-    prevOpen.current = open;
-  }, [open]);
-
-  //   console.log(comments);
-  const options = ["Edit", "Delete"];
+  const [activeCommentId, setActiveCommentId] = useState(null);
 
   return (
     <>
-      {comments && (
+      {comments.length > 0 && (
         <div className="comments">
-          {comments.reverse().map((comment, index) => {
+          {comments.map((comment, index) => {
             return (
               <motion.div
                 key={index}
@@ -76,82 +48,67 @@ function AllComments({ comments }) {
                     >
                       <h4>{comment.userName}</h4>
                     </Link>
+
                     {currentUser.uid === comment.userId ? (
-                      <>
+                      <div className="edit-comment-icon">
                         <img
                           src={moreIcon}
                           alt=""
                           id="comment-setting"
-                          ref={anchorRef}
+                          // ref={anchorRef}
                           aria-controls={open ? "composition-menu" : undefined}
                           aria-expanded={open ? "true" : undefined}
                           aria-haspopup="true"
-                          onClick={handleToggle}
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            handleToggle();
+                            activeCommentId === comment.id
+                              ? setActiveCommentId(null) // Clear active comment ID if already set
+                              : setActiveCommentId(comment.id); // Set active comment ID
+                          }}
                         />
 
-                        <Popper
-                          open={open}
-                          anchorEl={anchorRef.current}
-                          role={undefined}
-                          placement="bottom-start"
-                          anchorOrigin={{
-                            vertical: "bottom", // Adjust these values based on your use case
-                            horizontal: "left", // Adjust these values based on your use case
-                          }}
-                          transformOrigin={{
-                            vertical: "bottom", // Adjust these values based on your use case
-                            horizontal: "left", // Adjust these values based on your use case
-                          }}
-                          transition
-                          disablePortal
-                        >
-                          {({ TransitionProps, placement }) => (
-                            <Grow
-                              {...TransitionProps}
-                              style={{
-                                transformOrigin:
-                                  //   placement === "bottom-start"
-                                  //     ? "left top"
-                                  // :
-
-                                  placement === "bottom-start"
-                                    ? "left top"
-                                    : placement === "bottom"
-                                    ? "left bottom"
-                                    : placement === "top-start"
-                                    ? "left top"
-                                    : "left bottom", // Add any other placements you might use
-
-                                // "left bottom",
+                        {activeCommentId === comment.id && ( // Display buttons for the active comment
+                          <div className="comment-edit-menu">
+                            <div
+                              className="edit-option"
+                              onClick={() => {
+                                setEditCommentId(comment.id);
+                                setEditedComment(comment.text);
                               }}
                             >
-                              <Paper>
-                                <ClickAwayListener onClickAway={handleClose}>
-                                  <MenuList
-                                    autoFocusItem={open}
-                                    id="composition-menu"
-                                    aria-labelledby="composition-button"
-                                    onKeyDown={handleListKeyDown}
-                                  >
-                                    <MenuItem onClick={handleClose}>
-                                      Edit
-                                    </MenuItem>
-
-                                    <MenuItem onClick={handleClose}>
-                                      Delete
-                                    </MenuItem>
-                                  </MenuList>
-                                </ClickAwayListener>
-                              </Paper>
-                            </Grow>
-                          )}
-                        </Popper>
-                      </>
+                              <img src={editIcon} alt="" />
+                              Edit
+                            </div>
+                            <div className="edit-option">
+                              <img src={deleteIcon} alt="" />
+                              Delete
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     ) : (
                       <></>
                     )}
                   </div>
-                  <h5>{comment.text}</h5>
+                  {editCommentId === comment.id  ? (
+                    <input
+                      type="text"
+                      className="comment-editor"
+                      id="comment-editor"
+                      value={editedComment}
+                      onChange={(e) => setEditedComment(e.target.value)}
+                      onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                          editComment(artId, comment.id, editedComment);
+                          setEditCommentId("");
+                          setEditedComment("");
+                        }
+                      }}
+                    />
+                  ) : (
+                    <h5>{comment.text}</h5>
+                  )}
                 </div>
               </motion.div>
             );

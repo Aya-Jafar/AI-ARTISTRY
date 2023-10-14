@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { getSciFiArtworks, saveArtwork } from "../../../backend/data";
-import ArtGrid from "../grid-section/ArtGrid";
+import ArtGrid from "../ArtGrid";
 
 function MainArtGrid() {
   const [scifiArtworks, setSciFiArtworks] = useState([]);

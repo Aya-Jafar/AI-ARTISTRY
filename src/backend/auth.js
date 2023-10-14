@@ -1,7 +1,4 @@
 
-
-
-
 export const isAuthenticated = (currentUser) => {
   return currentUser ? true : false;
 };

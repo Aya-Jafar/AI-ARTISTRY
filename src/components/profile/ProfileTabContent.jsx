@@ -2,11 +2,15 @@ import React, { useContext, useState, useEffect } from "react";
 import profileImg from "../../images/profile-user.png";
 import AuthContext from "../../providers/Auth";
 import { motion } from "framer-motion";
-import ArtGrid from "../home/grid-section/ArtGrid";
+import ArtGrid from "../common/ArtGrid";
 import ProfileTabContext from "../../providers/ProfileTabContent";
-import { saveArtwork } from "../../backend/data";
-import { slideAnimation } from "../../utils/motion";
-import { getSavedArtworks, getLikedArtworks } from "../../backend/data";
+import { getPosts } from "../../backend/data";
+import {
+  getSavedArtworks,
+  addToLikedActivity,
+  getUserActivity,
+} from "../../backend/data";
+import UserActivity from "./ActivityTab";
 
 function ProfileTabContent() {
   const { currentUser } = useContext(AuthContext);
@@ -14,27 +18,21 @@ function ProfileTabContent() {
 
   const [currentContent, setCurrentContent] = useState([]);
 
-  //   useEffect(() => {
-  //     generateProfileContent();
-  //   }, [currentUser]);
-
   const generateProfileContent = () => {
     switch (currentProfileTab) {
+      case "Posts":
+        getPosts(currentUser, setCurrentContent);
+        return <ArtGrid artworks={currentContent} label="posts" />;
+
       case "Saved":
         getSavedArtworks(currentUser, setCurrentContent);
-        return <>{saveArtwork && <ArtGrid artworks={currentContent} />}</>;
-      case "Liked":
-        getLikedArtworks(currentUser, setCurrentContent);
-        return (
-          <>
-            {saveArtwork && (
-              <ArtGrid artworks={currentContent} {...slideAnimation("left")} />
-            )}
-          </>
-        );
+        return <ArtGrid artworks={currentContent} label="saved" />;
+
+      case "Activity":
+        getUserActivity(currentUser, setCurrentContent);
+        return <UserActivity activities={currentContent} />;
     }
   };
-  //   console.log(currentContent);
 
   return <>{generateProfileContent()}</>;
 }

@@ -3,11 +3,10 @@ import { motion } from "framer-motion";
 import ProfileTabContext from "../../providers/ProfileTabContent";
 import { ProfileTabProvider } from "../../providers/ProfileTabContent";
 import AuthContext from "../../providers/Auth";
-import { getSavedArtworks } from "../../backend/data";
+import { getSavedArtworks as setPosts } from "../../backend/data";
 import saveIcon from "../../images/save-instagram.png";
 import likeIcon from "../../images/heart (2).png";
-import cart from "../../images/shopping-cart.png";
-
+import posts from "../../images/ai (2).png";
 
 function Tab({ text, icon, isActive, onClick }) {
   return (
@@ -23,7 +22,7 @@ function Tab({ text, icon, isActive, onClick }) {
 function ProfileTabs() {
   const { currentProfileTab, setProfileTab } = useContext(ProfileTabContext);
   const { currentUser } = useContext(AuthContext);
-  const [activeTab, setActiveTab] = useState("Saved");
+  const [activeTab, setActiveTab] = useState("Posts");
 
   const [defaultImage, setActiveImage] = useState("");
 
@@ -32,7 +31,7 @@ function ProfileTabs() {
     setActiveTab(text);
   };
   useEffect(() => {
-    getSavedArtworks(currentUser, setActiveImage);
+    setPosts(currentUser, setActiveImage);
   }, [currentUser]);
 
   // console.log(currentProfileTab);
@@ -42,22 +41,26 @@ function ProfileTabs() {
     <>
       <div className="profile-tabs" style={{ marginTop: "3%" }}>
         <Tab
-          text="Saved"
-          icon={saveIcon}
-          isActive={activeTab === "Saved"}
-          onClick={() => handleTabClick("Saved")}
+          text="Posts"
+          icon={posts}
+          isActive={activeTab === "Posts"}
+          onClick={() => handleTabClick("Posts")}
         />
+        {currentUser &&
+          currentUser.accessToken === localStorage.getItem("token") && (
+            <Tab
+              text="Saved"
+              icon={saveIcon}
+              isActive={activeTab === "Saved"}
+              onClick={() => handleTabClick("Saved")}
+            />
+          )}
+
         <Tab
-          text="Liked"
+          text="Activity"
           icon={likeIcon}
-          isActive={activeTab === "Liked"}
-          onClick={() => handleTabClick("Liked")}
-        />
-        <Tab
-          text="Cart"
-          icon={cart}
-          isActive={activeTab === "Cart"}
-          onClick={() => handleTabClick("Cart")}
+          isActive={activeTab === "Activity"}
+          onClick={() => handleTabClick("Activity")}
         />
       </div>
     </>

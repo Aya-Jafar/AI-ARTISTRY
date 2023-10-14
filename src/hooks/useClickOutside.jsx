@@ -1,7 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import AuthContext from "../providers/Auth";
 
 function useClickOutside(ref, showPopup, onClickOutside) {
+  const { currentUser } = useContext(AuthContext);
   //   console.log(showPopup);
   const navigate = useNavigate();
 
@@ -11,11 +13,15 @@ function useClickOutside(ref, showPopup, onClickOutside) {
         ref.current &&
         !ref.current.contains(event.target) &&
         showPopup &&
-        event.target.id !== "gmail-btn"
+        event.target.id !== "gmail-btn" &&
+        event.target.id !== "email" &&
+        event.target.id !== "password" &&
+        event.target.id !== "login-btn" &&
+        event.target.id !== "username" &&
+        event.target.id !== "signup-btn" &&
+        event.target.id !== "signup-from-login"
       ) {
         onClickOutside();
-        console.log(ref, event.target);
-
         navigate("/");
       }
     };

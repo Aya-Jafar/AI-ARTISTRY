@@ -1,9 +1,10 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../providers/Auth";
-import { saveToProfile, addToProfileLiked } from "../../backend/services";
+import { saveToProfile, handleLikeClick } from "../../backend/services";
 import useArtworkIcons from "../../hooks/useArtworkIcons";
 import { motion } from "framer-motion";
+import { addToLikedActivity } from "../../backend/data";
 
 function ArtworkDetailBtn({ text, artId, id, setLikesCount }) {
   const { currentUser } = useContext(AuthContext);
@@ -14,19 +15,19 @@ function ArtworkDetailBtn({ text, artId, id, setLikesCount }) {
     currentUser,
     artId
   );
-
   const [isShaking, setIsShaking] = useState(false);
 
   const handleButtonClick = async () => {
     if (text === "Save") {
       await saveToProfile(currentUser, artId, setSaveIcon, navigate);
     } else {
-      await addToProfileLiked(
+      await handleLikeClick(
         currentUser,
         artId,
         setLikeIcon,
         setLikesCount,
-        navigate
+        navigate,
+        "Like"
       );
     }
     // Trigger the shaking animation

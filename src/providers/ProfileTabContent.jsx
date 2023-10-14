@@ -3,7 +3,7 @@ import React, { createContext, useState } from "react";
 const ProfileTabContext = createContext();
 
 export function ProfileTabProvider({ children }) {
-  const [currentProfileTab, setProfileTab] = useState("saved");
+  const [currentProfileTab, setProfileTab] = useState("Posts");
   return (
     <ProfileTabContext.Provider value={{ currentProfileTab, setProfileTab }}>
       {children}
