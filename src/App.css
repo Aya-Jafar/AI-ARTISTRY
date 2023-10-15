@@ -360,7 +360,7 @@ body {
   max-height: 80vh;
   margin: 0 5%;
   margin-top: 3%;
-  flex:1
+  flex: 1;
 }
 
 .prompt-section {
@@ -393,7 +393,6 @@ body {
   display: flex;
   flex-wrap: wrap;
   width: auto;
-
 }
 
 .imagine-image-container {
@@ -476,6 +475,9 @@ body {
   /* -webkit-transform: scale(1.106);
   -moz-transform: scale(1.106); */
   transform: scale(1.106);
+}
+#logo{
+  
 }
 
 .logout-section p {
@@ -950,7 +952,7 @@ button[type="submit"] {
 .artwork-detail-img {
   object-fit: contain;
   margin-left: 90px;
-  width: 60%
+  width: 60%;
 }
 
 .artwork-info {
@@ -1198,9 +1200,6 @@ blockquote:before {
   /* font-weight: 100; */
 }
 
-
-
-
 .comment-icon {
   position: absolute;
   top: 50%;
@@ -1296,8 +1295,6 @@ blockquote:before {
   /* background-color: rgb(103, 103, 103); */
 }
 
-
-
 .activty-item {
   /* background-color: #202024; */
   border-radius: 14px;
@@ -1309,7 +1306,6 @@ blockquote:before {
   gap: 5%;
 }
 
-
 .activty-item:hover {
   border: 0.5px solid rgba(239, 239, 239, 0.675);
 }
@@ -1320,10 +1316,9 @@ blockquote:before {
   /* color: rgba(140, 138, 138, 0.675); */
 }
 
-#comment-text{
+#comment-text {
   font-weight: 800;
-  color:white
-
+  color: white;
 }
 
 .activty-item img {
@@ -1345,9 +1340,9 @@ blockquote:before {
 .icon-title {
   display: flex;
   align-items: center;
-  color:white
+  color: white;
 }
-.icon-title img{
+.icon-title img {
   width: 10px;
   height: 25px;
 }
@@ -1356,23 +1351,20 @@ blockquote:before {
   font-size: 13px;
 }
 
-
 .comment-detail img {
   width: 30px;
   padding: 0 3%;
 }
 
-
-
-.edit-comment-icon{
+.edit-comment-icon {
   position: relative;
   margin-top: 6%;
   /* padding-right: 5%; */
 }
-.comment-edit-menu{
+.comment-edit-menu {
   position: absolute;
   background-color: white;
-  color:#000000;
+  color: #000000;
   padding: 15% 20%;
   /* padding-left: 20%; */
 
@@ -1381,33 +1373,26 @@ blockquote:before {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  gap:4%;
+  gap: 4%;
   z-index: 1;
-  right:1px;
+  right: 1px;
   border-radius: 5px;
-  
 }
 
-.edit-option{
+.edit-option {
   margin-top: 11%;
   display: flex;
   align-items: center;
   justify-content: start;
-  gap:10%;
+  gap: 10%;
   cursor: pointer;
 }
-.edit-option:hover{
+.edit-option:hover {
   background-color: #e9e9e9;
 }
-.edit-option img{
+.edit-option img {
   width: 20px;
 }
-
-
-
-
-
-
 
 @media (min-width: 0px) and (max-width: 780px) {
   /* Styles for mobile screens */
@@ -1420,14 +1405,12 @@ blockquote:before {
   .cover {
     /* margin-bottom: 0; */
     margin-bottom: 30vh;
-    
   }
 
   .cover-text {
     /* background-color: red; */
     left: 0;
     margin-top: 0;
-  
 
     width: 100%;
     height: 300px;
@@ -1473,7 +1456,7 @@ blockquote:before {
     width: 100px;
     height: 150px;
   }
-  .about-us-container h1{
+  .about-us-container h1 {
     font-size: 30px;
   }
   .about-us-container p {
@@ -1498,34 +1481,59 @@ blockquote:before {
     position: absolute;
     align-items: start;
     right: 2rem;
-    top: 60px;
-    background-color: rgba(255, 255, 255, 0.619);
-    height: 240px;
+    top: 40px;
+    background-color: #0a0a0acd;
+    height: 200px;
     padding: 2% 5%;
     margin-top: 3%;
+    z-index: 1;
   }
+
   .drop-down-menu.open li {
     padding: 0.7rem;
     display: flex;
     align-items: center;
-    font-size: 25px;
+
     justify-content: center;
+    color: white;
   }
+  .logout-section.mobile img{
+    /* color:red */
+    width: 17px;
+    height: 20px;
+  }
+
   .nav-link {
-    color: black;
-    font-size: 27px;
+    color: white;
+    font-size: 16px;
   }
+
+
   .popup {
-    height: 40vh;
+    height: 70vh;
     width: 60vw;
     left: 20%;
   }
+  .signup-btns{
+    width: 100%;
+    font-size: 17px;
+  }
+
+  #login , #sign-up{
+    height: 30px;
+    font-size: 14px;
+    
+  }
+
+
+
   .filter-tabs {
     width: 90%;
     height: 4vh;
     margin-top: 0;
     margin-bottom: 15%;
   }
+  
   .filter-text {
     font-size: 12px;
   }
@@ -1611,21 +1619,29 @@ blockquote:before {
     width: 100%;
   }
   #logo {
-    padding-left: 3%;
+    padding-left: 1%;
+    padding-right: 0;
+    margin-right: 0;
+
   }
+  #logo{
+    width: 95%;
+  }
+
+  
   .profile-tabs {
     width: 80%;
+    font-size: 10px;
   }
   .profile-tab img {
     width: 27px;
     height: 27px;
   }
+
   .active-tab {
     border-bottom: 7px solid #50d5ff;
     padding: 0 5%;
   }
-
-
 
   .activity {
     width: 80%;
@@ -1644,12 +1660,10 @@ blockquote:before {
 
     border: 1px solid rgb(99, 99, 99);
 
-    background-color: red;
+    /* background-color: red; */
 
     /* background-color: red; */
   }
-
-
 
   #activity-image {
     width: 100%;

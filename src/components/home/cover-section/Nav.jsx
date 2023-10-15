@@ -8,6 +8,7 @@ import logoutIcon from "../../../images/logout.png";
 import { linkStyles, navGapSetter } from "../../../utils/formaters";
 import { motion } from "framer-motion";
 import { Link as ScrollLink } from "react-scroll";
+import MobileNav from "./MobileNav";
 
 function Nav() {
   const { currentUser, signOutUser } = useContext(AuthContext);
@@ -24,8 +25,6 @@ function Nav() {
 
   const currentLocation = useLocation();
   const navigate = useNavigate();
-
-  const [isContactClicked, setIsContactClicked] = useState(false);
 
   const contactNavigate = () => {
     if (currentLocation.pathname !== "/") {
@@ -64,7 +63,6 @@ function Nav() {
               offset={-70}
               duration={1000}
               onClick={contactNavigate}
-              // onClickCapture={() => console.log("Contact")}
             >
               CONTACT US
             </ScrollLink>
@@ -95,34 +93,12 @@ function Nav() {
           )}
         </div>
       </div>
-
-      <div class={menuActive ? "drop-down-menu open" : "drop-down-menu"}>
-        <li>
-          <Link
-            to="/imagine"
-            style={{ textDecoration: "none", color: "white" }}
-          >
-            <div className="nav-link">IMAGINE</div>
-          </Link>
-        </li>
-        <li>
-          <div href="#">CONTACT US</div>
-        </li>
-        {/* TODO: Fix mobile size auth buttons issue */}
-
-        {/* <NavBtn path="/signup" text="SIGN UP" id="sign-up" /> */}
-
-        {/* <li>
-          <UserSection
-            toggleSignupPopup
-            setSignupPopup
-            signupPopup
-            toggleLoginPopup
-            setLoginPopup
-            loginPopup
-          />
-        </li> */}
-      </div>
+      <MobileNav
+        showUserSection={showUserSection}
+        signOutUser={signOutUser}
+        contactNavigate={contactNavigate}
+        menuActive={menuActive}
+      />
     </>
   );
 }
