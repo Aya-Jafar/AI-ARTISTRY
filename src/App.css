@@ -133,24 +133,27 @@ body {
   background-image: url("./images/ai-generated-7881509_1280.jpg");
   background-repeat: no-repeat;
   background-position: center top;
-  background-size: 100% 75%;
+  background-size: 100% 76%;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 40vh;
 }
 
+
 .about-us-container {
-  margin-top: 10vh;
-  height: 70vh;
-  width: 70vw;
+  margin-top: 40vh;
+  height: 90vh;
+  width: 64vw;
   background-color: rgba(0, 0, 0, 0.834);
+  /* background-color: red; */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   color: white;
-  padding: 1% 3%;
-  margin-bottom: 10%;
+  padding: 2% 4%;
+  /* margin-bottom: 50px; */
   /* border: 0.2px solid rgba(255, 255, 255, 0.205); */
 }
 
@@ -1065,7 +1068,7 @@ button[type="submit"]:hover {
   display: flex;
   align-items: center;
   /* justify-content: space-between; */
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   gap: 8%;
   /* background-color:#535358; */
   height: 70vh;
@@ -1152,6 +1155,7 @@ blockquote:before {
 
 .footer {
   height: 20vh;
+  margin-top: 20vh;
   background-color: #202024;
   display: flex;
   align-items: center;
@@ -1410,11 +1414,16 @@ blockquote:before {
   .cover-text {
     /* background-color: red; */
     left: 0;
-    margin-top: 0;
+    top: 10;
+
+    /* margin-top: 0; */
 
     width: 100%;
     height: 300px;
     /* background-color: rgb(29, 29, 29); */
+  }
+  .cover-text h2{
+    font-size: 25px;
   }
 
   .header {
@@ -1454,7 +1463,7 @@ blockquote:before {
   }
   .about-us-pic img {
     width: 100px;
-    height: 150px;
+    height: 100px;
   }
   .about-us-container h1 {
     font-size: 30px;
@@ -1558,6 +1567,7 @@ blockquote:before {
     width: 100%;
     margin: 0;
     padding: 0;
+    margin-top: 30px;
     /* padding-left: 5%; */
   }
   .prompt-section h1 {
@@ -1565,20 +1575,39 @@ blockquote:before {
   }
   .contact {
     /* height: 100vh; */
-    width: 85%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     margin-bottom: 100vh;
     border: none;
-    margin-right: 0;
+    margin: 50% 0 ;
+    gap:10%;
+    
+
+    /* background-color: red; */
   }
   .form {
-    width: 90%;
-  }
-  .left-form-image {
     width: 80%;
-    display: flex;
+    padding-bottom: 10%;
+    /* background-color: red; */
+
+  }
+  .left-form-image{
+    display: none;
+  }
+
+  .left-form-image img{
+
+    width: 100%;
+    display: none;
     align-items: center;
     justify-content: center;
     /* padding: 0 32%; */
+  }
+  #send-btn{
+    /* height: 100vh; */
+    /* margin-top: 30%;  */
+  
   }
 
   blockquote {
@@ -1620,15 +1649,16 @@ blockquote:before {
   }
   #logo {
     padding-left: 1%;
-    padding-right: 0;
-    margin-right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* padding-right: 0; */
+    /* margin-right: 0; */
+    width: 90%;
 
   }
-  #logo{
-    width: 95%;
-  }
 
-  
+
   .profile-tabs {
     width: 80%;
     font-size: 10px;
