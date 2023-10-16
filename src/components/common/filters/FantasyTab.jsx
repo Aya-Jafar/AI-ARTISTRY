@@ -8,7 +8,7 @@ function FantasyTab() {
   const [fantasyArtworks, setFantasyArtworks] = useState([]);
 
   useEffect(() => {
-    getFantasyArtworks(setFantasyArtworks);
+    getFantasyArtworks(setFantasyArtworks,10);
   }, []);
 
   return (

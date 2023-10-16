@@ -6,7 +6,7 @@ function MainArtGrid() {
   const [scifiArtworks, setSciFiArtworks] = useState([]);
 
   useEffect(() => {
-    getSciFiArtworks(setSciFiArtworks);
+    getSciFiArtworks(setSciFiArtworks,10);
   }, []);
 
   return (

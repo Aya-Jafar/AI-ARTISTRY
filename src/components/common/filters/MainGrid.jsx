@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { getAllArtworks } from "../../../backend/data";
 import ArtGrid from "../ArtGrid";
 import moreIcon from "../../../images/maximize.png";
@@ -8,9 +8,10 @@ import { Link } from "react-router-dom";
 
 function MainArtGrid({ isHomePage }) {
   const [artworks, setArtworks] = useState([]);
+  const ref = useRef();
 
   useEffect(() => {
-    getAllArtworks(setArtworks);
+    getAllArtworks(setArtworks, 10);
   }, []);
 
   return (
@@ -18,6 +19,7 @@ function MainArtGrid({ isHomePage }) {
       <div id="art-grid-section">
         {artworks && <ArtGrid artworks={artworks} label="home" />}
       </div>
+
       {isHomePage && (
         <div className="art-grid-btns">
           <Link to="/imagine">

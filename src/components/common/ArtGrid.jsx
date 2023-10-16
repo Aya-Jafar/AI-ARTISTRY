@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import { motion } from "framer-motion";
 import { fadeIn, scaleOnHover } from "../../utils/motion";
 import { textVariants } from "../../utils/motion";
@@ -13,6 +13,8 @@ function ArtGrid({ artworks, label }) {
     triggerOnce: true,
     threshold: 0.2,
   });
+  const wrapperRef = useRef()
+
   // console.log(artworks);
 
   return (
@@ -21,6 +23,7 @@ function ArtGrid({ artworks, label }) {
         <ResponsiveMasonry
           style={{ width: "100%" }}
           columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
+          ref={wrapperRef}
         >
           <Masonry
             className="my-masonry-grid"
