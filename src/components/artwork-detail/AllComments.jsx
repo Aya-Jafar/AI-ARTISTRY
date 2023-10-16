@@ -84,7 +84,16 @@ function AllComments({ comments, artId }) {
                               <img src={editIcon} alt="" />
                               Edit
                             </div>
-                            <div className="edit-option">
+                            <div
+                              className="edit-option"
+                              onClick={() =>
+                                deleteComment(
+                                  artId,
+                                  comment.id,
+                                  currentUser && currentUser.uid
+                                )
+                              }
+                            >
                               <img src={deleteIcon} alt="" />
                               Delete
                             </div>
@@ -104,7 +113,12 @@ function AllComments({ comments, artId }) {
                       onChange={(e) => setEditedComment(e.target.value)}
                       onKeyPress={(e) => {
                         if (e.key === "Enter") {
-                          editComment(artId, comment.id, editedComment);
+                          editComment(
+                            artId,
+                            comment.id,
+                            currentUser.uid,
+                            editedComment
+                          );
                           setEditCommentId("");
                           setEditedComment("");
                         }

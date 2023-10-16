@@ -1,5 +1,4 @@
 import {
-  getFirestore,
   collection,
   getDocs,
   updateDoc,
@@ -13,71 +12,72 @@ import {
   addDoc,
   deleteDoc,
   onSnapshot,
-  arrayUnion,
+  limit,
 } from "firebase/firestore";
 
 import db from "./firebaseConfig";
 
 const allArtworksCollection = collection(db, "ai-art");
 
-export const getAllArtworks = (setArtworks) => {
+export const getAllArtworks = (setArtworks, limitCount) => {
   let allDocuments = [];
-  getDocs(allArtworksCollection)
+  const limitedQuery = query(allArtworksCollection, limit(limitCount)); // Add the limit here
+
+  getDocs(limitedQuery)
     .then((querySnapshot) => {
-      // console.log(querySnapshot);
       querySnapshot.forEach((doc) => {
-        // doc.data() is the data of each document
         allDocuments.push({ id: doc.id, ...doc.data() });
       });
       setArtworks(allDocuments);
-      // console.log("All documents:", allDocuments);
     })
     .catch((error) => {
       console.error("Error getting documents:", error);
     });
 };
 
-export const getFantasyArtworks = (setArtworks) => {
-  // Create a query against the collection.
-  // const fantasyArtwork = query(
-  //   allArtworksCollection,
-  //   where("type", "==", "fantasy")
-  // );
+export const getFantasyArtworks = (setArtworks, limitCount) => {
+  const queryOptions = [
+    query(
+      allArtworksCollection,
+      where("type", "==", "fantasy"),
+      limit(limitCount)
+    ),
+  ];
 
-  getDocs(allArtworksCollection)
+  getDocs(...queryOptions)
     .then((querySnapshot) => {
-      // console.log(querySnapshot);
       const fantasyDocs = [];
       querySnapshot.forEach((doc) => {
-        // doc.data() is the data of each document
-        if (doc.data().type === "fantasy") {
-          fantasyDocs.push({ id: doc.id, ...doc.data() });
-        }
+        fantasyDocs.push({ id: doc.id, ...doc.data() });
       });
       setArtworks(fantasyDocs);
-      console.log("All documents:", fantasyDocs);
+      // console.log("Fantasy documents:", fantasyDocs);
     })
     .catch((error) => {
-      console.error("Error getting documents:", error);
+      // console.error("Error getting documents:", error);
     });
 };
 
-export const getSciFiArtworks = (setArtworks) => {
-  getDocs(allArtworksCollection)
+export const getSciFiArtworks = (setArtworks, limitCount) => {
+  const queryOptions = [
+    query(
+      allArtworksCollection,
+      where("type", "==", "SCI-FI"),
+      limit(limitCount)
+    ),
+  ];
+
+  getDocs(...queryOptions)
     .then((querySnapshot) => {
-      // console.log(querySnapshot);
-      const sciFiDocs = [];
+      const fantasyDocs = [];
       querySnapshot.forEach((doc) => {
-        // doc.data() is the data of each document
-        if (doc.data().type === "SCI-FI") {
-          sciFiDocs.push({ id: doc.id, ...doc.data() });
-        }
+        fantasyDocs.push({ id: doc.id, ...doc.data() });
       });
-      setArtworks(sciFiDocs);
-      console.log("All documents:", sciFiDocs);
+      setArtworks(fantasyDocs);
+      // console.log("Fantasy documents:", fantasyDocs);
     })
     .catch((error) => {
-      console.error("Error getting documents:", error);
+      // console.error("Error getting documents:", error);
     });
 };
 
@@ -236,10 +236,10 @@ export const isArtworkLiked = async (currentUser, artId) => {
   // const activityRef = collection(db, "activity",userId);
 
   try {
-    const userSavedLikedRef = doc(db, "activity", userId);
+    const userLikedActivity = doc(db, "activity", userId);
 
     // Fetch the user's document to get the current savedPosts array
-    const userSavedPostsSnapshot = await getDoc(userSavedLikedRef);
+    const userSavedPostsSnapshot = await getDoc(userLikedActivity);
 
     const userData = userSavedPostsSnapshot.data();
 
@@ -248,8 +248,13 @@ export const isArtworkLiked = async (currentUser, artId) => {
         (e) => e.artData.id === artId && e.activityType === "Like"
       );
 
+      console.log(userData.activities);
+      console.log(liked);
+
       if (liked) {
         return true;
+      } else {
+        return false;
       }
     }
   } catch (error) {
@@ -323,32 +328,36 @@ export const addToLikedActivity = async (currentUser, artId, activityType) => {
   try {
     const activitySnapshot = await getDoc(activityRef);
 
-    if (
-      !activitySnapshot.data() ||
-      !activitySnapshot.data().activities ||
-      activitySnapshot.data().activities.length === 0
-    ) {
-      // If the activities array is empty, add the new activity
+    if (!activitySnapshot.exists()) {
+      // If the activity document doesn't exist, create it with the new activity
       await setDoc(activityRef, {
         activities: [newActivityObject],
       });
       console.log("Document added successfully");
     } else {
-      const foundAndLiked = activitySnapshot
-        .data()
-        .activities.some((e) => e.artId === artId && e.activityType === "Like");
+      const existingActivities = activitySnapshot.data().activities;
 
-      if (foundAndLiked) {
-        // If the user has liked the artwork, delete the entire document
-        await deleteDoc(activityRef);
-        console.log("Document deleted");
-      } else {
-        // If the user hasn't liked the artwork, add the new activity
+      // Check if the same activity (same artId and activityType) exists
+      const existingIndex = existingActivities.findIndex(
+        (activity) =>
+          activity.artData.id === artId &&
+          activity.activityType === activityType
+      );
+
+      if (existingIndex !== -1) {
+        // If the activity already exists, remove it from the array
+        existingActivities.splice(existingIndex, 1);
+
+        // Update the activities array without the removed activity
         await updateDoc(activityRef, {
-          activities: [
-            ...activitySnapshot.data().activities,
-            newActivityObject,
-          ],
+          activities: existingActivities,
+        });
+
+        console.log("Activity deleted successfully");
+      } else {
+        // If the activity doesn't exist, add the new activity
+        await updateDoc(activityRef, {
+          activities: [...existingActivities, newActivityObject],
         });
 
         console.log("Activity added successfully");
@@ -444,24 +453,26 @@ export const addCommentToActivity = async (currentUser, artId, newComment) => {
 
       const commentsCollectionRef = collection(docRef, "comments");
 
-      const commentCollectionRefInActivity = collection(
-        userRefInActivity,
-        "comments"
-      );
+      // Add the comment to the comments collection
+      const commentDocRef = await addDoc(commentsCollectionRef, commentObject);
 
-      await addDoc(commentCollectionRefInActivity, commentObject);
+      // Get the ID of the newly added comment
+      const commentId = commentDocRef.id;
 
-      await addDoc(commentsCollectionRef, commentObject);
+      // Add the comment ID to the comment object
+      commentObject.commentId = commentId;
 
       const artData = await fetchPhotoData(artId);
 
       const newActivityObject = {
         artData: artData,
         activityType: "comment",
+        commentId: commentId, // Add the comment ID to the activity
         commentText: newComment,
         userName: currentUser.displayName,
-        timestamp: new Date().toISOString(), // You can add a timestamp for the activity
+        timestamp: new Date().toISOString(),
       };
+
       if (
         !activitySnapshot.data() ||
         !activitySnapshot.data().activities ||
@@ -480,7 +491,6 @@ export const addCommentToActivity = async (currentUser, artId, newComment) => {
             newActivityObject,
           ],
         });
-
         console.log("Activity added successfully");
       }
     } catch (error) {
@@ -515,39 +525,85 @@ export const getUserActivity = async (currentUser, setActivity) => {
   }
 };
 
-export const deleteComment = async (artId, commentId) => {
+export const deleteComment = async (artId, commentId, userId) => {
   const commentDocRef = doc(db, "ai-art", artId, "comments", commentId);
+  const activityRef = doc(db, "activity", userId);
 
   try {
     await deleteDoc(commentDocRef);
-    console.log("Comment deleted successfully");
+    // console.log("Comment deleted successfully");
+
+    // Retrieve the user's activity data
+    const activitySnapshot = await getDoc(activityRef);
+
+    if (activitySnapshot.exists()) {
+      const activityData = activitySnapshot.data();
+
+      // Check if the user has an 'activities' array
+      if (activityData.activities) {
+        const activities = activityData.activities;
+
+        // Find the index of the activity associated with the deleted comment
+        const index = activities.findIndex(
+          (activity) => activity.commentId === commentId
+        );
+
+        if (index !== -1) {
+          // Remove the activity at the found index
+          activities.splice(index, 1);
+
+          // Update the user's activity with the modified 'activities' array
+          await updateDoc(activityRef, { activities: activities });
+          console.log("Activity updated after comment deletion");
+        }
+      }
+    }
   } catch (error) {
     console.error("Error deleting comment: ", error);
   }
 };
 
-export const editComment = async (artId, commentId, newComment) => {
+export const editComment = async (artId, commentId, userId, newText) => {
+  const commentDocRef = doc(db, "ai-art", artId, "comments", commentId);
+  const activityRef = doc(db, "activity", userId);
+
   try {
-    const artDocRef = doc(db, "ai-art", artId);
+    // Update the comment text
+    await updateDoc(commentDocRef, { text: newText });
+    console.log("Comment edited successfully");
 
-    // Update the specific comment within the "comments" subcollection
-    const commentRef = doc(artDocRef, "comments", commentId);
+    // Retrieve the user's activity data
+    const activitySnapshot = await getDoc(activityRef);
 
-    // if (commentRef.data().text === newComment) {
-    //   console.log("Updated comment is the same as the old one");
-    //   return;
-    // }
+    if (activitySnapshot.exists()) {
+      const activityData = activitySnapshot.data();
 
-    // Use updateDoc to modify the comment's "text" field with the new content
-    await updateDoc(commentRef, {
-      text: newComment,
-    });
+      // Check if the user has an 'activities' array
+      if (activityData.activities) {
+        const activities = activityData.activities;
 
-    console.log("Comment updated successfully");
+        // Find the index of the activity associated with the edited comment
+        const index = activities.findIndex(
+          (activity) => activity.commentId === commentId
+        );
+
+        if (index !== -1) {
+          // Update the comment text in the associated activity
+          activities[index].commentText = newText;
+
+          // Update the user's activity with the modified 'activities' array
+          await updateDoc(activityRef, { activities: activities });
+          console.log("Activity updated after comment edit");
+        }
+      }
+    }
   } catch (error) {
-    console.error("Error updating comment: ", error);
+    console.error("Error editing comment: ", error);
   }
 };
+
+
+
 
 export const postArtwork = async (currentUser, postUrl, prompt, navigate) => {
   // Get the current user's UID

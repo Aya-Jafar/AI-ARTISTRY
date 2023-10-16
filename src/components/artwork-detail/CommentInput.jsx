@@ -17,13 +17,20 @@ function CommentInput({ artId, currentComment, setCurrentComment }) {
     if (isAuthenticated(currentUser)) {
       if (currentComment.length > 0) {
         addCommentToActivity(currentUser, artId, currentComment);
-        setCurrentComment("");
       }
       setTimeout(() => {
         setIsClicked(false);
       }, 3000);
+
+      setCurrentComment("");
     } else {
       navigate("/login");
+    }
+  };
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent Enter from adding a newline
+      handleCommentIconClick();
     }
   };
 
@@ -33,6 +40,8 @@ function CommentInput({ artId, currentComment, setCurrentComment }) {
         className="comment-input"
         placeholder="Add your comment here..."
         onChange={(e) => setCurrentComment(e.target.value)}
+        onKeyPress={handleKeyPress}
+        value={currentComment}
       />
       {isClicked ? (
         <CircularProgress className="comment-progress-indicator" size="35px" />
