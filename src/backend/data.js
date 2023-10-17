@@ -133,13 +133,16 @@ export const saveArtwork = async (currentUser, artId) => {
   }
 };
 
+
+
 export const saveGeneratedImage = async (
   currentUser,
   generatedImageUrl,
   prompt,
   brightness,
   contrast,
-  navigate
+  navigate,
+  showSnackBar
 ) => {
   // Get the current user's UID
   if (currentUser) {
@@ -172,6 +175,7 @@ export const saveGeneratedImage = async (
           });
 
           console.log("Image removed from saved-images");
+
         } else {
           // If the image data is not found, add it to the array
           userData.savedPosts.push(imageData);
@@ -182,6 +186,7 @@ export const saveGeneratedImage = async (
           });
 
           console.log("Image added to saved-images");
+          showSnackBar();
         }
       } else {
         // Create a new document for the user if it doesn't exist
@@ -190,6 +195,7 @@ export const saveGeneratedImage = async (
         });
 
         console.log("User's saved-images document created with the image data");
+        showSnackBar();
       }
     } catch (error) {
       console.error("Error updating saved-images:", error);
@@ -199,13 +205,15 @@ export const saveGeneratedImage = async (
   }
 };
 
+
+
 export const isArtworkSaved = async (currentUser, artId) => {
   if (currentUser) {
     // Get the current user's UID
     const currentUserUid = currentUser.uid;
 
     // Create a reference to the user's document in the saved-posts collection
-    const userSavedPostsRef = doc(db, "activity", currentUserUid);
+    const userSavedPostsRef = doc(db, "saved-posts", currentUserUid);
 
     try {
       // Fetch the user's document to get the current savedPosts array
@@ -248,8 +256,8 @@ export const isArtworkLiked = async (currentUser, artId) => {
         (e) => e.artData.id === artId && e.activityType === "Like"
       );
 
-      console.log(userData.activities);
-      console.log(liked);
+      // console.log(userData.activities);
+      // console.log(liked);
 
       if (liked) {
         return true;
@@ -263,8 +271,8 @@ export const isArtworkLiked = async (currentUser, artId) => {
   }
 };
 
-const fetchPhotoData = async (photoId) => {
-  const photoRef = doc(db, "ai-art", photoId);
+const fetchArtworkData = async (artId) => {
+  const photoRef = doc(db, "ai-art", artId);
   const photoDoc = await getDoc(photoRef);
   return { id: photoDoc.id, ...photoDoc.data() };
 };
@@ -293,7 +301,7 @@ export const getSavedArtworks = async (currentUser, setSavedPosts) => {
         );
 
         const fetchedData = await Promise.all(
-          nonBlobData.map((photoId) => fetchPhotoData(photoId))
+          nonBlobData.map((photoId) => fetchArtworkData(photoId))
         );
 
         const updatedSavedPosts = [...blobUrls, ...fetchedData];
@@ -315,7 +323,7 @@ export const addToLikedActivity = async (currentUser, artId, activityType) => {
   const userId = currentUser.uid; // Get the user's UID
   const activityRef = doc(db, "activity", userId); // Reference to the user's activity document in Firestore
 
-  const artData = await fetchPhotoData(artId);
+  const artData = await fetchArtworkData(artId);
 
   const newActivityObject = {
     // artId: artId,
@@ -462,7 +470,7 @@ export const addCommentToActivity = async (currentUser, artId, newComment) => {
       // Add the comment ID to the comment object
       commentObject.commentId = commentId;
 
-      const artData = await fetchPhotoData(artId);
+      const artData = await fetchArtworkData(artId);
 
       const newActivityObject = {
         artData: artData,
@@ -601,9 +609,6 @@ export const editComment = async (artId, commentId, userId, newText) => {
     console.error("Error editing comment: ", error);
   }
 };
-
-
-
 
 export const postArtwork = async (currentUser, postUrl, prompt, navigate) => {
   // Get the current user's UID

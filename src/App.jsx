@@ -8,6 +8,7 @@ import Nav from "./components/home/cover-section/Nav";
 import Imagine from "./pages/Imagine";
 import ArtworkDetail from "./pages/ArtWorkDetails";
 import MoreArtworks from "./pages/MoreArtworks";
+import { AlertProvider } from "./providers/Alert";
 
 function App() {
   const location = useLocation();
@@ -18,7 +19,6 @@ function App() {
     !location.pathname.startsWith("/profile") &&
     !location.pathname.startsWith("/artwork/") &&
     location.pathname !== "/artworks/more/";
-
 
   return (
     <>
@@ -35,7 +35,14 @@ function App() {
         <Route path="/imagine" element={<Imagine />} />
         <Route path="/profile/:uid" element={<Profile />} />
 
-        <Route path="/artwork/:id" element={<ArtworkDetail />} />
+        <Route
+          path="/artwork/:id"
+          element={
+            <AlertProvider>
+              <ArtworkDetail />
+            </AlertProvider>
+          }
+        />
 
         <Route
           // strict

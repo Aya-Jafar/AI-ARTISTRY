@@ -4,10 +4,14 @@ import AuthContext from "../../providers/Auth";
 import { saveToProfile, handleLikeClick } from "../../backend/services";
 import useArtworkIcons from "../../hooks/useArtworkIcons";
 import { motion } from "framer-motion";
-import { addToLikedActivity } from "../../backend/data";
+import AlertContext from "../../providers/Alert";
 
 function ArtworkDetailBtn({ text, artId, id, setLikesCount }) {
   const { currentUser } = useContext(AuthContext);
+
+  const { showSnackBar, setShowSnackBar } = useContext(AlertContext);
+
+  console.log(showSnackBar, setShowSnackBar);
 
   const navigate = useNavigate();
 
@@ -27,8 +31,9 @@ function ArtworkDetailBtn({ text, artId, id, setLikesCount }) {
         setLikeIcon,
         setLikesCount,
         navigate,
-        "Like"
+        setShowSnackBar
       );
+      // setShowSnackBar(true)
     }
     // Trigger the shaking animation
     setIsShaking(true);
@@ -40,17 +45,21 @@ function ArtworkDetailBtn({ text, artId, id, setLikesCount }) {
   };
 
   return (
-    <motion.button className="btn" onClick={handleButtonClick} id={id}>
-      <motion.div className={`artwork-detail-btn ${isShaking ? "shake" : ""}`}>
-        <motion.img
-          src={text === "Save" ? saveIcon : likeIcon}
-          alt=""
-          animate={{ rotate: isShaking ? [0, -10, 10, -10, 10, -10, 0] : 0 }}
-          transition={{ duration: 0.5 }}
-        />
-        <motion.span>{text}</motion.span>
-      </motion.div>
-    </motion.button>
+    <>
+      <motion.button className="btn" onClick={handleButtonClick} id={id}>
+        <motion.div
+          className={`artwork-detail-btn ${isShaking ? "shake" : ""}`}
+        >
+          <motion.img
+            src={text === "Save" ? saveIcon : likeIcon}
+            alt=""
+            animate={{ rotate: isShaking ? [0, -10, 10, -10, 10, -10, 0] : 0 }}
+            transition={{ duration: 0.5 }}
+          />
+          <motion.span>{text}</motion.span>
+        </motion.div>
+      </motion.button>
+    </>
   );
 }
 

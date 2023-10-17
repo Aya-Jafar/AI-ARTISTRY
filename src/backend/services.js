@@ -29,27 +29,29 @@ export const saveToProfile = async (
   }
 };
 
+
 export const handleLikeClick = async (
   currentUser,
   artId,
   setLikeIcon,
   setLikesCount,
   navigate,
-  activityType,
-  setUserActivity
+  setShowSnackBar
 ) => {
   if (currentUser) {
-    await addToLikedActivity(currentUser, artId, activityType, setUserActivity);
+    await addToLikedActivity(currentUser, artId, "Like");
 
     const isFavourite = await isArtworkLiked(currentUser, artId);
 
     if (isFavourite) {
       setLikeIcon(filledHeart);
       setLikesCount((prevLikesCount) => prevLikesCount + 1);
+      setShowSnackBar(true)
     } // Update the displayed icon}
     else {
       setLikeIcon(heartIcon);
       setLikesCount((prevLikesCount) => prevLikesCount - 1);
+      setShowSnackBar(false)
     }
   } else {
     navigate("/login");

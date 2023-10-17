@@ -10,7 +10,8 @@ import AuthContext from "../providers/Auth";
 import CommentInput from "../components/artwork-detail/CommentInput";
 import CounterItem from "../components/artwork-detail/CounterItem";
 import AllComments from "../components/artwork-detail/AllComments";
-
+import CustomAlert from "../components/common/Alert";
+import AlertContext, { AlertProvider } from "../providers/Alert";
 
 const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
   const { id, generatedImageUrl, postUrl } = useParams();
@@ -20,6 +21,11 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
   const [commentsCount, setCommentsCount] = useState(0);
   const [allComments, setAllComments] = useState([]);
   const [currentComment, setCurrentComment] = useState("");
+
+  const { showSnackBar } = useContext(AlertContext);
+
+
+  console.log(showSnackBar , "Alert");
 
   useEffect(() => {
     // if it's not generated artwork then get it's data by it's id
@@ -52,8 +58,6 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
     }
   }, [id, generatedImageUrl, currentArtwork, allComments]);
 
-
-  
   const imageMaker = () => {
     if (id) {
       return currentArtwork.image;
@@ -64,7 +68,6 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
       return currentArtwork.postUrl;
     }
   };
-
 
   return (
     <>
@@ -87,6 +90,10 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
                 }}
               />
               <motion.div className="artwork-info">
+                {showSnackBar && (
+                  <CustomAlert message="Artwork added to liked successfully" />
+                )}
+
                 <motion.h1>{currentArtwork.model}</motion.h1>
                 <motion.h3>{currentArtwork.prompt}</motion.h3>
                 <motion.p>{`Prompt was created by ${`Aya`}`}</motion.p>
@@ -100,6 +107,8 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
                   />
                   <ArtworkDetailBtn text="Save" artId={id} id="save-btn" />
                 </div>
+
+
                 <div className="likes-comments-count">
                   <CounterItem
                     counterIcon={likeIcon}
@@ -116,10 +125,7 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
                   setCurrentComment={setCurrentComment}
                   currentComment={currentComment}
                 />
-                <AllComments
-                  comments={allComments}
-                  artId={id}
-                />
+                <AllComments comments={allComments} artId={id} />
               </motion.div>
             </>
           )}

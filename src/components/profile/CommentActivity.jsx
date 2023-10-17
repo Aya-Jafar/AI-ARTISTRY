@@ -5,15 +5,15 @@ import { Link } from "react-router-dom";
 function CommentActivity({ index, commentText, userName, artData, time }) {
   return (
     <div className="activty-item comment" key={index}>
-      
+        
       {/* <Link to={`/artwork/${artData.id}`}> */}
         <img src={artData && artData.image} alt="" id="activity-image" />
       {/* </Link> */}
 
-
       <div className="comment-detail">
         <h4 className="icon-title">
           <img src={commentIcon} alt="" />
+          
           {userName} commented on {`Aya`}'s post
         </h4>
 

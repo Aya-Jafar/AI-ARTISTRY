@@ -21,6 +21,7 @@ function Imagine() {
 
   const [generatedImage, setGeneratedImage] = useState("");
 
+
   const [customOptions, setCustomOptions] = useState({
     brightness: 100,
     contrast: 100,
