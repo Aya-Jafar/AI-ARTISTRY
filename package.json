@@ -4,9 +4,7 @@
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
     "@huggingface/inference": "^2.6.1",
-    "@mui/icons-material": "^5.14.11",
     "@mui/material": "^5.14.9",
     "@mui/styled-engine-sc": "^5.14.9",
     "@testing-library/jest-dom": "^5.17.0",
@@ -19,7 +17,6 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
     "react-intersection-observer": "^9.5.2",
-    "react-masonry-css": "^1.0.16",
     "react-motion-animate": "^1.0.6",
     "react-responsive-carousel": "^3.2.23",
     "react-responsive-masonry": "^2.1.7",
