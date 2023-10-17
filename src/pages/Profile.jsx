@@ -26,7 +26,7 @@ function Profile() {
       <h1>{currentUser && currentUser.displayName}</h1>
       <ProfileTabProvider>
         <ProfileTabs />
-        <ProfileTabContent />
+        <ProfileTabContent uid={uid}/>
       </ProfileTabProvider>
 
       {/* {savedArtworks && <ArtGrid artworks={savedArtworks} />} */}

@@ -5,7 +5,7 @@ import { textVariants } from "../../utils/motion";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { useInView } from "react-intersection-observer";
 import { Link } from "react-router-dom";
-import Skeleton from "@mui/material/Skeleton";
+
 
 function ArtGrid({ artworks, label }) {
   const [hoveredArtwork, setHoveredArtwork] = useState(null);
@@ -13,9 +13,6 @@ function ArtGrid({ artworks, label }) {
     triggerOnce: true,
     threshold: 0.2,
   });
-  const wrapperRef = useRef()
-
-  // console.log(artworks);
 
   return (
     <>
@@ -23,7 +20,7 @@ function ArtGrid({ artworks, label }) {
         <ResponsiveMasonry
           style={{ width: "100%" }}
           columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
-          ref={wrapperRef}
+          // ref={wrapperRef}
         >
           <Masonry
             className="my-masonry-grid"

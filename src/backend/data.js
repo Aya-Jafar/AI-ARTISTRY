@@ -272,7 +272,7 @@ const fetchPhotoData = async (photoId) => {
 export const getSavedArtworks = async (currentUser, setSavedPosts) => {
   if (currentUser) {
     // Get the current user's UID
-    const currentUserUid = currentUser.uid;
+    const currentUserUid = currentUser;
 
     // Create a reference to the user's document in the saved-posts collection
     const userSavedPostsRef = doc(db, "saved-posts", currentUserUid);
@@ -499,8 +499,8 @@ export const addCommentToActivity = async (currentUser, artId, newComment) => {
   }
 };
 
-export const getUserActivity = async (currentUser, setActivity) => {
-  if (currentUser) {
+export const getUserActivity = async (uid, setActivity) => {
+  if (uid) {
     const activityCollection = collection(db, "activity");
 
     let allActivity = [];
@@ -510,7 +510,7 @@ export const getUserActivity = async (currentUser, setActivity) => {
         // console.log(querySnapshot);
         querySnapshot.forEach((doc) => {
           // doc.data() is the data of each document
-          if (currentUser.uid === doc.id) {
+          if (uid === doc.id) {
             allActivity = [...allActivity, ...doc.data().activities];
           }
         });
@@ -667,7 +667,7 @@ export const postArtwork = async (currentUser, postUrl, prompt, navigate) => {
 export const getPosts = async (currentUser, setPosts) => {
   if (currentUser) {
     // Get the current user's UID
-    const currentUserUid = currentUser.uid;
+    const currentUserUid = currentUser;
 
     // Create a reference to the user's document in the saved-posts collection
     const userSavedPostsRef = doc(db, "posts", currentUserUid);

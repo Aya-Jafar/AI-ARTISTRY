@@ -12,24 +12,26 @@ import {
 } from "../../backend/data";
 import UserActivity from "./ActivityTab";
 
-function ProfileTabContent() {
+function ProfileTabContent({uid}) {
   const { currentUser } = useContext(AuthContext);
   const { currentProfileTab } = useContext(ProfileTabContext);
 
   const [currentContent, setCurrentContent] = useState([]);
 
+
+
   const generateProfileContent = () => {
     switch (currentProfileTab) {
       case "Posts":
-        getPosts(currentUser, setCurrentContent);
+        getPosts(uid, setCurrentContent);
         return <ArtGrid artworks={currentContent} label="posts" />;
 
       case "Saved":
-        getSavedArtworks(currentUser, setCurrentContent);
+        getSavedArtworks(uid, setCurrentContent);
         return <ArtGrid artworks={currentContent} label="saved" />;
 
       case "Activity":
-        getUserActivity(currentUser, setCurrentContent);
+        getUserActivity(uid, setCurrentContent);
         return <UserActivity activities={currentContent} />;
     }
   };
