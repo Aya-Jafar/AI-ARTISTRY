@@ -42,7 +42,6 @@ export const handleLikeClick = async (
     await addToLikedActivity(currentUser, artId, activityType, setUserActivity);
 
     const isFavourite = await isArtworkLiked(currentUser, artId);
-    // console.log(isFavourite);
 
     if (isFavourite) {
       setLikeIcon(filledHeart);
