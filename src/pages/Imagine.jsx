@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { slideAnimation } from "../utils/motion";
 import AuthContext from "../providers/Auth";
-import { Skeleton } from "@mui/material";
 import generateArt from "../backend/huggingFace";
 import CustomizationSliders from "../components/imagine/Customization";
 import { saveGeneratedImage, postArtwork } from "../backend/data";
@@ -11,6 +10,7 @@ import ImagineGrid from "../components/imagine/ImagineGrid";
 import GeneratedImage from "../components/imagine/GeneratedImage";
 import getRandomPropmt from "../backend/prompts";
 import CustomizedProgressBars from "../components/imagine/Loading";
+
 
 function Imagine() {
   const { currentUser } = useContext(AuthContext);
@@ -99,7 +99,7 @@ function Imagine() {
                 <button
                   className="btn"
                   onClick={() =>
-                    postArtwork(currentUser, generatedImage, prompt,navigate)
+                    postArtwork(currentUser, generatedImage, prompt, navigate)
                   }
                 >
                   Post
