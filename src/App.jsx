@@ -10,24 +10,23 @@ import ArtworkDetail from "./pages/ArtWorkDetails";
 import MoreArtworks from "./pages/MoreArtworks";
 
 function App() {
-  // const location = useLocation();
+  const location = useLocation();
 
   // // Check if the current route is not the Imagine page and not the profile page
-  // const showHomePage =
-  //   location.pathname !== "/imagine" &&
-  //   !location.pathname.startsWith("/profile") &&
-  //   !location.pathname.startsWith("/artwork/") &&
-  //   location.pathname !== "/artworks/more/";
+  const showHomePage =
+    location.pathname !== "/imagine" &&
+    !location.pathname.startsWith("/profile") &&
+    !location.pathname.startsWith("/artwork/") &&
+    location.pathname !== "/artworks/more/";
 
-  // console.log(location.state);
 
   return (
     <>
       <Nav />
+      {showHomePage && <Home />}
 
       <Routes>
-        <Route path="/" element={<Home />} />
-
+        {/* <Route path="/" element={<Home />} /> */}
 
         <Route path="/login" element={<Login />} />
 
