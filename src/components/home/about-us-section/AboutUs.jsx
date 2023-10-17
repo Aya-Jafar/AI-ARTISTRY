@@ -10,7 +10,7 @@ import AboutUsPic from "./AboutUsPic";
 function AboutUs() {
   const [ref, inView] = useInView({
     triggerOnce: true,
-    threshold: 0.2,
+    threshold: 0.02,
   });
 
   return (
