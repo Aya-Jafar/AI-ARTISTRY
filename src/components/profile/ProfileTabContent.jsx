@@ -18,6 +18,7 @@ function ProfileTabContent({uid}) {
 
   const [currentContent, setCurrentContent] = useState([]);
 
+  console.log(uid);
 
 
   const generateProfileContent = () => {
@@ -33,6 +34,9 @@ function ProfileTabContent({uid}) {
       case "Activity":
         getUserActivity(uid, setCurrentContent);
         return <UserActivity activities={currentContent} />;
+        
+      default:
+        return <></>; 
     }
   };
 
