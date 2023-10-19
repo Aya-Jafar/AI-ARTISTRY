@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import ProfileTabContext from "../../providers/ProfileTabContent";
 import { ProfileTabProvider } from "../../providers/ProfileTabContent";
 import AuthContext from "../../providers/Auth";
-import { getSavedArtworks as setPosts } from "../../backend/data";
+import { getSavedArtworks } from "../../backend/data";
 import saveIcon from "../../images/save-instagram.png";
 import likeIcon from "../../images/heart (2).png";
 import posts from "../../images/ai (2).png";
@@ -31,12 +31,9 @@ function ProfileTabs() {
     setActiveTab(text);
   };
   useEffect(() => {
-    setPosts(currentUser, setActiveImage);
+    getSavedArtworks(currentUser && currentUser.uid, setActiveImage);
   }, [currentUser]);
 
-  // console.log(currentProfileTab);
-
-  //   console.log(defaultImage[0].image);
   return (
     <>
       <div className="profile-tabs" style={{ marginTop: "3%" }}>
