@@ -8,7 +8,6 @@ import {
   query,
   where,
   increment,
-  serverTimestamp,
   addDoc,
   deleteDoc,
   onSnapshot,
@@ -18,6 +17,26 @@ import {
 import db from "./firebaseConfig";
 
 const allArtworksCollection = collection(db, "ai-art");
+
+
+
+export const getUserInfo = async (userId) => {
+  try {
+    const docRef = doc(db, "users", userId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      // console.log(docSnap.data());
+      return docSnap.data();
+    } else {
+      return null;
+    }
+  } catch (e) {
+    console.log("Invalid user ID", e);
+    return null;
+  }
+};
+
 
 export const getAllArtworks = (setArtworks, limitCount) => {
   let allDocuments = [];
@@ -133,8 +152,6 @@ export const saveArtwork = async (currentUser, artId) => {
   }
 };
 
-
-
 export const saveGeneratedImage = async (
   currentUser,
   generatedImageUrl,
@@ -175,7 +192,6 @@ export const saveGeneratedImage = async (
           });
 
           console.log("Image removed from saved-images");
-
         } else {
           // If the image data is not found, add it to the array
           userData.savedPosts.push(imageData);
@@ -204,8 +220,6 @@ export const saveGeneratedImage = async (
     navigate("/login");
   }
 };
-
-
 
 export const isArtworkSaved = async (currentUser, artId) => {
   if (currentUser) {
@@ -276,7 +290,7 @@ const fetchArtworkData = async (artId) => {
   const photoDoc = await getDoc(photoRef);
   return { id: photoDoc.id, ...photoDoc.data() };
 };
-
+// 
 export const getSavedArtworks = async (currentUser, setSavedPosts) => {
   if (currentUser) {
     // Get the current user's UID
@@ -674,9 +688,12 @@ export const getPosts = async (currentUser, setPosts) => {
     // Get the current user's UID
     const currentUserUid = currentUser;
 
+
+
     // Create a reference to the user's document in the saved-posts collection
     const userSavedPostsRef = doc(db, "posts", currentUserUid);
 
+    // console.log("Getting posts" , userSavedPostsRef);
     try {
       // Fetch the user's document to get the current saved artwork data
       const userSavedPostsSnapshot = await getDoc(userSavedPostsRef);
@@ -690,6 +707,7 @@ export const getPosts = async (currentUser, setPosts) => {
     }
   }
 };
+
 
 export const getGeneratedArtworkDetails = async (
   currentUser,
@@ -762,8 +780,6 @@ async function getPostDetail(currentUserUid, setArtworkDetail) {
     const foundArtwork = userData.posts.find(async (artwork) => {
       if (artwork.hasOwnProperty("postUrl")) {
         return artwork.postUrl;
-        // .split("artwork/generated")[0]
-        // .slice(0, 50) === generatedImageUrl
       }
       return false;
     });
