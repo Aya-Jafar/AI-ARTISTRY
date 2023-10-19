@@ -52,7 +52,6 @@ export const AuthProvider = ({ children }) => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-      const myCollection = collection(db, "ai-art");
 
       // Check if the user document already exists
       const docRef = doc(db, "users", user.uid);
@@ -63,6 +62,7 @@ export const AuthProvider = ({ children }) => {
         await setDoc(doc(db, "users", user.uid), {
           name: user.displayName,
           email: user.email,
+          image: user.reloadUserInfo.photoUrl,
           timestamp: serverTimestamp(),
         });
       }
@@ -74,7 +74,21 @@ export const AuthProvider = ({ children }) => {
   const signInWithFacebook = async () => {
     const provider = new FacebookAuthProvider();
     try {
-      await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      // Check if the user document already exists
+      const docRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(docRef);
+
+      if (!docSnap.exists()) {
+        // User doesn't exist, create a new user document
+        await setDoc(doc(db, "users", user.uid), {
+          name: user.displayName,
+          email: user.email,
+          image: user.reloadUserInfo.photoUrl,
+          timestamp: serverTimestamp(),
+        });
+      }
     } catch (error) {
       console.error("Facebook sign-in error:", error);
     }
