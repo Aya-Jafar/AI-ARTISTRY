@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import miniProfile from "../../images/profile-user.png";
 import { Link } from "react-router-dom";
 import { linkStyles } from "../../utils/formaters";
 import { motion } from "framer-motion";
@@ -9,6 +8,8 @@ import AuthContext from "../../providers/Auth";
 import { deleteComment, editComment } from "../../backend/data";
 import deleteIcon from "../../images/trash.png";
 import editIcon from "../../images/edit.png";
+import { getUserInfo } from "../../backend/data";
+import CommentImage from "./CommentImage";
 
 function AllComments({ comments, artId }) {
   // console.log(comments );
@@ -26,7 +27,9 @@ function AllComments({ comments, artId }) {
 
   const [activeCommentId, setActiveCommentId] = useState(null);
 
-  // console.log(comments);
+  useEffect(() => {
+    getUserInfo(comments[0] && comments[0].userId).then((result) => console.log(result));
+  }, [comments]);
 
   return (
     <>
@@ -39,21 +42,18 @@ function AllComments({ comments, artId }) {
                 className="one-comment"
                 style={{ ...slideAnimation("down") }}
               >
-                <div className="mini-profile-img">
-                  <img src={miniProfile} alt="" />
-                </div>
+                <CommentImage comment={comment}/>
+
                 <div className="username-comment">
                   <div className="username-settings">
                     <Link
-                      to={`/profile/${comment.userId}`}
+                      to={comment.userId && `/profile/${comment.userId}`}
                       style={{ ...linkStyles }}
                     >
                       <h4>{comment.userName}</h4>
                     </Link>
 
-                    {currentUser &&
-                    currentUser.accessToken ===
-                      localStorage.getItem("token") ? (
+                    {currentUser && currentUser.uid === comment.userId ? (
                       <div className="edit-comment-icon">
                         <img
                           src={moreIcon}
