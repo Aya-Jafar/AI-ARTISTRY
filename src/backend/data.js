@@ -18,8 +18,6 @@ import db from "./firebaseConfig";
 
 const allArtworksCollection = collection(db, "ai-art");
 
-
-
 export const getUserInfo = async (userId) => {
   try {
     const docRef = doc(db, "users", userId);
@@ -36,7 +34,6 @@ export const getUserInfo = async (userId) => {
     return null;
   }
 };
-
 
 export const getAllArtworks = (setArtworks, limitCount) => {
   let allDocuments = [];
@@ -159,7 +156,7 @@ export const saveGeneratedImage = async (
   brightness,
   contrast,
   navigate,
-  showSnackBar
+  setShowSnackBar
 ) => {
   // Get the current user's UID
   if (currentUser) {
@@ -202,7 +199,7 @@ export const saveGeneratedImage = async (
           });
 
           console.log("Image added to saved-images");
-          showSnackBar();
+          setShowSnackBar(true);
         }
       } else {
         // Create a new document for the user if it doesn't exist
@@ -211,7 +208,7 @@ export const saveGeneratedImage = async (
         });
 
         console.log("User's saved-images document created with the image data");
-        showSnackBar();
+        setShowSnackBar(true);
       }
     } catch (error) {
       console.error("Error updating saved-images:", error);
@@ -290,7 +287,7 @@ const fetchArtworkData = async (artId) => {
   const photoDoc = await getDoc(photoRef);
   return { id: photoDoc.id, ...photoDoc.data() };
 };
-// 
+//
 export const getSavedArtworks = async (currentUser, setSavedPosts) => {
   if (currentUser) {
     // Get the current user's UID
@@ -624,7 +621,13 @@ export const editComment = async (artId, commentId, userId, newText) => {
   }
 };
 
-export const postArtwork = async (currentUser, postUrl, prompt, navigate) => {
+export const postArtwork = async (
+  currentUser,
+  postUrl,
+  prompt,
+  navigate,
+  setShowSnackBar
+) => {
   // Get the current user's UID
   if (currentUser) {
     const currentUserUid = currentUser.uid;
@@ -666,6 +669,7 @@ export const postArtwork = async (currentUser, postUrl, prompt, navigate) => {
           });
 
           console.log("Image added to saved-images");
+          setShowSnackBar(true)
         }
       } else {
         // Create a new document for the user if it doesn't exist
@@ -674,6 +678,7 @@ export const postArtwork = async (currentUser, postUrl, prompt, navigate) => {
         });
 
         console.log("User's saved-images document created with the image data");
+        setShowSnackBar(true)
       }
     } catch (error) {
       console.error("Error updating saved-images:", error);
@@ -683,12 +688,12 @@ export const postArtwork = async (currentUser, postUrl, prompt, navigate) => {
   }
 };
 
+
+
 export const getPosts = async (currentUser, setPosts) => {
   if (currentUser) {
     // Get the current user's UID
     const currentUserUid = currentUser;
-
-
 
     // Create a reference to the user's document in the saved-posts collection
     const userSavedPostsRef = doc(db, "posts", currentUserUid);
@@ -700,6 +705,7 @@ export const getPosts = async (currentUser, setPosts) => {
       const userData = userSavedPostsSnapshot.data();
 
       if (userData && userData.posts) {
+        console.log(userData.posts);
         setPosts(userData.posts);
       }
     } catch (error) {
@@ -707,7 +713,6 @@ export const getPosts = async (currentUser, setPosts) => {
     }
   }
 };
-
 
 export const getGeneratedArtworkDetails = async (
   currentUser,
