@@ -13,16 +13,19 @@ export const saveToProfile = async (
   currentUser,
   artId,
   setSaveIcon,
-  navigate
+  navigate,
+  setShowSnackBar
 ) => {
   if (currentUser) {
     await saveArtwork(currentUser, artId); // Wait for the artwork to be saved
     const isSaved = await isArtworkSaved(currentUser, artId); // Check if it's saved
     if (isSaved) {
       setSaveIcon(filledSaved);
+      setShowSnackBar(true)
     } // Update the displayed icon}
     else {
       setSaveIcon(saveIcon);
+      setShowSnackBar(false)
     }
   } else {
     navigate("/login");
