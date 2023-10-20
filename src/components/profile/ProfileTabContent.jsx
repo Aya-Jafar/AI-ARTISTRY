@@ -13,12 +13,9 @@ import {
 import UserActivity from "./ActivityTab";
 
 function ProfileTabContent({uid}) {
-  const { currentUser } = useContext(AuthContext);
   const { currentProfileTab } = useContext(ProfileTabContext);
 
   const [currentContent, setCurrentContent] = useState([]);
-
-  console.log(uid);
 
 
   const generateProfileContent = () => {

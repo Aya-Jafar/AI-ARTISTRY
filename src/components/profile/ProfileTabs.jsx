@@ -5,7 +5,7 @@ import { ProfileTabProvider } from "../../providers/ProfileTabContent";
 import AuthContext from "../../providers/Auth";
 import { getSavedArtworks } from "../../backend/data";
 import saveIcon from "../../images/save-instagram.png";
-import likeIcon from "../../images/heart (2).png";
+import activityIcon from "../../images/activity.png";
 import posts from "../../images/ai (2).png";
 
 function Tab({ text, icon, isActive, onClick }) {
@@ -22,7 +22,7 @@ function Tab({ text, icon, isActive, onClick }) {
 function ProfileTabs() {
   const { currentProfileTab, setProfileTab } = useContext(ProfileTabContext);
   const { currentUser } = useContext(AuthContext);
-  const [activeTab, setActiveTab] = useState("Posts");
+  const [activeTab, setActiveTab] = useState("Activity");
 
   const [defaultImage, setActiveImage] = useState("");
 
@@ -38,11 +38,12 @@ function ProfileTabs() {
     <>
       <div className="profile-tabs" style={{ marginTop: "3%" }}>
         <Tab
-          text="Posts"
-          icon={posts}
-          isActive={activeTab === "Posts"}
-          onClick={() => handleTabClick("Posts")}
+          text="Activity"
+          icon={activityIcon}
+          isActive={activeTab === "Activity"}
+          onClick={() => handleTabClick("Activity")}
         />
+        
         {currentUser &&
           currentUser.accessToken === localStorage.getItem("token") && (
             <Tab
@@ -54,10 +55,10 @@ function ProfileTabs() {
           )}
 
         <Tab
-          text="Activity"
-          icon={likeIcon}
-          isActive={activeTab === "Activity"}
-          onClick={() => handleTabClick("Activity")}
+          text="Posts"
+          icon={posts}
+          isActive={activeTab === "Posts"}
+          onClick={() => handleTabClick("Posts")}
         />
       </div>
     </>

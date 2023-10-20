@@ -21,7 +21,7 @@ function Profile() {
     getUserInfo(uid).then((result) => setUserInfo(result));
   }, [currentUser]);
 
-
+  
   return (
     <div className="profile">
       <div className="profile-image">
@@ -31,13 +31,13 @@ function Profile() {
           <img src={profileImg} alt="" />
         )}
       </div>
-      <h1>{userInfo && userInfo.displayName}</h1>
+      <h1>{userInfo && userInfo.name}</h1>
+      <h4>{userInfo && userInfo.email}</h4>
 
       <ProfileTabProvider>
         <ProfileTabs />
         <ProfileTabContent uid={uid} />
       </ProfileTabProvider>
-
     </div>
   );
 }
