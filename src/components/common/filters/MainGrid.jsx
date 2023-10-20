@@ -8,27 +8,89 @@ import { Link } from "react-router-dom";
 
 function MainArtGrid({ isHomePage }) {
   const [artworks, setArtworks] = useState([]);
-  const ref = useRef();
+  const [allArtworksLoaded, setAllArtworksLoaded] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const limit = 8; // Adjust the limit as needed
+
+  const fetchArtworks = (page) => {
+    getAllArtworks(
+      (newArtworks) => {
+        if (newArtworks.length === 0) {
+          // If there are no new artworks, all artworks are loaded
+          setAllArtworksLoaded(true);
+        } else {
+          setArtworks([...newArtworks]); // Clear the old artworks and replace them with new ones
+        }
+      },
+      limit * page,
+      isHomePage
+    );
+  };
 
   useEffect(() => {
-    getAllArtworks(setArtworks, 10);
-  }, []);
+    if (!allArtworksLoaded) {
+      fetchArtworks(currentPage);
+    }
+  }, [currentPage, allArtworksLoaded]);
+
+  
+  const handleIntersection = (entries) => {
+    const intersectionEntry = entries[0];
+    if (intersectionEntry.isIntersecting && !allArtworksLoaded) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  const intersectionRef = useRef(null); // Initialize with null
+
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 1.0,
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, options);
+    if (intersectionRef.current && !allArtworksLoaded) {
+      observer.observe(intersectionRef.current);
+    }
+
+    return () => {
+      if (intersectionRef.current) {
+        observer.unobserve(intersectionRef.current);
+      }
+    };
+  }, [allArtworksLoaded]);
 
   return (
     <>
-      <div id="art-grid-section">
-        {artworks && <ArtGrid artworks={artworks} label="home" />}
-      </div>
+      {isHomePage ? (
+        <>
+          <div id="art-grid-section">
+            {artworks && <ArtGrid artworks={artworks} label="home" />}
+          </div>
+          <div className="art-grid-btns">
+            <Link to="/imagine">
+              <ButtonWithIcon icon={generateIcon} text="Generate" />
+            </Link>
+            <Link to="/artworks/more/">
+              <ButtonWithIcon icon={moreIcon} text="More" />
+            </Link>
+          </div>
+        </>
+      ) : (
+        <>
+          <div id="art-grid-section">
+            {artworks && <ArtGrid artworks={artworks} label="home" />}
+          </div>
+          <br />
+          <br />
 
-      {isHomePage && (
-        <div className="art-grid-btns">
-          <Link to="/imagine">
-            <ButtonWithIcon icon={generateIcon} text="Generate" />
-          </Link>
-          <Link to="/artworks/more/">
-            <ButtonWithIcon icon={moreIcon} text="More" />
-          </Link>
-        </div>
+          {!allArtworksLoaded && <div ref={intersectionRef} ></div>}
+          <br />
+          
+        </>
       )}
     </>
   );

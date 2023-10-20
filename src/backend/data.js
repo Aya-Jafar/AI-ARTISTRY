@@ -12,6 +12,7 @@ import {
   deleteDoc,
   onSnapshot,
   limit,
+  orderBy,
 } from "firebase/firestore";
 
 import db from "./firebaseConfig";
@@ -24,7 +25,6 @@ export const getUserInfo = async (userId) => {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      // console.log(docSnap.data());
       return docSnap.data();
     } else {
       return null;
@@ -35,9 +35,29 @@ export const getUserInfo = async (userId) => {
   }
 };
 
-export const getAllArtworks = (setArtworks, limitCount) => {
+export const getAllArtworks = (setArtworks, limitCount, isHomePage) => {
   let allDocuments = [];
-  const limitedQuery = query(allArtworksCollection, limit(limitCount)); // Add the limit here
+  console.log(isHomePage);
+  let limitedQuery;
+  if (isHomePage) {
+    limitedQuery = query(
+      allArtworksCollection,
+      limit(limitCount),
+      where("type", "in", ["all", "all, fantasy", "all, SCI-FI"])
+    );
+  } else {
+    limitedQuery = query(
+      allArtworksCollection,
+      limit(limitCount),
+      where("type", "in", [
+        "all",
+        "all, fantasy",
+        "all, SCI-FI",
+        "fantasy",
+        "SCI-FI",
+      ])
+    );
+  }
 
   getDocs(limitedQuery)
     .then((querySnapshot) => {
@@ -51,11 +71,13 @@ export const getAllArtworks = (setArtworks, limitCount) => {
     });
 };
 
+
+
 export const getFantasyArtworks = (setArtworks, limitCount) => {
   const queryOptions = [
     query(
       allArtworksCollection,
-      where("type", "==", "fantasy"),
+      where("type", "in", ["fantasy", "all, fantasy"]),
       limit(limitCount)
     ),
   ];
@@ -67,7 +89,6 @@ export const getFantasyArtworks = (setArtworks, limitCount) => {
         fantasyDocs.push({ id: doc.id, ...doc.data() });
       });
       setArtworks(fantasyDocs);
-      // console.log("Fantasy documents:", fantasyDocs);
     })
     .catch((error) => {
       // console.error("Error getting documents:", error);
@@ -78,7 +99,7 @@ export const getSciFiArtworks = (setArtworks, limitCount) => {
   const queryOptions = [
     query(
       allArtworksCollection,
-      where("type", "==", "SCI-FI"),
+      where("type", "in", ["SCI-FI", "all, SCI-FI"]),
       limit(limitCount)
     ),
   ];
@@ -669,7 +690,7 @@ export const postArtwork = async (
           });
 
           console.log("Image added to saved-images");
-          setShowSnackBar(true)
+          setShowSnackBar(true);
         }
       } else {
         // Create a new document for the user if it doesn't exist
@@ -678,7 +699,7 @@ export const postArtwork = async (
         });
 
         console.log("User's saved-images document created with the image data");
-        setShowSnackBar(true)
+        setShowSnackBar(true);
       }
     } catch (error) {
       console.error("Error updating saved-images:", error);
@@ -688,8 +709,6 @@ export const postArtwork = async (
   }
 };
 
-
-
 export const getPosts = async (currentUser, setPosts) => {
   if (currentUser) {
     // Get the current user's UID
@@ -698,7 +717,6 @@ export const getPosts = async (currentUser, setPosts) => {
     // Create a reference to the user's document in the saved-posts collection
     const userSavedPostsRef = doc(db, "posts", currentUserUid);
 
-    // console.log("Getting posts" , userSavedPostsRef);
     try {
       // Fetch the user's document to get the current saved artwork data
       const userSavedPostsSnapshot = await getDoc(userSavedPostsRef);
