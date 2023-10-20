@@ -88,11 +88,14 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
                   filter: `brightness(${currentArtwork.brightness}%) contrast(${currentArtwork.contrast}%)`,
                 }}
               />
-              <motion.div className="artwork-info" style={infoStyle(currentArtwork.prompt)}>
+              <motion.div
+                className="artwork-info"
+                style={infoStyle(currentArtwork.prompt)}
+              >
                 {showSnackBar && (
                   <CustomAlert message="Artwork added successfully" />
                 )}
-                
+
                 {currentArtwork.model ? (
                   <motion.h1>{currentArtwork.model}</motion.h1>
                 ) : (
