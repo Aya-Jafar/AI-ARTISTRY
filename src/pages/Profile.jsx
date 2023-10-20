@@ -19,18 +19,20 @@ function Profile() {
   useEffect(() => {
     getSavedArtworks(uid, setSavedArtworks);
     getUserInfo(uid).then((result) => setUserInfo(result));
-  }, [currentUser]);
+  }, [uid]);
 
-  
+  // console.log(userInfo);
+
   return (
     <div className="profile">
-      <div className="profile-image">
-        {userInfo !== null ? (
+      <div>
+        {userInfo ? (
           <img src={userInfo.image} alt="" className="profile-image" />
         ) : (
-          <img src={profileImg} alt="" />
+          <img src={profileImg} alt="" className="profile-image" />
         )}
       </div>
+
       <h1>{userInfo && userInfo.name}</h1>
       <h4>{userInfo && userInfo.email}</h4>
 
