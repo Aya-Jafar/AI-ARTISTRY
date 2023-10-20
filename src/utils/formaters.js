@@ -24,12 +24,22 @@ export const formatDate = (date) => {
   // Create the formatted string
   const formattedDateStr = `${dayOfWeek}. ${month}. ${year}\n${hour}:${minute} ${ampm} AST`;
 
-  console.log(inputDate, formattedDateStr);
   return formattedDateStr.split("\n");
 };
 
 
-
+export const infoStyle = (prompt) => {
+  if (prompt.length >= 3) {
+    return {
+      fontSize: "15px",
+      width:"25%"
+    };
+  } else {
+    return {
+      fontSize: "20px",
+    };
+  }
+};
 
 export const alignTabText = (text) => {
   switch (text) {
