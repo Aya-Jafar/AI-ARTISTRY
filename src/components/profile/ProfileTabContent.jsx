@@ -1,13 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
-import profileImg from "../../images/profile-user.png";
-import AuthContext from "../../providers/Auth";
 import { motion } from "framer-motion";
 import ArtGrid from "../common/ArtGrid";
 import ProfileTabContext from "../../providers/ProfileTabContent";
 import { getPosts } from "../../backend/data";
 import {
   getSavedArtworks,
-  addToLikedActivity,
   getUserActivity,
 } from "../../backend/data";
 import UserActivity from "./ActivityTab";
