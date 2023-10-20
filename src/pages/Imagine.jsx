@@ -48,9 +48,6 @@ function Imagine() {
           type="audio/mpeg"
         />
       </audio>
-      {true && (
-          <CustomAlert message="Artwork added successfully" />
-        )}
 
       <motion.div
         initial={{ opacity: 0 }}
@@ -59,8 +56,6 @@ function Imagine() {
         transition={{ duration: 0.5 }}
         className="imagine-container"
       >
-        
-
         <div className="prompt-section">
           <motion.h1 {...slideAnimation("left")}>
             Imagine Tomorrow, Create Today
@@ -139,8 +134,9 @@ function Imagine() {
             </>
           )}
         </div>
+        
+        <CustomAlert message="Artwork added successfully" />
 
-        {/* !isClicked  && !generatedImage */}
         <div className="image-section">
           {!isClicked && !generatedImage ? (
             <>
