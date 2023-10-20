@@ -14,7 +14,6 @@ import CustomAlert from "../components/common/CustomAlert";
 import AlertContext, { AlertProvider } from "../providers/Alert";
 import { infoStyle } from "../utils/formaters";
 
-
 const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
   const { id, generatedImageUrl, postUrl } = useParams();
   const { currentUser } = useContext(AuthContext);
@@ -106,7 +105,12 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
                   {currentArtwork.prompt}
                 </motion.h3>
 
-                <motion.p>{`Prompt was created by ${`Aya`}`}</motion.p>
+                {currentArtwork.creator ? (
+                  <motion.p>{`Prompt was created by ${currentArtwork.creator}`}</motion.p>
+                ) : (
+                  <motion.p>unknown prompt creator</motion.p>
+                )}
+
                 <br />
                 <div className="artwork-detail-btns">
                   <ArtworkDetailBtn
