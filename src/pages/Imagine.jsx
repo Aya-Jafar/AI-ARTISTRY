@@ -10,7 +10,8 @@ import ImagineGrid from "../components/imagine/ImagineGrid";
 import GeneratedImage from "../components/imagine/GeneratedImage";
 import getRandomPropmt from "../backend/prompts";
 import CustomizedProgressBars from "../components/imagine/Loading";
-
+import AlertContext from "../providers/Alert";
+import CustomAlert from "../components/common/CustomAlert";
 
 function Imagine() {
   const { currentUser } = useContext(AuthContext);
@@ -21,11 +22,12 @@ function Imagine() {
 
   const [generatedImage, setGeneratedImage] = useState("");
 
-
   const [customOptions, setCustomOptions] = useState({
     brightness: 100,
     contrast: 100,
   });
+
+  const { showSnackBar, setShowSnackBar } = useContext(AlertContext);
 
   const hangleGenerateClick = async (e) => {
     e.preventDefault();
@@ -46,6 +48,9 @@ function Imagine() {
           type="audio/mpeg"
         />
       </audio>
+      {true && (
+          <CustomAlert message="Artwork added successfully" />
+        )}
 
       <motion.div
         initial={{ opacity: 0 }}
@@ -54,6 +59,8 @@ function Imagine() {
         transition={{ duration: 0.5 }}
         className="imagine-container"
       >
+        
+
         <div className="prompt-section">
           <motion.h1 {...slideAnimation("left")}>
             Imagine Tomorrow, Create Today
@@ -100,7 +107,13 @@ function Imagine() {
                 <button
                   className="btn"
                   onClick={() =>
-                    postArtwork(currentUser, generatedImage, prompt, navigate)
+                    postArtwork(
+                      currentUser,
+                      generatedImage,
+                      prompt,
+                      navigate,
+                      setShowSnackBar
+                    )
                   }
                 >
                   Post
@@ -115,7 +128,8 @@ function Imagine() {
                       prompt,
                       customOptions.brightness,
                       customOptions.contrast,
-                      navigate
+                      navigate,
+                      setShowSnackBar
                     )
                   }
                 >

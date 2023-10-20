@@ -10,8 +10,10 @@ import AuthContext from "../providers/Auth";
 import CommentInput from "../components/artwork-detail/CommentInput";
 import CounterItem from "../components/artwork-detail/CounterItem";
 import AllComments from "../components/artwork-detail/AllComments";
-import CustomAlert from "../components/common/Alert";
+import CustomAlert from "../components/common/CustomAlert";
 import AlertContext, { AlertProvider } from "../providers/Alert";
+import { infoStyle } from "../utils/formaters";
+
 
 const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
   const { id, generatedImageUrl, postUrl } = useParams();
@@ -23,9 +25,6 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
   const [currentComment, setCurrentComment] = useState("");
 
   const { showSnackBar } = useContext(AlertContext);
-
-
-  console.log(showSnackBar , "Alert");
 
   useEffect(() => {
     // if it's not generated artwork then get it's data by it's id
@@ -89,13 +88,21 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
                   filter: `brightness(${currentArtwork.brightness}%) contrast(${currentArtwork.contrast}%)`,
                 }}
               />
-              <motion.div className="artwork-info">
+              <motion.div className="artwork-info" style={infoStyle(currentArtwork.prompt)}>
                 {showSnackBar && (
-                  <CustomAlert message="Artwork added to liked successfully" />
+                  <CustomAlert message="Artwork added successfully" />
+                )}
+                
+                {currentArtwork.model ? (
+                  <motion.h1>{currentArtwork.model}</motion.h1>
+                ) : (
+                  <motion.h1>Art diffusion</motion.h1>
                 )}
 
-                <motion.h1>{currentArtwork.model}</motion.h1>
-                <motion.h3>{currentArtwork.prompt}</motion.h3>
+                <motion.h3 className="prompt-text">
+                  {currentArtwork.prompt}
+                </motion.h3>
+
                 <motion.p>{`Prompt was created by ${`Aya`}`}</motion.p>
                 <br />
                 <div className="artwork-detail-btns">
@@ -107,7 +114,6 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
                   />
                   <ArtworkDetailBtn text="Save" artId={id} id="save-btn" />
                 </div>
-
 
                 <div className="likes-comments-count">
                   <CounterItem
