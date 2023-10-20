@@ -26,13 +26,20 @@ function App() {
       {showHomePage && <Home />}
 
       <Routes>
-        {/* <Route path="/" element={<Home />} /> */}
+        {/* {showHomePage && <Route path="/" element={<Home />} />} */}
 
         <Route path="/login" element={<Login />} />
 
         <Route path="/signup" element={<SignUp />} />
 
-        <Route path="/imagine" element={<Imagine />} />
+        <Route
+          path="/imagine"
+          element={
+            <AlertProvider>
+              <Imagine />
+            </AlertProvider>
+          }
+        />
         <Route path="/profile/:uid" element={<Profile />} />
 
         <Route
@@ -45,17 +52,24 @@ function App() {
         />
 
         <Route
-          // strict
           path="/artwork/generated/:generatedImageUrl"
           element={
-            <ArtworkDetail isGeneratedArtwork={true} label="saved-generated" />
+            <AlertProvider>
+              <ArtworkDetail
+                isGeneratedArtwork={true}
+                label="saved-generated"
+              />
+            </AlertProvider>
           }
         />
 
         <Route
-          // strict
           path="/post/:postUrl"
-          element={<ArtworkDetail isGeneratedArtwork={true} label="posts" />}
+          element={
+            <AlertProvider>
+              <ArtworkDetail isGeneratedArtwork={true} label="posts" />
+            </AlertProvider>
+          }
         />
 
         <Route path="/artworks/more/" element={<MoreArtworks />} />
