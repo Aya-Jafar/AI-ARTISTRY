@@ -23,7 +23,13 @@ function ArtworkDetailBtn({ text, artId, id, setLikesCount }) {
 
   const handleButtonClick = async () => {
     if (text === "Save") {
-      await saveToProfile(currentUser, artId, setSaveIcon, navigate);
+      await saveToProfile(
+        currentUser,
+        artId,
+        setSaveIcon,
+        navigate,
+        setShowSnackBar
+      );
     } else {
       await handleLikeClick(
         currentUser,
