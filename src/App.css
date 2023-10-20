@@ -591,6 +591,7 @@ button[type="submit"] {
   flex-wrap: wrap;
   width: auto;
   padding: 2% 7%;
+  min-height: 90vh;
 }
 
 .my-masonry-grid_column {
