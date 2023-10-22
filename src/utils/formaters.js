@@ -27,13 +27,21 @@ export const formatDate = (date) => {
   return formattedDateStr.split("\n");
 };
 
-
 export const infoStyle = (prompt) => {
+  const screenWidth = window.innerWidth;
+
   if (prompt.length >= 3) {
-    return {
-      fontSize: "15px",
-      width:"25%"
-    };
+    if (screenWidth > 800) {
+      return {
+        fontSize: "15px",
+        width: "25%",
+      };
+    } else {
+      return {
+        fontSize: "15px",
+        width: "100%",
+      };
+    }
   } else {
     return {
       fontSize: "20px",
