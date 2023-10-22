@@ -71,8 +71,6 @@ export const getAllArtworks = (setArtworks, limitCount, isHomePage) => {
     });
 };
 
-
-
 export const getFantasyArtworks = (setArtworks, limitCount) => {
   const queryOptions = [
     query(
@@ -192,7 +190,13 @@ export const saveGeneratedImage = async (
       const userData = userSavedImagesSnapshot.data();
 
       // Create an object to store the image URL and prompt
-      const imageData = { generatedImageUrl, prompt, brightness, contrast };
+      const imageData = {
+        generatedImageUrl,
+        creator: currentUser.displayName,
+        prompt,
+        brightness,
+        contrast,
+      };
 
       if (userData && userData.savedPosts) {
         // Check if the image data is already in the array
