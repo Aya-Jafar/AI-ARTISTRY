@@ -54,7 +54,7 @@ function ArtGrid({ artworks, label }) {
                         {artwork.postUrl && (
                           <Link
                             to={`/post/${encodeURIComponent(
-                              artwork.postUrl
+                              artwork.postUrl.slice(-50)
                             )}`}
                           >
                             <motion.img

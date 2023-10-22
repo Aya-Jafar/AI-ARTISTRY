@@ -805,13 +805,14 @@ async function getPostDetail(currentUserUid, setArtworkDetail, postUrl) {
   const userSavedImagesSnapshot = await getDoc(userSavedImagesRef);
   const userData = userSavedImagesSnapshot.data();
 
+
   if (userData && userData.posts) {
     // console.log(userData.posts);
     // Use Array.find to find the object with the matching prompt
     const foundArtwork = userData.posts.find((artwork) => {
+      // console.log(artwork.postUrl);
       return (
-        artwork.postUrl.split("post/")[0].slice(-50) ===
-        postUrl.slice(-50)
+        artwork.postUrl.slice(-50) === postUrl.slice(-50)
       );
     });
 
