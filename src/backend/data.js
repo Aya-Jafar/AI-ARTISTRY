@@ -748,10 +748,14 @@ export const getGeneratedArtworkDetails = async (
 
       if (whichTab === "posts") {
         // get the document from the "posts" collection by it's matching url and use setArtworkDetail for it
-        await getPostDetail(currentUserUid, setArtworkDetail);
+        await getPostDetail(
+          currentUserUid,
+          setArtworkDetail,
+          generatedImageUrl
+        );
       }
       if (whichTab === "saved-generated") {
-        await getGenerateDetail(
+        await getGeneratedDetail(
           currentUserUid,
           generatedImageUrl,
           setArtworkDetail
@@ -763,7 +767,7 @@ export const getGeneratedArtworkDetails = async (
   }
 };
 
-async function getGenerateDetail(
+async function getGeneratedDetail(
   currentUserUid,
   generatedImageUrl,
   setArtworkDetail
@@ -795,21 +799,23 @@ async function getGenerateDetail(
   }
 }
 
-async function getPostDetail(currentUserUid, setArtworkDetail) {
+async function getPostDetail(currentUserUid, setArtworkDetail, postUrl) {
   const userSavedImagesRef = doc(db, "posts", currentUserUid);
   // Fetch the user's document
   const userSavedImagesSnapshot = await getDoc(userSavedImagesRef);
   const userData = userSavedImagesSnapshot.data();
 
   if (userData && userData.posts) {
-    console.log(userData.posts);
+    // console.log(userData.posts);
     // Use Array.find to find the object with the matching prompt
-    const foundArtwork = userData.posts.find(async (artwork) => {
-      if (artwork.hasOwnProperty("postUrl")) {
-        return artwork.postUrl;
-      }
-      return false;
+    const foundArtwork = userData.posts.find((artwork) => {
+      return (
+        artwork.postUrl.split("post/")[0].slice(-50) ===
+        postUrl.slice(-50)
+      );
     });
+
+    console.log(foundArtwork);
     // If a matching object is found, you can use it
     if (foundArtwork) {
       setArtworkDetail(foundArtwork);

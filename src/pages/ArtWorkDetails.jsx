@@ -56,6 +56,7 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
     }
   }, [id, generatedImageUrl, currentArtwork, allComments]);
 
+
   const imageMaker = () => {
     if (id) {
       return currentArtwork.image;
@@ -66,6 +67,7 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
       return currentArtwork.postUrl;
     }
   };
+  console.log(currentArtwork);
 
   return (
     <>

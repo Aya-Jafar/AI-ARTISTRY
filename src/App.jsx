@@ -18,6 +18,7 @@ function App() {
     location.pathname !== "/imagine" &&
     !location.pathname.startsWith("/profile") &&
     !location.pathname.startsWith("/artwork/") &&
+    !location.pathname.startsWith("/post/") &&
     location.pathname !== "/artworks/more/";
 
   return (
@@ -67,7 +68,10 @@ function App() {
           path="/post/:postUrl"
           element={
             <AlertProvider>
-              <ArtworkDetail isGeneratedArtwork={true} label="posts" />
+              <ArtworkDetail 
+                isGeneratedArtwork={true} 
+                label="posts" 
+              />
             </AlertProvider>
           }
         />
