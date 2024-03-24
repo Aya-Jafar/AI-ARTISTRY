@@ -11,8 +11,6 @@ function ArtworkDetailBtn({ text, artId, id, setLikesCount }) {
 
   const { showSnackBar, setShowSnackBar } = useContext(AlertContext);
 
-  // console.log(showSnackBar, setShowSnackBar);
-
   const navigate = useNavigate();
 
   const { saveIcon, likeIcon, setSaveIcon, setLikeIcon } = useArtworkIcons(

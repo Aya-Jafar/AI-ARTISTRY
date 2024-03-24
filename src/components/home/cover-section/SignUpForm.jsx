@@ -57,7 +57,6 @@ function SignUpForm() {
     }, 3000);
 
     navigate("/");
-    // console.log("Sign Up Success");
   };
 
   return (

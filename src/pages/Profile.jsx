@@ -21,7 +21,6 @@ function Profile() {
     getUserInfo(uid).then((result) => setUserInfo(result));
   }, [uid]);
 
-  // console.log(userInfo);
 
   return (
     <div className="profile">

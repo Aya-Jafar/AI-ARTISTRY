@@ -57,16 +57,9 @@ function LoginForm() {
     } finally {
       setLoading(false); // Ensure loading is set to false after sign-in attempt
     }
-    // if (success !== null) {
-    //   setSuccess(false);
-    // }
   };
 
-  console.log(success);
 
-  // const snackBar = (
-  //   <Box sx={{ display: "flex", justifyContent: "center" }}>Top-Center</Box>
-  // );
 
   return (
     <>

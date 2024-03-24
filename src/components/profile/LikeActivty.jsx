@@ -3,7 +3,6 @@ import likeIcon from "../../images/love (2).png";
 import { Link } from "react-router-dom";
 
 function LikeActivity({ index, userName, artData, time }) {
-    // console.log(artData);
   return (
     <div className="activty-item" key={index}>
       <img src={artData && artData.image} alt="" id="activity-image"/>

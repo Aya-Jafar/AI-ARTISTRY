@@ -30,14 +30,12 @@ export const getUserInfo = async (userId) => {
       return null;
     }
   } catch (e) {
-    console.log("Invalid user ID", e);
     return null;
   }
 };
 
 export const getAllArtworks = (setArtworks, limitCount, isHomePage) => {
   let allDocuments = [];
-  console.log(isHomePage);
   let limitedQuery;
   if (isHomePage) {
     limitedQuery = query(
@@ -109,10 +107,8 @@ export const getSciFiArtworks = (setArtworks, limitCount) => {
         fantasyDocs.push({ id: doc.id, ...doc.data() });
       });
       setArtworks(fantasyDocs);
-      // console.log("Fantasy documents:", fantasyDocs);
     })
     .catch((error) => {
-      // console.error("Error getting documents:", error);
     });
 };
 
@@ -142,7 +138,6 @@ export const saveArtwork = async (currentUser, artId) => {
             savedPosts: userData.savedPosts,
           });
 
-          console.log("Artwork removed from saved-posts");
         } else {
           // If the artwork ID is not found, add it to the array
           userData.savedPosts.push(artId);
@@ -152,7 +147,6 @@ export const saveArtwork = async (currentUser, artId) => {
             savedPosts: userData.savedPosts,
           });
 
-          console.log("Artwork added to saved-posts");
         }
       } else {
         // Create a new document for the user if it doesn't exist

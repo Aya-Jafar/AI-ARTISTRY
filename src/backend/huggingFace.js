@@ -10,7 +10,6 @@ const generateArt = async (setGeneratedImage, prompt) => {
       data: prompt.trim(),
       model: model,
     });
-    // console.log(response);
 
     const reader = new FileReader();
     reader.onload =  (e) => {

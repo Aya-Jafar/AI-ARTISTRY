@@ -67,7 +67,6 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
       return currentArtwork.postUrl;
     }
   };
-  console.log(currentArtwork);
 
   return (
     <>

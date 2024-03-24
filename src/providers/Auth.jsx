@@ -27,8 +27,6 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
 
-  // console.log(currentUser && currentUser.accessToken);
-  //  console.log(currentUser && currentUser.getIdToken());
 
   const auth = getAuth(app);
 
@@ -38,13 +36,13 @@ export const AuthProvider = ({ children }) => {
       if (user) {
         localStorage.setItem("token", user.accessToken);
       }
-      // console.log(user);
     });
 
     return unsubscribe;
   }, [auth]);
 
-  // console.log(localStorage.getItem("token"));
+
+
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();

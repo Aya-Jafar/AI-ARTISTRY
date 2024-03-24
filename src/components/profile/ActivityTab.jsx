@@ -3,13 +3,6 @@ import CommentActivity from "./CommentActivity";
 import LikeActivity from "./LikeActivty";
 
 function UserActivity({ activities }) {
-//   const sortedActivities = activities.sort(
-//     (a, b) => a.timestamp - b.timestamp
-//   );
-
-//   console.log("Reversed activities array:", sortedActivities);
-
-
   return (
     activities && (
       <div className="activity">

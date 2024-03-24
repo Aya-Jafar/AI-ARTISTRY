@@ -3,8 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../providers/Auth";
 
 function useClickOutside(ref, showPopup, onClickOutside) {
-  const { currentUser } = useContext(AuthContext);
-  //   console.log(showPopup);
+
   const navigate = useNavigate();
 
   useEffect(() => {

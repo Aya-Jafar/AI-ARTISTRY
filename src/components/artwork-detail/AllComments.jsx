@@ -12,7 +12,6 @@ import { getUserInfo } from "../../backend/data";
 import CommentImage from "./CommentImage";
 
 function AllComments({ comments, artId }) {
-  // console.log(comments );
   const { currentUser } = useContext(AuthContext);
 
   const [open, setOpen] = React.useState(false);
@@ -28,7 +27,7 @@ function AllComments({ comments, artId }) {
   const [activeCommentId, setActiveCommentId] = useState(null);
 
   useEffect(() => {
-    getUserInfo(comments[0] && comments[0].userId).then((result) => console.log(result));
+    getUserInfo(comments[0] && comments[0].userId);
   }, [comments]);
 
   return (
