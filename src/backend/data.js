@@ -150,8 +150,6 @@ export const saveArtwork = async (currentUser, artId) => {
         await setDoc(userSavedPostsRef, {
           savedPosts: [artId],
         });
-
-        console.log("User's saved-posts document created with the artwork ID");
       }
     } catch (error) {
       console.error("Error updating saved-posts:", error);
@@ -204,7 +202,6 @@ export const saveGeneratedImage = async (
             savedPosts: userData.savedPosts,
           });
 
-          console.log("Image removed from saved-images");
         } else {
           // If the image data is not found, add it to the array
           userData.savedPosts.push(imageData);
@@ -213,8 +210,6 @@ export const saveGeneratedImage = async (
           await setDoc(userSavedImagesRef, {
             savedPosts: userData.savedPosts,
           });
-
-          console.log("Image added to saved-images");
           setShowSnackBar(true);
         }
       } else {
@@ -223,7 +218,6 @@ export const saveGeneratedImage = async (
           savedPosts: [imageData],
         });
 
-        console.log("User's saved-images document created with the image data");
         setShowSnackBar(true);
       }
     } catch (error) {
@@ -283,9 +277,6 @@ export const isArtworkLiked = async (currentUser, artId) => {
         (e) => e.artData.id === artId && e.activityType === "Like"
       );
 
-      // console.log(userData.activities);
-      // console.log(liked);
-
       if (liked) {
         return true;
       } else {
@@ -317,7 +308,6 @@ export const getSavedArtworks = async (currentUser, setSavedPosts) => {
       const userSavedPostsSnapshot = await getDoc(userSavedPostsRef);
       const userData = userSavedPostsSnapshot.data();
 
-      // console.log(userData);
 
       if (userData && userData.savedPosts) {
         const blobUrls = userData.savedPosts.filter(
@@ -368,7 +358,6 @@ export const addToLikedActivity = async (currentUser, artId, activityType) => {
       await setDoc(activityRef, {
         activities: [newActivityObject],
       });
-      console.log("Document added successfully");
     } else {
       const existingActivities = activitySnapshot.data().activities;
 
@@ -388,14 +377,12 @@ export const addToLikedActivity = async (currentUser, artId, activityType) => {
           activities: existingActivities,
         });
 
-        console.log("Activity deleted successfully");
       } else {
         // If the activity doesn't exist, add the new activity
         await updateDoc(activityRef, {
           activities: [...existingActivities, newActivityObject],
         });
 
-        console.log("Activity added successfully");
       }
     }
     await updateLikesCount(artId);
@@ -411,7 +398,6 @@ async function updateLikesCount(artId) {
 
   const currentLikesCount = artworkDoc.data()?.likesCount || 0;
 
-  console.log("Current likes count: " + currentLikesCount);
 
   if (currentLikesCount === 0) {
     // If the current likesCount is 0, increment it by 1
@@ -424,7 +410,6 @@ async function updateLikesCount(artId) {
       likesCount: increment(-1),
     });
   }
-  console.log("Current likes count: " + currentLikesCount);
 }
 
 export const getArtworkDetails = async (
@@ -451,9 +436,7 @@ export const getArtworkDetails = async (
           id: doc.id, // Include the comment ID
           ...doc.data(), // Include the comment data
         }));
-        // console.log(commentsData);
         setCommentsCount(commentsData.length);
-        // console.log(commentsData);
         setAllComments(commentsData);
       });
 
@@ -499,6 +482,7 @@ export const addCommentToActivity = async (currentUser, artId, newComment) => {
 
       const artData = await fetchArtworkData(artId);
 
+
       const newActivityObject = {
         artData: artData,
         activityType: "comment",
@@ -507,6 +491,7 @@ export const addCommentToActivity = async (currentUser, artId, newComment) => {
         userName: currentUser.displayName,
         timestamp: new Date().toISOString(),
       };
+
 
       if (
         !activitySnapshot.data() ||
@@ -517,7 +502,6 @@ export const addCommentToActivity = async (currentUser, artId, newComment) => {
         await setDoc(activityRef, {
           activities: [newActivityObject],
         });
-        console.log("Comment added to empty activity list successfully");
       } else {
         // If the user hasn't liked the artwork, add the new activity
         await updateDoc(activityRef, {
@@ -526,7 +510,6 @@ export const addCommentToActivity = async (currentUser, artId, newComment) => {
             newActivityObject,
           ],
         });
-        console.log("Activity added successfully");
       }
     } catch (error) {
       console.error("Error adding comment: ", error);
@@ -542,7 +525,6 @@ export const getUserActivity = async (uid, setActivity) => {
 
     getDocs(activityCollection)
       .then((querySnapshot) => {
-        // console.log(querySnapshot);
         querySnapshot.forEach((doc) => {
           // doc.data() is the data of each document
           if (uid === doc.id) {
@@ -550,7 +532,6 @@ export const getUserActivity = async (uid, setActivity) => {
           }
         });
         setActivity(allActivity);
-        console.log("All documents:", allActivity);
       })
       .catch((error) => {
         console.error("Error getting documents:", error);
@@ -566,7 +547,6 @@ export const deleteComment = async (artId, commentId, userId) => {
 
   try {
     await deleteDoc(commentDocRef);
-    // console.log("Comment deleted successfully");
 
     // Retrieve the user's activity data
     const activitySnapshot = await getDoc(activityRef);
@@ -589,7 +569,6 @@ export const deleteComment = async (artId, commentId, userId) => {
 
           // Update the user's activity with the modified 'activities' array
           await updateDoc(activityRef, { activities: activities });
-          console.log("Activity updated after comment deletion");
         }
       }
     }
@@ -605,7 +584,6 @@ export const editComment = async (artId, commentId, userId, newText) => {
   try {
     // Update the comment text
     await updateDoc(commentDocRef, { text: newText });
-    console.log("Comment edited successfully");
 
     // Retrieve the user's activity data
     const activitySnapshot = await getDoc(activityRef);
@@ -628,7 +606,6 @@ export const editComment = async (artId, commentId, userId, newText) => {
 
           // Update the user's activity with the modified 'activities' array
           await updateDoc(activityRef, { activities: activities });
-          console.log("Activity updated after comment edit");
         }
       }
     }
@@ -674,7 +651,6 @@ export const postArtwork = async (
             posts: userData.posts,
           });
 
-          console.log("Image removed from saved-images");
         } else {
           // If the image data is not found, add it to the array
           userData.posts.push(imageData);
@@ -693,7 +669,6 @@ export const postArtwork = async (
           posts: [imageData],
         });
 
-        console.log("User's saved-images document created with the image data");
         setShowSnackBar(true);
       }
     } catch (error) {
@@ -718,7 +693,6 @@ export const getPosts = async (currentUser, setPosts) => {
       const userData = userSavedPostsSnapshot.data();
 
       if (userData && userData.posts) {
-        console.log(userData.posts);
         setPosts(userData.posts);
       }
     } catch (error) {
@@ -797,14 +771,11 @@ async function getPostDetail(currentUserUid, setArtworkDetail, postUrl) {
   const userData = userSavedImagesSnapshot.data();
 
   if (userData && userData.posts) {
-    // console.log(userData.posts);
     // Use Array.find to find the object with the matching prompt
     const foundArtwork = userData.posts.find((artwork) => {
-      // console.log(artwork.postUrl);
       return artwork.postUrl.slice(-50) === postUrl.slice(-50);
     });
 
-    console.log(foundArtwork);
     // If a matching object is found, you can use it
     if (foundArtwork) {
       setArtworkDetail(foundArtwork);
