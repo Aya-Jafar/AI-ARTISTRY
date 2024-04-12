@@ -2,19 +2,22 @@ import { formatDate } from "../../utils/formaters";
 import commentIcon from "../../images/comment.png";
 import { Link } from "react-router-dom";
 
-function CommentActivity({ index, commentText, userName, artData, time }) {
+function CommentActivity({
+  index,
+  commentText,
+  userName,
+  artData,
+  time,
+  artworkData,
+}) {
   return (
     <div className="activty-item comment" key={index}>
-        
-      {/* <Link to={`/artwork/${artData.id}`}> */}
-        <img src={artData && artData.image} alt="" id="activity-image" />
-      {/* </Link> */}
+      <img src={artData && artData.image} alt="" id="activity-image" />
 
       <div className="comment-detail">
         <h4 className="icon-title">
           <img src={commentIcon} alt="" />
-          
-          {userName} commented on {`Aya`}'s post
+          {userName} commented on {artworkData?.creator}'s post
         </h4>
 
         <h4 id="comment-text">"{commentText}"</h4>

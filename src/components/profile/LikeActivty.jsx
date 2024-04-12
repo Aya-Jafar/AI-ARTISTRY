@@ -2,16 +2,14 @@ import { formatDate } from "../../utils/formaters";
 import likeIcon from "../../images/love (2).png";
 import { Link } from "react-router-dom";
 
-function LikeActivity({ index, userName, artData, time }) {
+function LikeActivity({ index, userName, artData, time, artworkData }) {
   return (
     <div className="activty-item" key={index}>
-      <img src={artData && artData.image} alt="" id="activity-image"/>
+      <img src={artData && artData.image} alt="" id="activity-image" />
       <div className="comment-detail">
         <h4 className="icon-title">
-          {/* <Link to={`/artwork/${artData.id}`}> */}
-            <img src={likeIcon} alt="" />
-          {/* </Link> */}
-          {userName} liked {`Aya`}'s post
+          <img src={likeIcon} alt="" />
+          {userName} liked {artworkData?.creator}'s post
         </h4>
         {time && (
           <>
