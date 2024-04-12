@@ -108,8 +108,7 @@ export const getSciFiArtworks = (setArtworks, limitCount) => {
       });
       setArtworks(fantasyDocs);
     })
-    .catch((error) => {
-    });
+    .catch((error) => {});
 };
 
 export const saveArtwork = async (currentUser, artId) => {
@@ -137,7 +136,6 @@ export const saveArtwork = async (currentUser, artId) => {
           await setDoc(userSavedPostsRef, {
             savedPosts: userData.savedPosts,
           });
-
         } else {
           // If the artwork ID is not found, add it to the array
           userData.savedPosts.push(artId);
@@ -146,7 +144,6 @@ export const saveArtwork = async (currentUser, artId) => {
           await setDoc(userSavedPostsRef, {
             savedPosts: userData.savedPosts,
           });
-
         }
       } else {
         // Create a new document for the user if it doesn't exist
@@ -799,15 +796,12 @@ async function getPostDetail(currentUserUid, setArtworkDetail, postUrl) {
   const userSavedImagesSnapshot = await getDoc(userSavedImagesRef);
   const userData = userSavedImagesSnapshot.data();
 
-
   if (userData && userData.posts) {
     // console.log(userData.posts);
     // Use Array.find to find the object with the matching prompt
     const foundArtwork = userData.posts.find((artwork) => {
       // console.log(artwork.postUrl);
-      return (
-        artwork.postUrl.slice(-50) === postUrl.slice(-50)
-      );
+      return artwork.postUrl.slice(-50) === postUrl.slice(-50);
     });
 
     console.log(foundArtwork);
