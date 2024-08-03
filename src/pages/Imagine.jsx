@@ -12,6 +12,9 @@ import getRandomPropmt from "../backend/prompts";
 import CustomizedProgressBars from "../components/imagine/Loading";
 import AlertContext from "../providers/Alert";
 import CustomAlert from "../components/common/CustomAlert";
+import { Tooltip } from "@mui/material";
+import ChatBot from "../components/imagine/ChatBot";
+import chatBotInitIcon from  "../images/chatbot-init.png";
 
 function Imagine() {
   const { currentUser } = useContext(AuthContext);
@@ -19,6 +22,7 @@ function Imagine() {
 
   const [isClicked, setIsClicked] = useState(false);
   const [prompt, setPrompt] = useState("");
+  const [showChatBot, setShowChatBot] = useState(false);
 
   const [generatedImage, setGeneratedImage] = useState("");
 
@@ -86,6 +90,12 @@ function Imagine() {
             >
               Generate
             </button>
+            <Tooltip title="Brainstorm prompts ideas" placement="right">
+              <div className="chat-circle" onClick={() => setShowChatBot(true)}>
+                <img src={chatBotInitIcon} alt="" className="icon-fit-container" />
+              </div>
+            </Tooltip>
+            <ChatBot showChatBot={showChatBot} />
           </div>
 
           {generatedImage && (
@@ -134,21 +144,33 @@ function Imagine() {
             </>
           )}
         </div>
-        
+
         <CustomAlert message="Artwork added successfully" />
 
         <div className="image-section">
           {!isClicked && !generatedImage ? (
             <>
               <ImagineGrid />
+
+              {/* TODO:  change this to be at the else secotion */}
+              <div className="gemni-btns">
+                <button id="get-artist-names-btn">
+                  Get artists names with similar work
+                </button>
+                <button id="get-artist-names-btn">
+                  Chat about the generated artwork
+                </button>
+              </div>
             </>
           ) : (
             <>
               {generatedImage ? (
-                <GeneratedImage
-                  generatedImage={generatedImage}
-                  customOptions={customOptions}
-                />
+                <>
+                  <GeneratedImage
+                    generatedImage={generatedImage}
+                    customOptions={customOptions}
+                  />
+                </>
               ) : (
                 <div className="progress-bg">
                   <div className="grid-container">
@@ -157,20 +179,16 @@ function Imagine() {
 
                   <CustomizedProgressBars />
                 </div>
-                // <>
-                //   <h1 class="title">This may take a while...</h1>
-                //   <div class="rainbow-marker-loader"></div>
-                // </>
               )}
             </>
           )}
         </div>
       </motion.div>
-      <footer className="footer-copywrite">
+      {/* <footer className="footer-copywrite">
         <div class="song-copyright">
           &copy; Imagine-John Lennon. All rights reserved.
         </div>
-      </footer>
+      </footer> */}
     </>
   );
 }
