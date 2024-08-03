@@ -9,25 +9,25 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 1.3% 5%;
+  font: 120% system-ui;
   background-color: black;
   color: white;
   white-space: nowrap;
+}
+.nav-link:hover {
+  color: #50d5ff;
+  font-weight: bold;
 }
 
 .nav-links {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /* gap: 10%; */
   cursor: pointer;
   white-space: nowrap;
 }
 .nav-link {
   font-size: 18px;
-}
-.nav-link:hover {
-  color: #50d5ff;
-  font-weight: bold;
 }
 
 .nav-btns {
@@ -140,7 +140,6 @@ body {
   margin-bottom: 40vh;
 }
 
-
 .about-us-container {
   margin-top: 40vh;
   height: 90vh;
@@ -208,7 +207,6 @@ body {
   filter: blur(6px);
   margin: -10px;
   /* background-color: red; */
-  
 }
 
 #logo {
@@ -313,6 +311,39 @@ body {
   color: white;
   border: 1px solid rgb(99, 99, 99);
 }
+.gemni-btns {
+  display: flex;
+  gap: 10px;
+}
+
+#get-artist-names-btn {
+  background-color: #000000;
+  color: white;
+  border: 1px solid rgb(99, 99, 99);
+  padding: 10px 20px;
+  /* width: 150px; */
+  border-radius: 14px;
+  cursor: pointer;
+  font-size: 15px;
+  width: fit-content;
+}
+#get-artist-names-btn:hover {
+  border: 1px solid #50d5ff;
+}
+
+.chat-circle {
+  width: 50px;
+  height: 40px;
+  cursor: pointer;
+  border: 1px solid rgb(99, 99, 99);
+  /* border-radius: 50%; */
+  border-radius: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* font-size: 25px; */
+}
 
 .filter {
   /* background-color: red; */
@@ -385,7 +416,9 @@ body {
   padding-left: 1%;
   padding-top: 1%;
   height: auto;
-  width: 40vw;
+  height: 65vh;
+
+  width: 45vw;
   /* background-color: #202024; */
 }
 
@@ -396,23 +429,107 @@ body {
 
 .imagine-grid {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   width: auto;
+  height: 100%;
 }
 
 .imagine-image-container {
   width: 93%;
+  height: auto;
+  position: relative;
+  overflow: hidden;
+  max-height: 100%;
   margin-bottom: 10px;
   border-radius: 14px;
   overflow: hidden;
 }
 
+.imagine-image-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
+  pointer-events: none; /* Prevent interaction with the pseudo-element */
+}
+
+.chatbot-container {
+  position: fixed;
+  bottom: 20px; /* Adjust the bottom spacing */
+  left: 20px; /* Adjust the left spacing */
+  width: 300px; /* Set a width for the chatbot */
+  border: 1px solid rgb(99, 99, 99);
+  border-radius: 8px;
+  z-index: 1000; /* Make sure it's above other content */
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  height: 40vh; /* Set a height for the chatbot */
+  overflow: hidden; /* Prevent container from overflowing */
+}
+
+.messages-container {
+  flex: 1; /* Allow the messages container to grow and fill available space */
+  overflow-y: auto; /* Enable scrolling for messages */
+  padding: 10px; /* Add padding inside the messages container */
+  word-wrap: break-word; /* Ensure long words break */
+}
+
+.chatbot-message {
+  white-space: pre-wrap; /* Preserve whitespace and wrap text */
+  overflow-wrap: break-word; /* Break long words if necessary */
+}
+
+#chatbot-input {
+  all: unset;
+  width: calc(100% - 30px); /* Adjust width to fit within padding */
+  background-color: black;
+  color: white;
+  padding: 10px 10px;
+  border-radius: 5px;
+  position: relative; /* Position relative to the container */
+  bottom: 0;
+  display: flex;
+  align-items: center;
+
+  margin-bottom: 10px; /* Add margin to the input field */
+}
+
+.answer {
+  background-color: #4c4c4c; /* Background color for the question */
+  color: white;
+  padding: 1px 5px;
+  border-radius: 14px;
+  max-width: 70%; /* Adjust as needed */
+  text-align: left; /* Align text to the right */
+  margin-top: 10px;
+}
+
+.question {
+  background-color: #2b2b2b; /* Background color for the answer */
+  padding: 1px 5px;
+
+  border-radius: 14px;
+  margin-bottom: 10px;
+  max-width: 70%; /* Adjust as needed */
+  text-align: right; /* Align text to the left */
+  margin-left: auto; /* Push to the left side of the container */
+}
+
+.icon-fit-container {
+  width: 60%;
+  height: 70%;
+}
+
 .imagine-image {
   width: 100%;
-  height: auto;
+  height: 100%;
   overflow: hidden;
   object-fit: cover;
-  /* cursor: pointer; */
 }
 
 .imagine-image-container:hover {
@@ -433,7 +550,6 @@ body {
 #imagine-custome-btns {
   margin-top: 17%;
 }
-
 
 .logout-section {
   display: flex;
@@ -471,7 +587,6 @@ body {
   gap: 10px;
   cursor: pointer;
   margin-bottom: 7px;
-
 }
 .profile-tab img {
   width: 35px;
@@ -492,7 +607,6 @@ body {
 .artwork-detail-btn img {
   width: 25px;
 }
-
 
 textarea {
   width: 100%;
@@ -536,7 +650,6 @@ textarea:hover {
 
   margin-top: 3%;
   cursor: pointer;
-
 }
 
 .signup-form {
@@ -635,7 +748,6 @@ button[type="submit"] {
   height: 100%;
 }
 
-
 .artwork-detail {
   display: flex;
   align-items: start;
@@ -733,8 +845,6 @@ button[type="submit"] {
   width: 15vw;
   border-radius: 50%;
 }
-
-
 
 button[type="submit"]:hover {
   background-color: #8ddef7;
@@ -1065,10 +1175,9 @@ blockquote:before {
 .edit-option img {
   width: 20px;
 }
-.prompt-text{
+.prompt-text {
   text-wrap: wrap;
 }
-
 
 @media (min-width: 0px) and (max-width: 780px) {
   /* Styles for mobile screens */
@@ -1089,7 +1198,7 @@ blockquote:before {
     width: 100%;
     height: 300px;
   }
-  .cover-text h2{
+  .cover-text h2 {
     font-size: 25px;
   }
 
@@ -1114,7 +1223,6 @@ blockquote:before {
     width: 80%;
     padding: 0 4%;
     height: 90vh;
-
   }
 
   .about-us-pics {
@@ -1170,7 +1278,7 @@ blockquote:before {
     justify-content: center;
     color: white;
   }
-  .logout-section.mobile img{
+  .logout-section.mobile img {
     /* color:red */
     width: 17px;
     height: 20px;
@@ -1181,24 +1289,21 @@ blockquote:before {
     font-size: 16px;
   }
 
-
   .popup {
     height: 70vh;
     width: 60vw;
     left: 20%;
   }
-  .signup-btns{
+  .signup-btns {
     width: 100%;
     font-size: 17px;
   }
 
-  #login , #sign-up{
+  #login,
+  #sign-up {
     height: 30px;
     font-size: 14px;
-    
   }
-
-
 
   .filter-tabs {
     width: 90%;
@@ -1206,7 +1311,7 @@ blockquote:before {
     margin-top: 0;
     margin-bottom: 15%;
   }
-  
+
   .filter-text {
     font-size: 12px;
   }
@@ -1240,22 +1345,18 @@ blockquote:before {
     width: 100%;
     margin-bottom: 100vh;
     border: none;
-    margin: 50% 0 ;
-    gap:10%;
-    
-
+    margin: 50% 0;
+    gap: 10%;
   }
   .form {
     width: 80%;
     padding-bottom: 10%;
-
   }
-  .left-form-image{
+  .left-form-image {
     display: none;
   }
 
-  .left-form-image img{
-
+  .left-form-image img {
     width: 100%;
     display: none;
     align-items: center;
@@ -1305,9 +1406,7 @@ blockquote:before {
     justify-content: center;
     align-items: center;
     width: 90%;
-
   }
-
 
   .profile-tabs {
     width: 80%;
@@ -1337,7 +1436,6 @@ blockquote:before {
     border-radius: 10px 10px 0 0;
 
     border: 1px solid rgb(99, 99, 99);
-
   }
 
   #activity-image {
@@ -1356,12 +1454,10 @@ blockquote:before {
 
     padding-left: 3%;
     width: 93%;
-
   }
   .icon-title {
     display: flex;
     align-items: center;
     border-radius: 14px;
   }
-
 }
