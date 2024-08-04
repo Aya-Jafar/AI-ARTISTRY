@@ -2,12 +2,32 @@ import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { popupVariants } from "../../utils/motion";
 import { chatBotSocket } from "../../backend/geminiAPI";
+import sendIcon from "../../images/send.png";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function ChatBot({ showChatBot }) {
   const [messages, setMessages] = useState([]);
   const [initialMessage, setInitialMessage] = useState("");
   const [isConnected, setIsConnected] = useState(false);
   const [pendingMessage, setPendingMessage] = useState("");
+
+  const [isSentClicked, setIsSentClicked] = useState(false);
+
+  const handleSendIconClick = () => {
+    if (initialMessage.trim()) {
+      setIsSentClicked(true); // Set loading state
+      setPendingMessage(initialMessage);
+      setIsConnected(true);
+
+      // Reset the message input after setting pendingMessage
+      setInitialMessage("");
+
+      // Remove loading state after the timeout
+      setTimeout(() => {
+        setIsSentClicked(false);
+      }, 3000);
+    }
+  };
 
   useEffect(() => {
     if (isConnected) {
@@ -40,6 +60,8 @@ function ChatBot({ showChatBot }) {
           exit="hidden"
           variants={popupVariants}
         >
+          <motion.h1 className="chatbot-title">Brainstorm prompts</motion.h1>
+          <hr />
           <div className="messages-container">
             {messages.map((message, index) => (
               <div key={index} className="chatbot-message">
@@ -54,23 +76,33 @@ function ChatBot({ showChatBot }) {
               </div>
             ))}
           </div>
-          <hr
-            style={{
-              width: "100%",
-              backgroundColor: "rgb(99, 99, 99)",
-              height: "1px",
-              border: "none",
-            }}
-          />
+          <hr />
 
-          <input
-            id="chatbot-input"
-            type="text"
-            value={initialMessage}
-            onChange={(e) => setInitialMessage(e.target.value)}
-            onKeyPress={handleKeyPress}
-            placeholder="Type your initial message"
-          />
+          <div className="chat-input-container">
+            <input
+              id="chatbot-input"
+              type="text"
+              value={initialMessage}
+              onChange={(e) => setInitialMessage(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Write an initial prompt..."
+            />
+
+            {isSentClicked ? (
+              <CircularProgress
+                className="comment-progress-indicator"
+                size="35px"
+              />
+            ) : (
+              <img
+                src={sendIcon}
+                alt="Comment Icon"
+                className="comment-icon"
+                id="send-icon-in-chatbot"
+                onClick={() => handleSendIconClick()}
+              />
+            )}
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
