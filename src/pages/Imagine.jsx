@@ -14,7 +14,7 @@ import AlertContext from "../providers/Alert";
 import CustomAlert from "../components/common/CustomAlert";
 import { Tooltip } from "@mui/material";
 import ChatBot from "../components/imagine/ChatBot";
-import chatBotInitIcon from  "../images/chatbot-init.png";
+import chatBotInitIcon from "../images/chatbot-init.png";
 
 function Imagine() {
   const { currentUser } = useContext(AuthContext);
@@ -92,10 +92,17 @@ function Imagine() {
             </button>
             <Tooltip title="Brainstorm prompts ideas" placement="right">
               <div className="chat-circle" onClick={() => setShowChatBot(true)}>
-                <img src={chatBotInitIcon} alt="" className="icon-fit-container" />
+                <img
+                  src={chatBotInitIcon}
+                  alt=""
+                  className="icon-fit-container"
+                />
               </div>
             </Tooltip>
-            <ChatBot showChatBot={showChatBot} />
+            <ChatBot
+              showChatBot={showChatBot}
+              setShowChatBot={setShowChatBot}
+            />
           </div>
 
           {generatedImage && (

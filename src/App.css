@@ -28,6 +28,7 @@ body {
 }
 .nav-link {
   font-size: 18px;
+  transition: font-weight 0.5s ease;
 }
 
 .nav-btns {
@@ -90,6 +91,7 @@ body {
 .cover-text {
   color: white;
   width: 564px;
+  position: relative;
   height: 330px;
   position: absolute;
   top: 360px;
@@ -99,6 +101,17 @@ body {
   align-items: start;
   /* background-color: rgba(0, 0, 0, 0.834); */
   background-color: #0c0c0cd5;
+}
+
+.chatbot-header {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+}
+
+#chatbot-close {
+  width: 20px;
+  height: 20px;
 }
 
 .cover-text h1 {
@@ -352,7 +365,7 @@ hr {
 }
 .chatbot-title {
   font-size: 20px;
-  margin-left: 10px;
+  /* margin-left: 10px; */
 }
 .chat-input-container {
   display: flex;
@@ -458,6 +471,7 @@ hr {
   margin-bottom: 10px;
   border-radius: 14px;
   overflow: hidden;
+  transition: border-color 0.5s ease, outline-color 0.5s ease;
 }
 
 .imagine-image-container::after {
