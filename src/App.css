@@ -363,6 +363,29 @@ hr {
   height: 1px;
   border: none;
 }
+.typing-effect {
+  display: inline;
+  /* white-space: nowrap; */
+  /* overflow: hidden; */
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+}
+
 .chatbot-title {
   font-size: 20px;
   /* margin-left: 10px; */
@@ -545,7 +568,7 @@ hr {
 .answer {
   background-color: #4c4c4c; /* Background color for the question */
   color: white;
-  padding: 1px 5px;
+  padding: 8px 8px;
   border-radius: 14px;
   max-width: 70%; /* Adjust as needed */
   text-align: left; /* Align text to the right */
@@ -554,7 +577,7 @@ hr {
 
 .question {
   background-color: #2b2b2b; /* Background color for the answer */
-  padding: 1px 5px;
+  padding: 1px 8px;
 
   border-radius: 14px;
   margin-bottom: 10px;

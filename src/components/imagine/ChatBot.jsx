@@ -6,6 +6,27 @@ import sendIcon from "../../images/send.png";
 import CircularProgress from "@mui/material/CircularProgress";
 import closeIcon from "../../images/close.png";
 
+
+
+const TypingEffect = ({ text }) => {
+  const [displayText, setDisplayText] = useState('');
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (index < text.length) {
+      const timer = setTimeout(() => {
+        setDisplayText(prev => prev + text[index]);
+        setIndex(prev => prev + 1);
+      }, 100); // Adjust the speed here
+
+      return () => clearTimeout(timer);
+    }
+  }, [index, text]);
+
+  return <span className="typing-effect">{displayText}</span>;
+};
+
+
 function ChatBot({ showChatBot, setShowChatBot }) {
   const [messages, setMessages] = useState([]);
   const [initialMessage, setInitialMessage] = useState("");
@@ -95,7 +116,7 @@ function ChatBot({ showChatBot, setShowChatBot }) {
                 </div>
                 {/* TODO: Add Insert icon to insert it into the text area again*/}
                 <div className="answer">
-                  <p>{message.answer}</p>
+                <TypingEffect text={message.answer} />
                 </div>
               </div>
             ))}
