@@ -1,5 +1,7 @@
 export const chatBotSocket = (setMessages, initialMessage) => {
-  const chatSocket = new WebSocket("ws://localhost:8000/ws/chatbot/");
+  const chatSocket = new WebSocket(
+    `${process.env.REACT_APP_WEBSOCKET_URL}/ws/chatbot/`
+  );
 
   chatSocket.onmessage = (e) => {
     const data = JSON.parse(e.data);
@@ -23,22 +25,25 @@ export const chatBotSocket = (setMessages, initialMessage) => {
   return chatSocket;
 };
 
-export const getArtistsNameWithSimilarWork = async (base64Url , setArtists) => {
+export const getArtistsNameWithSimilarWork = async (base64Url, setArtists) => {
   if (base64Url) {
     const payload = {
       image_base64_url: base64Url,
-      prompt:"Give me artist names with similar artworks for this image"
+      prompt: "Give me artist names with similar artworks for this image",
     };
 
     try {
       // Send the POST request
-      const response = await fetch("http://localhost:8000/get-artists/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_GEMINI_API_URL}/get-artists/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
 
       const data = await response.json();
 
