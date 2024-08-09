@@ -27,6 +27,7 @@ export const getArtistsNameWithSimilarWork = async (base64Url , setArtists) => {
   if (base64Url) {
     const payload = {
       image_base64_url: base64Url,
+      prompt:"Give me artist names with similar artworks for this image"
     };
 
     try {
