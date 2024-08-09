@@ -12,19 +12,20 @@ import getRandomPropmt from "../backend/prompts";
 import CustomizedProgressBars from "../components/imagine/Loading";
 import AlertContext from "../providers/Alert";
 import CustomAlert from "../components/common/CustomAlert";
-import { Tooltip } from "@mui/material";
+import { CircularProgress, Tooltip } from "@mui/material";
 import ChatBot from "../components/imagine/ChatBot";
 import chatBotInitIcon from "../images/chatbot-init.png";
+import { getArtistsNameWithSimilarWork } from "../backend/gemini";
+import TypingEffect from "../components/imagine/TypingEffect";
 
 function Imagine() {
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
-
   const [isClicked, setIsClicked] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [showChatBot, setShowChatBot] = useState(false);
-
   const [generatedImage, setGeneratedImage] = useState("");
+  const [artists, setArtists] = useState([]);
 
   const [customOptions, setCustomOptions] = useState({
     brightness: 100,
@@ -43,6 +44,21 @@ function Imagine() {
       console.log(e);
     }
   };
+
+  const getArtists = async (e) => {
+    e.preventDefault();
+
+    if (generatedImage) {
+      await getArtistsNameWithSimilarWork(generatedImage, setArtists);
+    }
+  };
+
+  const tempArtists = [
+    "Here are some artists who have created similar works of art:",
+
+    "Antonio Canova (1757-1822) was an Italian sculptor known for his neoclassical style. He is known for his sculptures of angels and mythological figures.",
+    "Bertel Thorvaldsen (1770-1844) was a Danish sculptor who was also known for his neoclassical style. He is known for his sculptures of angels, mythological figures, and religious figures.",
+  ];
 
   return (
     <>
@@ -158,16 +174,6 @@ function Imagine() {
           {!isClicked && !generatedImage ? (
             <>
               <ImagineGrid />
-
-              {/* TODO:  change this to be at the else secotion */}
-              <div className="gemni-btns">
-                <button id="get-artist-names-btn">
-                  Get artists names with similar work
-                </button>
-                <button id="get-artist-names-btn">
-                  Chat about the generated artwork
-                </button>
-              </div>
             </>
           ) : (
             <>
@@ -177,6 +183,31 @@ function Imagine() {
                     generatedImage={generatedImage}
                     customOptions={customOptions}
                   />
+                  <div className="gemni-btns">
+                    <button
+                      id="get-artist-names-btn"
+                      onClick={(e) => getArtists(e)}
+                    >
+                      {artists.length === 0 ? (
+                        <>Get artists names with similar work</>
+                      ) : (
+                        <div className="loading-btn-with-text">
+                          <>Get artists names with similar work</>
+                          <CircularProgress size={20} />
+                        </div>
+                      )}
+                    </button>
+                    <button id="get-artist-names-btn">
+                      Chat about the generated artwork
+                    </button>
+                  </div>
+                  <div style={{ paddingBottom: "70px", marginTop: "40px" }}>
+                    {artists.length > 0 && (
+                      <p>
+                        <TypingEffect text={artists.join("\n\n")} />
+                      </p>
+                    )}
+                  </div>
                 </>
               ) : (
                 <div className="progress-bg">

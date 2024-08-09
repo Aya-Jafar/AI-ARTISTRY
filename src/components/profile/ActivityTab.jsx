@@ -3,7 +3,6 @@ import CommentActivity from "./CommentActivity";
 import LikeActivity from "./LikeActivty";
 
 function UserActivity({ activities }) {
-  console.log(activities);
   return (
     activities && (
       <div className="activity">

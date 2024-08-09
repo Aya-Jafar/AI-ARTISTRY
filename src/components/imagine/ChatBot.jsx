@@ -1,31 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { popupVariants } from "../../utils/motion";
-import { chatBotSocket } from "../../backend/geminiAPI";
+import { chatBotSocket } from "../../backend/gemini";
 import sendIcon from "../../images/send.png";
 import CircularProgress from "@mui/material/CircularProgress";
 import closeIcon from "../../images/close.png";
-
-
-
-const TypingEffect = ({ text }) => {
-  const [displayText, setDisplayText] = useState('');
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    if (index < text.length) {
-      const timer = setTimeout(() => {
-        setDisplayText(prev => prev + text[index]);
-        setIndex(prev => prev + 1);
-      }, 100); // Adjust the speed here
-
-      return () => clearTimeout(timer);
-    }
-  }, [index, text]);
-
-  return <span className="typing-effect">{displayText}</span>;
-};
-
+import TypingEffect from "./TypingEffect";
 
 function ChatBot({ showChatBot, setShowChatBot }) {
   const [messages, setMessages] = useState([]);
@@ -116,7 +96,7 @@ function ChatBot({ showChatBot, setShowChatBot }) {
                 </div>
                 {/* TODO: Add Insert icon to insert it into the text area again*/}
                 <div className="answer">
-                <TypingEffect text={message.answer} />
+                  <TypingEffect text={message.answer} />
                 </div>
               </div>
             ))}

@@ -325,11 +325,14 @@ body {
   border: 1px solid rgb(99, 99, 99);
 }
 .gemni-btns {
+  margin-top: 4px;
   display: flex;
   gap: 10px;
 }
 
 #get-artist-names-btn {
+  all: unset;
+
   background-color: #000000;
   color: white;
   border: 1px solid rgb(99, 99, 99);
@@ -339,7 +342,28 @@ body {
   cursor: pointer;
   font-size: 15px;
   width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  white-space: nowrap;
 }
+
+.loading-btn-with-text {
+  all: unset;
+  background-color: #000000;
+  color: white;
+  cursor: pointer;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  gap: 10px;
+
+  white-space: nowrap;
+}
+
 #get-artist-names-btn:hover {
   border: 1px solid #50d5ff;
 }
@@ -364,6 +388,7 @@ hr {
   border: none;
 }
 .typing-effect {
+  white-space: pre-wrap;
   display: inline;
   /* white-space: nowrap; */
   /* overflow: hidden; */
@@ -466,7 +491,7 @@ hr {
   padding-left: 1%;
   padding-top: 1%;
   height: auto;
-  height: 65vh;
+  height: 70vh;
 
   width: 45vw;
   /* background-color: #202024; */
@@ -515,6 +540,7 @@ hr {
   left: 20px; /* Adjust the left spacing */
   width: 300px; /* Set a width for the chatbot */
   border: 1px solid rgb(99, 99, 99);
+  background-color: #000000;
   border-radius: 8px;
   z-index: 1000; /* Make sure it's above other content */
   display: flex;
@@ -584,7 +610,7 @@ hr {
   margin-top: 10px;
 
   max-width: 70%; /* Adjust as needed */
-  text-align: right; /* Align text to the left */
+  text-align: left; /* Align text to the left */
   margin-left: auto; /* Push to the left side of the container */
 }
 
