@@ -17,7 +17,6 @@ export const chatBotSocket = (setMessages, initialMessage) => {
 
   chatSocket.onclose = (e) => {
     console.log("WebSocket closed:", e);
-    console.log("Code:", e.code);
     console.log("Reason:", e.reason);
   };
 
@@ -43,7 +42,6 @@ export const getArtistsNameWithSimilarWork = async (base64Url , setArtists) => {
       const data = await response.json();
 
       if (data.artists) {
-        console.log("Artists:", data);
         setArtists(data.artists);
       } else if (data.error) {
         console.error("Error:", data.error);

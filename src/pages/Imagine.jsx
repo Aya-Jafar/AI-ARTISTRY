@@ -197,9 +197,9 @@ function Imagine() {
                         </div>
                       )}
                     </button>
-                    <button id="get-artist-names-btn">
+                    {/* <button id="get-artist-names-btn">
                       Chat about the generated artwork
-                    </button>
+                    </button> */}
                   </div>
                   <div style={{ paddingBottom: "70px", marginTop: "40px" }}>
                     {artists.length > 0 && (
