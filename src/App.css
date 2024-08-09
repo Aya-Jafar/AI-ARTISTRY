@@ -538,14 +538,14 @@ hr {
   position: fixed;
   bottom: 20px; /* Adjust the bottom spacing */
   left: 20px; /* Adjust the left spacing */
-  width: 300px; /* Set a width for the chatbot */
+  width: 320px; /* Set a width for the chatbot */
   border: 1px solid rgb(99, 99, 99);
   background-color: #000000;
   border-radius: 8px;
   z-index: 1000; /* Make sure it's above other content */
   display: flex;
   flex-direction: column; /* Stack children vertically */
-  height: 40vh; /* Set a height for the chatbot */
+  height: 45vh; /* Set a height for the chatbot */
   overflow: hidden; /* Prevent container from overflowing */
 }
 

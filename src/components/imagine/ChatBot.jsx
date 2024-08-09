@@ -6,14 +6,21 @@ import sendIcon from "../../images/send.png";
 import CircularProgress from "@mui/material/CircularProgress";
 import closeIcon from "../../images/close.png";
 import TypingEffect from "./TypingEffect";
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
 
 function ChatBot({ showChatBot, setShowChatBot }) {
   const [messages, setMessages] = useState([]);
   const [initialMessage, setInitialMessage] = useState("");
   const [isConnected, setIsConnected] = useState(false);
   const [pendingMessage, setPendingMessage] = useState("");
-
   const [isSentClicked, setIsSentClicked] = useState(false);
+  const recommendedMessages = [
+    "Give me a creative prompt for image generation about space",
+    "Creative image generation prompts",
+    "Fantasy world scene idea",
+  ];
+  const [initialMessageNotSent, setInitialMessageNotSent] = useState(true);
 
   const chatSocketRef = useRef(null); // Use a ref to store the WebSocket instance
 
@@ -68,6 +75,17 @@ function ChatBot({ showChatBot, setShowChatBot }) {
     setShowChatBot(false);
   };
 
+  const sendInitialMessage = (chosenText) => {
+    setInitialMessageNotSent(false);
+    setPendingMessage(chosenText);
+    setIsConnected(true);
+    setInitialMessage("");
+
+    setTimeout(() => {
+      setIsSentClicked(false);
+    }, 3000);
+  };
+
   return (
     <AnimatePresence>
       {showChatBot && (
@@ -88,6 +106,37 @@ function ChatBot({ showChatBot, setShowChatBot }) {
             </div>
           </div>
           <hr />
+          {/* <p>Hi 👋</p> */}
+          {initialMessageNotSent && (
+            <Stack
+              direction="row"
+              spacing={1}
+              flexWrap="wrap"
+              sx={{
+                padding: "0px 12px",
+                marginTop: "3px",
+              }}
+            >
+              {recommendedMessages.map((recommendedMessage) => (
+                <Chip
+                  key={recommendedMessage} // Add a unique key for each chip
+                  label={recommendedMessage}
+                  variant="outlined"
+                  color="info"
+                  onClick={() => sendInitialMessage(recommendedMessage)}
+                  style={{ marginBottom: 10 }}
+                  sx={{
+                    transition: "background-color 0.3s, color 0.3s",
+                    "&:hover": {
+                      borderColor: "#50D5FF",
+                      color: "#50D5FF",
+                    },
+                  }}
+                />
+              ))}
+            </Stack>
+          )}
+
           <div className="messages-container">
             {messages.map((message, index) => (
               <div key={index} className="chatbot-message">
