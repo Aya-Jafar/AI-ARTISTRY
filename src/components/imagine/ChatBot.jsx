@@ -8,57 +8,59 @@ import closeIcon from "../../images/close.png";
 import TypingEffect from "./TypingEffect";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
+import { ArrowUpRight } from "lucide-react";
 
-function ChatBot({ showChatBot, setShowChatBot }) {
+function ChatBot({ showChatBot, setShowChatBot, setPrompt }) {
   const [messages, setMessages] = useState([]);
   const [initialMessage, setInitialMessage] = useState("");
   const [isConnected, setIsConnected] = useState(false);
   const [pendingMessage, setPendingMessage] = useState("");
   const [isSentClicked, setIsSentClicked] = useState(false);
-  const recommendedMessages = [
+  const [recommendedMessages, setRecommendedMessages] = useState([
     "Give me a creative prompt for image generation about space",
     "Creative image generation prompts",
     "Fantasy world scene idea",
-  ];
+  ]);
   const [initialMessageNotSent, setInitialMessageNotSent] = useState(true);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const chatSocketRef = useRef(null);
+  const selectedTextRef = useRef("");
+  const selectedTextIndexRef = useRef(null); // Ref to manage selected message index
+  const iconVisibleRef = useRef(false); // Ref to manage icon visibility
 
-  const chatSocketRef = useRef(null); // Use a ref to store the WebSocket instance
-
+  // Handle send icon click
   const handleSendIconClick = () => {
     if (initialMessage.trim()) {
-      setIsSentClicked(true); // Set loading state
+      setIsSentClicked(true);
       setPendingMessage(initialMessage);
       setIsConnected(true);
-
-      // Reset the message input after setting pendingMessage
       setInitialMessage("");
+      setRecommendedMessages([]);
 
-      // Remove loading state after the timeout
       setTimeout(() => {
         setIsSentClicked(false);
       }, 3000);
     }
   };
 
+  // Handle WebSocket connection
   useEffect(() => {
     if (isConnected) {
-      chatSocketRef.current = chatBotSocket(setMessages, pendingMessage); // Store WebSocket instance in ref
+      chatSocketRef.current = chatBotSocket(setMessages, pendingMessage);
 
       return () => {
-        chatSocketRef.current.close(); // Clean up the WebSocket connection on component unmount
+        chatSocketRef.current.close();
       };
     }
-  }, [isConnected, pendingMessage]); // Re-run effect if isConnected or pendingMessage changes
+  }, [isConnected, pendingMessage]);
 
+  // Handle Enter key press
   const handleKeyPress = (e) => {
     if (e.key === "Enter" && initialMessage.trim()) {
-      setIsSentClicked(true); // Set loading state
-
-      // Set the pending message and connect to WebSocket
+      setIsSentClicked(true);
       setPendingMessage(initialMessage);
       setIsConnected(true);
-
-      // Reset the message input after setting pendingMessage
+      setRecommendedMessages([]);
       setInitialMessage("");
 
       setTimeout(() => {
@@ -67,14 +69,22 @@ function ChatBot({ showChatBot, setShowChatBot }) {
     }
   };
 
+  // Handle closing the chatbot
   const handleCloseChatBot = () => {
     if (chatSocketRef.current) {
-      chatSocketRef.current.close(); // Close WebSocket connection
+      chatSocketRef.current.close();
     }
-    setIsConnected(false); // Reset connection state
+    setIsConnected(false);
     setShowChatBot(false);
+    setMessages([]);
+    setRecommendedMessages([
+      "Give me a creative prompt for image generation about space",
+      "Creative image generation prompts",
+      "Fantasy world scene idea",
+    ]);
   };
 
+  // Send initial message
   const sendInitialMessage = (chosenText) => {
     setInitialMessageNotSent(false);
     setPendingMessage(chosenText);
@@ -85,6 +95,65 @@ function ChatBot({ showChatBot, setShowChatBot }) {
       setIsSentClicked(false);
     }, 3000);
   };
+
+  const onSelectStart = () => {
+    iconVisibleRef.current = false; // Hide the icon on selection start
+  };
+
+  const handleSelectionChange = (index) => {
+    const activeSelection = document.getSelection();
+    const text = activeSelection?.toString().trim();
+
+    if (!activeSelection || !text) {
+      iconVisibleRef.current = false; // Hide the icon
+      selectedTextIndexRef.current = null;
+      const iconElement = document.querySelector("#icon");
+      if (iconElement) {
+        iconElement.style.display = "none";
+      }
+      return;
+    }
+    selectedTextRef.current = text;
+    selectedTextIndexRef.current = index;
+
+    const rect = activeSelection.getRangeAt(0).getBoundingClientRect();
+    setPosition({
+      x: rect.left + rect.width / 2 - 35,
+      y: rect.top + window.scrollY - 640,
+    });
+
+    iconVisibleRef.current = true; // Show the icon
+  };
+
+  const insertPrompt = () => {
+    const textToInsert = selectedTextRef.current;
+
+    if (textToInsert.trim().length > 0) {
+      setPrompt(textToInsert);
+      selectedTextRef.current = "";
+      iconVisibleRef.current = false; // Hide the icon
+      selectedTextIndexRef.current = null;
+    }
+  };
+
+  const handleMouseUp = () => {
+    const text = selectedTextRef.current;
+    if (text && text.length > 0) {
+      iconVisibleRef.current = true; // Show the icon
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("selectstart", onSelectStart);
+    document.addEventListener("selectionchange", handleSelectionChange);
+    document.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      document.removeEventListener("selectstart", onSelectStart);
+      document.removeEventListener("selectionchange", handleSelectionChange);
+      document.removeEventListener("mouseup", handleMouseUp);
+      iconVisibleRef.current = false;
+    };
+  }, [iconVisibleRef.current]);
 
   return (
     <AnimatePresence>
@@ -98,15 +167,12 @@ function ChatBot({ showChatBot, setShowChatBot }) {
         >
           <div className="chatbot-header">
             <motion.h1 className="chatbot-title">Brainstorm prompts</motion.h1>
-            <div
-              className="close-btn"
-              onClick={handleCloseChatBot} // Close the chatbot and WebSocket connection
-            >
+            <div className="close-btn" onClick={handleCloseChatBot}>
               <img src={closeIcon} alt="Close Chatbot" id="chatbot-close" />
             </div>
           </div>
           <hr />
-          {/* <p>Hi 👋</p> */}
+
           {initialMessageNotSent && (
             <Stack
               direction="row"
@@ -119,7 +185,7 @@ function ChatBot({ showChatBot, setShowChatBot }) {
             >
               {recommendedMessages.map((recommendedMessage) => (
                 <Chip
-                  key={recommendedMessage} // Add a unique key for each chip
+                  key={recommendedMessage}
                   label={recommendedMessage}
                   variant="outlined"
                   color="info"
@@ -139,12 +205,33 @@ function ChatBot({ showChatBot, setShowChatBot }) {
 
           <div className="messages-container">
             {messages.map((message, index) => (
-              <div key={index} className="chatbot-message">
+              <div
+                key={index}
+                className="chatbot-message"
+                onMouseUp={() => handleSelectionChange(index)}
+                onMouseDown={onSelectStart}
+                style={{ position: "relative" }}
+              >
                 <div className="question">
                   <p>{message.message}</p>
                 </div>
-                {/* TODO: Add Insert icon to insert it into the text area again*/}
+
                 <div className="answer">
+                  {selectedTextIndexRef.current === index && (
+                    <div
+                      onClick={insertPrompt}
+                      id="icon"
+                      style={{
+                        position: "absolute",
+                        transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
+                        cursor: "pointer",
+                        zIndex: 9999,
+                        display: iconVisibleRef?.current ? "block" : "none",
+                      }}
+                    >
+                      <ArrowUpRight className="corner-right-up" />
+                    </div>
+                  )}
                   <TypingEffect text={message.answer} />
                 </div>
               </div>

@@ -53,13 +53,6 @@ function Imagine() {
     }
   };
 
-  const tempArtists = [
-    "Here are some artists who have created similar works of art:",
-
-    "Antonio Canova (1757-1822) was an Italian sculptor known for his neoclassical style. He is known for his sculptures of angels and mythological figures.",
-    "Bertel Thorvaldsen (1770-1844) was a Danish sculptor who was also known for his neoclassical style. He is known for his sculptures of angels, mythological figures, and religious figures.",
-  ];
-
   return (
     <>
       <audio autoPlay loop>
@@ -68,7 +61,6 @@ function Imagine() {
           type="audio/mpeg"
         />
       </audio>
-
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -118,6 +110,7 @@ function Imagine() {
             <ChatBot
               showChatBot={showChatBot}
               setShowChatBot={setShowChatBot}
+              setPrompt={setPrompt}
             />
           </div>
 
