@@ -11,15 +11,18 @@ import Stack from "@mui/material/Stack";
 import { ArrowUpRight } from "lucide-react";
 
 function ChatBot({ showChatBot, setShowChatBot, setPrompt }) {
+  const RECOMMENDED_MESSAGES = [
+    "Give me a creative prompt for image generation about space",
+    "Creative image generation prompts",
+    "Fantasy world scene idea",
+  ];
   const [messages, setMessages] = useState([]);
   const [initialMessage, setInitialMessage] = useState("");
   const [isConnected, setIsConnected] = useState(false);
   const [pendingMessage, setPendingMessage] = useState("");
   const [isSentClicked, setIsSentClicked] = useState(false);
   const [recommendedMessages, setRecommendedMessages] = useState([
-    "Give me a creative prompt for image generation about space",
-    "Creative image generation prompts",
-    "Fantasy world scene idea",
+    ...RECOMMENDED_MESSAGES,
   ]);
   const [initialMessageNotSent, setInitialMessageNotSent] = useState(true);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -77,11 +80,7 @@ function ChatBot({ showChatBot, setShowChatBot, setPrompt }) {
     setIsConnected(false);
     setShowChatBot(false);
     setMessages([]);
-    setRecommendedMessages([
-      "Give me a creative prompt for image generation about space",
-      "Creative image generation prompts",
-      "Fantasy world scene idea",
-    ]);
+    setRecommendedMessages([...RECOMMENDED_MESSAGES]);
   };
 
   // Send initial message
@@ -222,10 +221,7 @@ function ChatBot({ showChatBot, setShowChatBot, setPrompt }) {
                       onClick={insertPrompt}
                       id="icon"
                       style={{
-                        position: "absolute",
                         transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
-                        cursor: "pointer",
-                        zIndex: 9999,
                         display: iconVisibleRef?.current ? "block" : "none",
                       }}
                     >
