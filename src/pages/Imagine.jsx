@@ -45,12 +45,16 @@ function Imagine() {
     }
   };
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const getArtists = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     if (generatedImage) {
       await getArtistsNameWithSimilarWork(generatedImage, setArtists);
     }
+    setIsLoading(false);
   };
 
   return (
@@ -181,7 +185,7 @@ function Imagine() {
                       id="get-artist-names-btn"
                       onClick={(e) => getArtists(e)}
                     >
-                      {artists.length === 0 ? (
+                      {!isLoading ? (
                         <>Get artists names with similar work</>
                       ) : (
                         <div className="loading-btn-with-text">
