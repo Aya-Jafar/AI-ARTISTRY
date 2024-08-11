@@ -6,10 +6,10 @@ import { slideAnimation } from "../../utils/motion";
 import moreIcon from "../../images/more.png";
 import AuthContext from "../../providers/Auth";
 import { deleteComment, editComment } from "../../backend/data";
-import deleteIcon from "../../images/trash.png";
-import editIcon from "../../images/edit.png";
 import { getUserInfo } from "../../backend/data";
 import CommentImage from "./CommentImage";
+import { Trash,Pencil } from "lucide-react";
+
 
 function AllComments({ comments, artId }) {
   const { currentUser } = useContext(AuthContext);
@@ -80,7 +80,7 @@ function AllComments({ comments, artId }) {
                                 setEditedComment(comment.text);
                               }}
                             >
-                              <img src={editIcon} alt="" />
+                             <Pencil  size={20}/>
                               Edit
                             </div>
                             <div
@@ -93,7 +93,7 @@ function AllComments({ comments, artId }) {
                                 )
                               }
                             >
-                              <img src={deleteIcon} alt="" />
+                              <Trash size={20}/>
                               Delete
                             </div>
                           </div>

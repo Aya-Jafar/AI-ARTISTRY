@@ -3,16 +3,15 @@ import { useParams } from "react-router-dom";
 import { getArtworkDetails, getPosts } from "../backend/data";
 import { motion } from "framer-motion";
 import ArtworkDetailBtn from "../components/artwork-detail/ArtworkDetailBtn";
-import likeIcon from "../images/love (2).png";
-import commentIcon from "../images/comment.png";
 import { getGeneratedArtworkDetails } from "../backend/data";
 import AuthContext from "../providers/Auth";
 import CommentInput from "../components/artwork-detail/CommentInput";
 import CounterItem from "../components/artwork-detail/CounterItem";
 import AllComments from "../components/artwork-detail/AllComments";
 import CustomAlert from "../components/common/CustomAlert";
-import AlertContext, { AlertProvider } from "../providers/Alert";
+import AlertContext  from "../providers/Alert";
 import { infoStyle } from "../utils/formaters";
+import { Heart,MessageSquareText } from "lucide-react";
 
 const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
   const { id, generatedImageUrl, postUrl } = useParams();
@@ -125,11 +124,11 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
 
                 <div className="likes-comments-count">
                   <CounterItem
-                    counterIcon={likeIcon}
+                    counterIcon={Heart}
                     countesNumber={likesCount}
                   />
                   <CounterItem
-                    counterIcon={commentIcon}
+                    counterIcon={MessageSquareText}
                     countesNumber={commentsCount}
                   />
                 </div>

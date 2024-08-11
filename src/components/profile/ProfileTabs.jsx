@@ -1,18 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import ProfileTabContext from "../../providers/ProfileTabContent";
-import { ProfileTabProvider } from "../../providers/ProfileTabContent";
 import AuthContext from "../../providers/Auth";
 import { getSavedArtworks } from "../../backend/data";
-import saveIcon from "../../images/save-instagram.png";
-import activityIcon from "../../images/activity.png";
-import posts from "../../images/ai (2).png";
+import { Activity ,Bookmark , LayoutDashboard} from 'lucide-react';
 
-function Tab({ text, icon, isActive, onClick }) {
+function Tab({ text, icon: Icon, isActive, onClick }) {
   return (
     <div className={isActive ? "active-tab" : ""} onClick={onClick}>
       <motion.div className="profile-tab">
-        <img src={icon} alt="" />
+        <Icon size={35}/>
         <h3>{text}</h3>
       </motion.div>
     </div>
@@ -23,6 +20,7 @@ function ProfileTabs() {
   const { currentProfileTab, setProfileTab } = useContext(ProfileTabContext);
   const { currentUser } = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState("Activity");
+  const [token, setToken] = useState("")
 
   const [defaultImage, setActiveImage] = useState("");
 
@@ -34,21 +32,22 @@ function ProfileTabs() {
     getSavedArtworks(currentUser && currentUser.uid, setActiveImage);
   }, [currentUser]);
 
+  
   return (
     <>
       <div className="profile-tabs" style={{ marginTop: "3%" }}>
         <Tab
           text="Activity"
-          icon={activityIcon}
+          icon={Activity}
           isActive={activeTab === "Activity"}
           onClick={() => handleTabClick("Activity")}
         />
         
         {currentUser &&
-          currentUser.accessToken === localStorage.getItem("token") && (
+          currentUser?.accessToken === localStorage.getItem("token") && (
             <Tab
               text="Saved"
-              icon={saveIcon}
+              icon={Bookmark}
               isActive={activeTab === "Saved"}
               onClick={() => handleTabClick("Saved")}
             />
@@ -56,7 +55,7 @@ function ProfileTabs() {
 
         <Tab
           text="Posts"
-          icon={posts}
+          icon={LayoutDashboard}
           isActive={activeTab === "Posts"}
           onClick={() => handleTabClick("Posts")}
         />

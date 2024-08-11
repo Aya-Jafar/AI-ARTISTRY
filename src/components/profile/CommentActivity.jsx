@@ -1,6 +1,5 @@
 import { formatDate } from "../../utils/formaters";
-import commentIcon from "../../images/comment.png";
-import { Link } from "react-router-dom";
+import { MessageSquareText } from 'lucide-react';
 
 function CommentActivity({
   index,
@@ -16,7 +15,7 @@ function CommentActivity({
 
       <div className="comment-detail">
         <h4 className="icon-title">
-          <img src={commentIcon} alt="" />
+          <MessageSquareText size={35}/>
           {userName} commented on {artworkData?.creator}'s post
         </h4>
 

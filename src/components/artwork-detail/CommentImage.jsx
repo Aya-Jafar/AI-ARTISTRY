@@ -16,7 +16,7 @@ function CommentImage({ comment }) {
           <img
             src={profileImag !== null ? profileImag : miniProfile}
             alt=""
-            className="profile-image"
+            className="profile-image comment"
           />
         )}
       </div>

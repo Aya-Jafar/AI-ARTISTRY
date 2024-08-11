@@ -53,7 +53,7 @@ function ArtworkDetailBtn({ text, artId, id, setLikesCount }) {
       <motion.button className="btn" onClick={handleButtonClick} id={id}>
         <motion.div
           className={`artwork-detail-btn ${isShaking ? "shake" : ""}`}
-        >
+        >          
           <motion.img
             src={text === "Save" ? saveIcon : likeIcon}
             alt=""

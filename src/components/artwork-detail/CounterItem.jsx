@@ -1,9 +1,9 @@
 import React from "react";
 
-function CounterItem({ counterIcon, countesNumber }) {
+function CounterItem({ counterIcon:Icon, countesNumber }) {
   return (
     <div className="counter-item">
-      <img src={counterIcon} alt="" />
+      <Icon />
       <h3>{countesNumber}</h3>
     </div>
   );
