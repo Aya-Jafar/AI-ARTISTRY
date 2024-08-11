@@ -234,7 +234,7 @@ body {
   position: absolute;
   top: 10%;
   left: 30%;
-  height: 70vh;
+  height: 60vh;
   width: 40vw;
   color: white;
   margin-top: 3%;
@@ -550,6 +550,7 @@ hr {
 }
 
 .messages-container {
+  position: relative;
   flex: 1; /* Allow the messages container to grow and fill available space */
   overflow-y: auto; /* Enable scrolling for messages */
   padding: 10px; /* Add padding inside the messages container */
@@ -557,6 +558,7 @@ hr {
 }
 
 .chatbot-message {
+  position: relative;
   white-space: pre-wrap; /* Preserve whitespace and wrap text */
   overflow-wrap: break-word; /* Break long words if necessary */
 }
@@ -592,6 +594,7 @@ hr {
 }
 
 .answer {
+  position: relative;
   background-color: #4c4c4c; /* Background color for the question */
   color: white;
   padding: 8px 8px;
@@ -599,6 +602,35 @@ hr {
   max-width: 70%; /* Adjust as needed */
   text-align: left; /* Align text to the right */
   margin-top: 10px;
+}
+
+.corner-right-up {
+  cursor: pointer;
+  position: absolute;
+  top: -0.5rem;
+  left: 0;
+  width: 25px;
+  height: 25px;
+  border-radius: 14px;
+  background-color: white;
+  color: rgb(68, 68, 68);
+  border-radius: 0.25rem; /* rounded in Tailwind translates to 0.25rem */
+  margin: 0;
+  z-index: 9999;
+}
+
+.corner-right-up::after {
+  content: "";
+  position: absolute;
+  top: 100%; /* top-full in Tailwind translates to 100% */
+  left: 50%;
+  transform: translateX(-50%);
+  height: 0;
+  width: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid black; /* border-b-black in Tailwind translates to borderTop in inline styles */
+  transform: translateX(-50%) rotate(180deg); /* rotation */
 }
 
 .question {
