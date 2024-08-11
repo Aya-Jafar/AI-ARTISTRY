@@ -6,26 +6,28 @@ function UserActivity({ activities }) {
   return (
     activities && (
       <div className="activity">
-        {activities?.map((activity, index) => {
-          return activity.activityType === "Like" ? (
-            <LikeActivity
-              index={index}
-              artworkData={activity.artData}
-              userName={activity.userName}
-              artData={activity.artData}
-              time={activity.timestamp}
-            />
-          ) : (
-            <CommentActivity
-              index={index}
-              artworkData={activity.artData}
-              commentText={activity.commentText}
-              userName={activity.userName}
-              artData={activity.artData}
-              time={activity.timestamp}
-            />
-          );
-        })}
+        {activities
+          ?.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+          .map((activity, index) => {
+            return activity.activityType === "Like" ? (
+              <LikeActivity
+                index={index}
+                artworkData={activity.artData}
+                userName={activity.userName}
+                artData={activity.artData}
+                time={activity.timestamp}
+              />
+            ) : (
+              <CommentActivity
+                index={index}
+                artworkData={activity.artData}
+                commentText={activity.commentText}
+                userName={activity.userName}
+                artData={activity.artData}
+                time={activity.timestamp}
+              />
+            );
+          })}
       </div>
     )
   );

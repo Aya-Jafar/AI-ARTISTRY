@@ -1001,7 +1001,7 @@ button[type="submit"]:hover {
 .contact {
   display: flex;
   align-items: center;
-  gap: 8%;
+  gap: 10%;
   height: 70vh;
   margin: 10% 7%;
   border: 0.4px solid rgba(162, 160, 160, 0.32);
