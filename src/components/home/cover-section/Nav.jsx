@@ -18,6 +18,7 @@ function Nav() {
   const [menuActive, setMenuActive] = useState(false);
 
   const [hoveredLogout, setHoveredLogout] = useState(false);
+  const [navigateToContact, setNavigateToContact] = useState(false);
 
   const toggleMenu = () => setMenuActive(!menuActive);
 
@@ -28,9 +29,20 @@ function Nav() {
 
   const contactNavigate = () => {
     if (currentLocation.pathname !== "/") {
+      // Navigate to the homepage and set the state to true
       navigate("/");
+      setNavigateToContact(true);
     }
   };
+
+  useEffect(() => {
+    // Check if we need to scroll to the contact section after navigation
+    if (navigateToContact && currentLocation.pathname === "/") {
+      // Trigger the scroll by clicking the hidden ScrollLink element
+      document.getElementById("hidden-scroll-link").click();
+      setNavigateToContact(false); // Reset the state
+    }
+  }, [currentLocation.pathname, navigateToContact]);
 
   useEffect(() => {
     token ? setShowUserSection(true) : setShowUserSection(false);
@@ -67,6 +79,16 @@ function Nav() {
               CONTACT US
             </ScrollLink>
           </motion.div>
+          
+          <ScrollLink
+            to="contact"
+            spy={true}
+            smooth={true}
+            offset={-70}
+            duration={1000}
+            id="hidden-scroll-link"
+            style={{ display: "none" }}
+          />
 
           {showUserSection ? (
             <>
