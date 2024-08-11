@@ -4,10 +4,6 @@ import {
   saveArtwork,
   addToLikedActivity,
 } from "./data";
-import filledSaved from "../images/bookmark.png";
-import saveIcon from "../images/save-instagram (1).png";
-import filledHeart from "../images/heart (4).png";
-import heartIcon from "../images/heart (3).png";
 
 export const saveToProfile = async (
   currentUser,
@@ -20,11 +16,11 @@ export const saveToProfile = async (
     await saveArtwork(currentUser, artId); // Wait for the artwork to be saved
     const isSaved = await isArtworkSaved(currentUser, artId); // Check if it's saved
     if (isSaved) {
-      setSaveIcon(filledSaved);
+      setSaveIcon("/bookmark.png");
       setShowSnackBar(true)
     } // Update the displayed icon}
     else {
-      setSaveIcon(saveIcon);
+      setSaveIcon("/save-instagram (1).png");
       setShowSnackBar(false)
     }
   } else {
@@ -47,12 +43,12 @@ export const handleLikeClick = async (
     const isFavourite = await isArtworkLiked(currentUser, artId);
 
     if (isFavourite) {
-      setLikeIcon(filledHeart);
+      setLikeIcon("/heart (4).png");
       setLikesCount((prevLikesCount) => prevLikesCount + 1);
       setShowSnackBar(true)
     } // Update the displayed icon}
     else {
-      setLikeIcon(heartIcon);
+      setLikeIcon("/heart (3).png");
       setLikesCount((prevLikesCount) => prevLikesCount - 1);
       setShowSnackBar(false)
     }

@@ -1,9 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { getAllArtworks } from "../../../backend/data";
 import ArtGrid from "../ArtGrid";
-import moreIcon from "../../../images/maximize.png";
 import ButtonWithIcon from "../ButtonWithIcon";
-import generateIcon from "../../../images/noun-generate-6053204.png";
 import { Link } from "react-router-dom";
 
 function MainArtGrid({ isHomePage }) {
@@ -72,10 +70,10 @@ function MainArtGrid({ isHomePage }) {
           </div>
           <div className="art-grid-btns">
             <Link to="/imagine">
-              <ButtonWithIcon icon={generateIcon} text="Generate" />
+              <ButtonWithIcon icon={"/noun-generate-6053204.png"} text="Generate" />
             </Link>
             <Link to="/artworks/more/">
-              <ButtonWithIcon icon={moreIcon} text="More" />
+              <ButtonWithIcon icon={"/maximize.png"} text="More" />
             </Link>
           </div>
         </>

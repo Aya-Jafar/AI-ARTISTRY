@@ -1,6 +1,5 @@
 import React from "react";
 import { motion } from "framer-motion";
-import logo from "../../../images/logo-without-bg.png";
 import { slideAnimation, fadeIn, stagger } from "../../../utils/motion";
 import { Link as ScrollLink } from "react-scroll";
 import ImageSlider from "./ImageSlider";
@@ -18,9 +17,7 @@ function Cover() {
 
       <motion.div className="cover-text" variants={stagger}>
         <motion.div variants={fadeIn} {...slideAnimation("left")}>
-          <img src={logo} alt="" id="logo" />
-          {/* <span className="highlight">AI </span>
-          {"Artistry".toUpperCase()} */}
+          <img src="/logo-without-bg.png" alt="" id="logo" />
         </motion.div>
 
         <motion.h2

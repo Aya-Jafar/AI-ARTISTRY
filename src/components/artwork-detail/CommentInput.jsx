@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import postCommentIcon from "../../images/send.png";
 import { addCommentToActivity } from "../../backend/data";
 import CircularProgress from "@mui/material/CircularProgress";
 import AuthContext from "../../providers/Auth";
@@ -47,7 +46,7 @@ function CommentInput({ artId, currentComment, setCurrentComment }) {
         <CircularProgress className="comment-progress-indicator" size="35px" />
       ) : (
         <img
-          src={postCommentIcon}
+          src={"/send.png"}
           alt="Comment Icon"
           className="comment-icon"
           onClick={() => handleCommentIconClick()}

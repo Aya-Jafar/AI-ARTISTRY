@@ -1,6 +1,5 @@
 import React, { useEffect,useState } from "react";
 import { getUserInfo } from "../../backend/data";
-import miniProfile from "../../images/profile-user.png";
 
 function CommentImage({ comment }) {
   const [profileImag, setProfileImage] = useState(null);
@@ -14,7 +13,7 @@ function CommentImage({ comment }) {
       <div className="mini-profile-img">
         {comment.userId && (
           <img
-            src={profileImag !== null ? profileImag : miniProfile}
+            src={profileImag !== null ? profileImag : "/profile-user.png"}
             alt=""
             className="profile-image comment"
           />

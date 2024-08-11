@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import firstCover from "../../../images/cover.png";
-import secondCover from "../../../images/2.png";
-import thirdCover from "../../../images/Untitled design (16).png";
+
 
 export default function ImageSlider(props) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const slides = [firstCover, secondCover, thirdCover];
+  // const slides = [firstCover, secondCover, thirdCover];
+
+  const slides = [
+    "/cover.png",
+    "/2.png",
+    "/Untitled design (16).png",
+  ];
+
   //   const slideInterval = 5000; // Time between slides in milliseconds
 
   const slideIntervals = [3000, 9000, 9000];

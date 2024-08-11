@@ -1,11 +1,12 @@
 import React from "react";
+import leftImage from "../../../images/contact-image.png";
 import ContactInput from "./ContactInput";
 
 function ContactForm() {
   return (
     <div className="contact" id="contact">
       <div className="left-form-image">
-        <img src={"/contact-image.png"} alt="" />
+        <img src={leftImage} alt="" />
       </div>
       <form
         className="form"

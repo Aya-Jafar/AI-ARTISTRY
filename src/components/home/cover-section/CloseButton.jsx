@@ -1,5 +1,4 @@
 import React from "react";
-import closeIcon from "../../../images/close.png";
 import { useNavigate } from "react-router-dom";
 
 function CloseButton({ setPopup }) {
@@ -13,7 +12,7 @@ function CloseButton({ setPopup }) {
         navigate("/");
       }}
     >
-      <img src={closeIcon} alt="" />
+      <img src={"/close.png"} alt="" />
     </div>
   );
 }

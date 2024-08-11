@@ -2,9 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { popupVariants } from "../../utils/motion";
 import { chatBotSocket } from "../../backend/gemini";
-import sendIcon from "../../images/send.png";
 import CircularProgress from "@mui/material/CircularProgress";
-import closeIcon from "../../images/close.png";
 import TypingEffect from "./TypingEffect";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
@@ -167,7 +165,7 @@ function ChatBot({ showChatBot, setShowChatBot, setPrompt }) {
           <div className="chatbot-header">
             <motion.h1 className="chatbot-title">Brainstorm prompts</motion.h1>
             <div className="close-btn" onClick={handleCloseChatBot}>
-              <img src={closeIcon} alt="Close Chatbot" id="chatbot-close" />
+              <img src="/close.png" alt="Close Chatbot" id="chatbot-close" />
             </div>
           </div>
           <hr />
@@ -252,7 +250,7 @@ function ChatBot({ showChatBot, setShowChatBot, setPrompt }) {
               />
             ) : (
               <img
-                src={sendIcon}
+                src={"/send.png"}
                 alt="Comment Icon"
                 className="comment-icon"
                 id="send-icon-in-chatbot"

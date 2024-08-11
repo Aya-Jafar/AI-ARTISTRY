@@ -143,7 +143,7 @@ body {
 .about-us {
   height: 100vh;
   background-color: black;
-  background-image: url("./images/ai-generated-7881509_1280.jpg");
+  background-image: url("../public/ai-generated-7881509_1280.jpg");
   background-repeat: no-repeat;
   background-position: center top;
   background-size: 100% 76%;
@@ -1357,7 +1357,7 @@ blockquote:before {
   }
 
   .about-us {
-    background-image: url("./images/ai-generated-7881509_1280.jpg");
+    background-image: url("../public/ai-generated-7881509_1280.jpg");
     background-repeat: no-repeat;
     background-position: center top;
     background-size: 100% 30%;

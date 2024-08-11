@@ -1,7 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import profileImg from "../images/profile-user.png";
 import AuthContext from "../providers/Auth";
-import { motion } from "framer-motion";
 import { getSavedArtworks, getUserInfo } from "../backend/data";
 import { ProfileTabProvider } from "../providers/ProfileTabContent";
 import ProfileTabs from "../components/profile/ProfileTabs";
@@ -28,7 +26,7 @@ function Profile() {
         {userInfo ? (
           <img src={userInfo.image} alt="" className="profile-image" />
         ) : (
-          <img src={profileImg} alt="" className="profile-image" />
+          <img src={"/profile-user.png"} alt="" className="profile-image" />
         )}
       </div>
 

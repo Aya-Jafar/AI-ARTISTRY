@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { linkStyles } from "../../utils/formaters";
 import { motion } from "framer-motion";
 import { slideAnimation } from "../../utils/motion";
+import moreIcon from "../../images/more.png";
 import AuthContext from "../../providers/Auth";
 import { deleteComment, editComment } from "../../backend/data";
 import { getUserInfo } from "../../backend/data";
@@ -54,7 +55,7 @@ function AllComments({ comments, artId }) {
                     {currentUser && currentUser.uid === comment.userId ? (
                       <div className="edit-comment-icon">
                         <img
-                          src={"/more.png"}
+                          src={moreIcon}
                           alt=""
                           id="comment-setting"
                           // ref={anchorRef}

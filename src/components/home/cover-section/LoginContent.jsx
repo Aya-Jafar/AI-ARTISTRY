@@ -1,8 +1,4 @@
 import React, { useContext, useState, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import googleIcon from "../../../images/google-icon.png";
-import facebookIcon from "../../../images/f-icon.png";
-import gmailIcon from "../../../images/g-icon.png";
 import AuthContext from "../../../providers/Auth";
 import CloseButton from "./CloseButton";
 import AuthBtn from "./AuthBtn";
@@ -30,20 +26,20 @@ function LoginContent() {
           ) : (
             <>
               <AuthBtn
-                icon={googleIcon}
+                icon={"/google-icon.png"}
                 text="Log in with Google"
                 onClick={signInWithGoogle}
               />
 
               <AuthBtn
-                icon={facebookIcon}
+                icon={"/f-icon.png"}
                 text="Log in with Facebook"
                 onClick={signInWithFacebook}
                 id="facebook-btn"
               />
 
               <AuthBtn
-                icon={gmailIcon}
+                icon={"/g-icon.png"}
                 text="Log in with Email"
                 onClick={() => {
                   handleEmailSignInClick();

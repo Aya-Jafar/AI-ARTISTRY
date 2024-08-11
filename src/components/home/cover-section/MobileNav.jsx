@@ -1,7 +1,6 @@
 import React from "react";
 import { linkStyles } from "../../../utils/formaters";
 import { motion } from "framer-motion";
-import logoutIcon from "../../../images/logout.png";
 import { Link } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
 import UserSection from "./UserSection";
@@ -43,7 +42,7 @@ function MobileNav({
             <li>
               <div className="logout-section mobile">
                 <img
-                  src={logoutIcon}
+                  src={"/logout.png"}
                   alt=""
                   className="logout-btn"
                   onClick={signOutUser}

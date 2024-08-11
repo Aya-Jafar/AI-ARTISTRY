@@ -14,7 +14,6 @@ import AlertContext from "../providers/Alert";
 import CustomAlert from "../components/common/CustomAlert";
 import { CircularProgress, Tooltip } from "@mui/material";
 import ChatBot from "../components/imagine/ChatBot";
-import chatBotInitIcon from "../images/chatbot-init.png";
 import { getArtistsNameWithSimilarWork } from "../backend/gemini";
 import TypingEffect from "../components/imagine/TypingEffect";
 
@@ -105,7 +104,7 @@ function Imagine() {
             <Tooltip title="Brainstorm prompts ideas" placement="right">
               <div className="chat-circle" onClick={() => setShowChatBot(true)}>
                 <img
-                  src={chatBotInitIcon}
+                  src={"/chatbot-init.png"}
                   alt=""
                   className="icon-fit-container"
                 />

@@ -4,7 +4,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import NavButton from "./NavButton";
 import AuthContext from "../../../providers/Auth";
 import UserSection from "./UserSection";
-import logoutIcon from "../../../images/logout.png";
 import { linkStyles, navGapSetter } from "../../../utils/formaters";
 import { motion } from "framer-motion";
 import { Link as ScrollLink } from "react-scroll";
@@ -79,7 +78,7 @@ function Nav() {
               CONTACT US
             </ScrollLink>
           </motion.div>
-          
+
           <ScrollLink
             to="contact"
             spy={true}
@@ -99,7 +98,7 @@ function Nav() {
                 onMouseLeave={() => setHoveredLogout(false)}
               >
                 <img
-                  src={logoutIcon}
+                  src={"/logout.png"}
                   alt=""
                   className="logout-btn"
                   onClick={signOutUser}

@@ -1,14 +1,9 @@
 import { useState, useEffect } from "react";
 import { isArtworkSaved,isArtworkLiked } from "../backend/data";
 
-import filledSaved from "../images/bookmark.png";
-import filledHeart from "../images/heart (4).png";
-import saveIconPic from "../images/save-instagram (1).png";
-import heartIcon from "../images/heart (3).png";
-
 const useArtworkIcons = (currentUser, artId) => {
-  const [saveIcon, setSaveIcon] = useState(saveIconPic);
-  const [likeIcon, setLikeIcon] = useState(heartIcon);
+  const [saveIcon, setSaveIcon] = useState("/save-instagram (1).png");
+  const [likeIcon, setLikeIcon] = useState("/heart (3).png");
 
   useEffect(() => {
     const loadIcons = async () => {
@@ -17,11 +12,11 @@ const useArtworkIcons = (currentUser, artId) => {
 
       // Update the local state based on localStorage
       if (isSaved) {
-        setSaveIcon(filledSaved);
+        setSaveIcon("/bookmark.png");
       }
 
       if (isFavourite) {
-        setLikeIcon(filledHeart);
+        setLikeIcon("/heart (4).png");
       }
     };
 
