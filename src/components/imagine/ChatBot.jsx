@@ -29,46 +29,38 @@ function ChatBot({ showChatBot, setShowChatBot, setPrompt }) {
   const selectedTextIndexRef = useRef(null); // Ref to manage selected message index
   const iconVisibleRef = useRef(false); // Ref to manage icon visibility
 
-  // Handle send icon click
-  const handleSendIconClick = () => {
-    if (initialMessage.trim()) {
-      setIsSentClicked(true);
-      setPendingMessage(initialMessage);
-      setIsConnected(true);
-      setInitialMessage("");
-      setRecommendedMessages([]);
-
-      setTimeout(() => {
-        setIsSentClicked(false);
-      }, 3000);
-    }
-  };
 
   // Handle WebSocket connection
   useEffect(() => {
-    if (isConnected) {
+    if (showChatBot) {
+      // Reset states when chatbot is reopened
+      setMessages([]); // Clear old messages
+      setPendingMessage(""); // Clear pending message
+      setInitialMessage(""); // Reset input
+      setRecommendedMessages([...RECOMMENDED_MESSAGES]); // Reset recommendations
+      setInitialMessageNotSent(true); // Reset to show recommendations
+
+      if (!isConnected) {
+        setIsConnected(true); // Establish connection
+      }
+    } else if (chatSocketRef.current) {
+      chatSocketRef.current.close();
+      setIsConnected(false); // Clean up connection
+    }
+  }, [showChatBot]);
+
+  useEffect(() => {
+    if (isConnected && pendingMessage) {
       chatSocketRef.current = chatBotSocket(setMessages, pendingMessage);
 
       return () => {
-        chatSocketRef.current.close();
+        if (chatSocketRef.current) {
+          chatSocketRef.current.close();
+        }
       };
     }
   }, [isConnected, pendingMessage]);
 
-  // Handle Enter key press
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter" && initialMessage.trim()) {
-      setIsSentClicked(true);
-      setPendingMessage(initialMessage);
-      setIsConnected(true);
-      setRecommendedMessages([]);
-      setInitialMessage("");
-
-      setTimeout(() => {
-        setIsSentClicked(false);
-      }, 3000);
-    }
-  };
 
   // Handle closing the chatbot
   const handleCloseChatBot = () => {
@@ -91,6 +83,23 @@ function ChatBot({ showChatBot, setShowChatBot, setPrompt }) {
     setTimeout(() => {
       setIsSentClicked(false);
     }, 3000);
+  };
+
+  const handleSendMessage = (event) => {
+    if (
+      (event.type === "click" || event.key === "Enter") &&
+      initialMessage.trim()
+    ) {
+      setIsSentClicked(true);
+      setPendingMessage(initialMessage);
+      setIsConnected(true);
+      setRecommendedMessages([]);
+      setInitialMessage("");
+
+      setTimeout(() => {
+        setIsSentClicked(false);
+      }, 3000);
+    }
   };
 
   const onSelectStart = () => {
@@ -239,7 +248,7 @@ function ChatBot({ showChatBot, setShowChatBot, setPrompt }) {
               type="text"
               value={initialMessage}
               onChange={(e) => setInitialMessage(e.target.value)}
-              onKeyPress={handleKeyPress}
+              onKeyPress={handleSendMessage}
               placeholder="Write an initial prompt..."
             />
 
@@ -254,7 +263,7 @@ function ChatBot({ showChatBot, setShowChatBot, setPrompt }) {
                 alt="Comment Icon"
                 className="comment-icon"
                 id="send-icon-in-chatbot"
-                onClick={handleSendIconClick}
+                onClick={handleSendMessage}
               />
             )}
           </div>
