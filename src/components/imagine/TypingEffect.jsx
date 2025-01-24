@@ -23,7 +23,7 @@ export default function TypingEffect({ text }) {
   };
 
   useEffect(() => {
-    if (index < text.length) {
+    if (text && index < text?.length) {
       const timer = setTimeout(() => {
         setDisplayText((prev) => prev + text[index]);
         setIndex((prev) => prev + 1);
