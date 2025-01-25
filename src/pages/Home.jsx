@@ -1,14 +1,26 @@
 import React, { useContext } from "react";
 import { useLocation } from "react-router-dom";
-import Cover from "../components/home/cover-section/Cover";
-import AboutUs from "../components/home/about-us-section/AboutUs";
-import FilterTabs from "../components/common/filters/FilterTabs";
 import { TabContentProvider } from "../providers/TabContent";
 import { motion } from "framer-motion";
-import HomeTabContent from "../components/common/filters/HomeTabContent";
-import ContactForm from "../components/home/contact-section/ContactForm";
-import Quote from "../components/home/Quote";
-import Footer from "../components/home/Footer";
+
+// Lazy load the components
+const Cover = React.lazy(() =>
+  import("../components/home/cover-section/Cover")
+);
+const AboutUs = React.lazy(() =>
+  import("../components/home/about-us-section/AboutUs")
+);
+const FilterTabs = React.lazy(() =>
+  import("../components/common/filters/FilterTabs")
+);
+const HomeTabContent = React.lazy(() =>
+  import("../components/common/filters/HomeTabContent")
+);
+const ContactForm = React.lazy(() =>
+  import("../components/home/contact-section/ContactForm")
+);
+const Quote = React.lazy(() => import("../components/home/Quote"));
+const Footer = React.lazy(() => import("../components/home/Footer"));
 
 /**
  * @description
@@ -39,21 +51,18 @@ function Home() {
       transition={{ duration: 0.5 }}
     >
       <>
-        {/* Section displaying cover image and title */}
-        <Cover />
-        {/* About Us section */}
-        <AboutUs />
-        {/* Tab content with filter options */}
-        <TabContentProvider>
-          <FilterTabs />
-          <HomeTabContent isHomePage={true} />
-        </TabContentProvider>
-        {/* Contact form section */}
-        <ContactForm />
-        {/* Section displaying a quote */}
-        <Quote />
-        {/* Footer section */}
-        <Footer />
+        {/* Lazy loaded components wrapped with Suspense */}
+        <React.Suspense fallback={<span class="loader"></span>}>
+          <Cover />
+          <AboutUs />
+          <TabContentProvider>
+            <FilterTabs />
+            <HomeTabContent isHomePage={true} />
+          </TabContentProvider>
+          <ContactForm />
+          <Quote />
+          <Footer />
+        </React.Suspense>
       </>
     </motion.div>
   );

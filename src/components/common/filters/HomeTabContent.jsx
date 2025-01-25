@@ -1,8 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, Suspense, lazy } from "react";
 import TabContext from "../../../providers/TabContent";
-import MainArtGrid from "./MainGrid";
-import FantasyTab from "./FantasyTab";
-import SciFiTab from "./SciFiTab";
+
+// Lazy load the tab content components
+const MainArtGrid = lazy(() => import("./MainGrid"));
+const FantasyTab = lazy(() => import("./FantasyTab"));
+const SciFiTab = lazy(() => import("./SciFiTab"));
 
 /**
  * @description
@@ -36,10 +38,16 @@ function HomeTabContent({ isHomePage }) {
         return <FantasyTab />;
       case "SCI-FI":
         return <SciFiTab />;
+      default:
+        return null;
     }
   };
 
-  return <>{generateTabContent()}</>;
+  return (
+    <Suspense fallback={<span class="loader"></span>}>
+      {generateTabContent()}
+    </Suspense>
+  );
 }
 
 export default HomeTabContent;

@@ -1,10 +1,14 @@
-import React, { useContext, useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import ArtGrid from "../common/ArtGrid";
+import React, { useContext, useState, useEffect, Suspense, lazy } from "react";
 import ProfileTabContext from "../../providers/ProfileTabContent";
-import { getPosts } from "../../backend/data";
-import { getSavedArtworks, getUserActivity } from "../../backend/data";
-import UserActivity from "./ActivityTab";
+import {
+  getPosts,
+  getSavedArtworks,
+  getUserActivity,
+} from "../../backend/data";
+
+// Lazy load components
+const ArtGrid = lazy(() => import("../common/ArtGrid"));
+const UserActivity = lazy(() => import("./ActivityTab"));
 
 /**
  * @component
@@ -18,43 +22,61 @@ import UserActivity from "./ActivityTab";
  * @example
  * <ProfileTabContent uid="12345" />
  */
-
 function ProfileTabContent({ uid }) {
   const { currentProfileTab } = useContext(ProfileTabContext);
   const [currentContent, setCurrentContent] = useState([]);
 
   /**
+   * @effect
+   * @description
+   * Fetches data based on the current active tab whenever it changes.
+   */
+  useEffect(() => {
+    const fetchData = async () => {
+      switch (currentProfileTab) {
+        case "Posts":
+          await getPosts(uid, setCurrentContent);
+          break;
+        case "Saved":
+          await getSavedArtworks(uid, setCurrentContent);
+          break;
+        case "Activity":
+          await getUserActivity(uid, setCurrentContent);
+          break;
+        default:
+          setCurrentContent([]);
+          break;
+      }
+    };
+
+    fetchData();
+  }, [currentProfileTab, uid]);
+
+  /**
    * @function generateProfileContent
    * @description
-   * The `generateProfileContent` function is responsible for determining which type of content to fetch and render
-   * based on the active profile tab (Posts, Saved, or Activity). It handles data fetching asynchronously and renders
-   * corresponding components with the fetched data.
+   * Determines the content to render based on the current active tab.
    *
-   * @returns {JSX.Element} The JSX component based on the active profile tab.
-   * @example
-   * // Example of how generateProfileContent would be used internally:
-   * const content = generateProfileContent();
+   * @returns {JSX.Element} The JSX content for the active profile tab.
    */
   const generateProfileContent = () => {
     switch (currentProfileTab) {
       case "Posts":
-        getPosts(uid, setCurrentContent);
         return <ArtGrid artworks={currentContent} label="posts" />;
-
       case "Saved":
-        getSavedArtworks(uid, setCurrentContent);
         return <ArtGrid artworks={currentContent} label="saved" />;
-
       case "Activity":
-        getUserActivity(uid, setCurrentContent);
         return <UserActivity activities={currentContent} />;
-
       default:
-        return <></>;
+        return null;
     }
   };
 
-  return <>{generateProfileContent()}</>;
+  return (
+    <Suspense fallback={<span class="loader"></span>}>
+      {generateProfileContent()}
+    </Suspense>
+  );
 }
 
 export default ProfileTabContent;

@@ -1017,6 +1017,44 @@ button[type="submit"]:hover {
   border: 0.4px solid rgba(162, 160, 160, 0.32);
 }
 
+.loader {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 10px solid;
+  box-sizing: border-box;
+  animation: animloader 1s linear infinite alternate;
+
+  /* Flexbox centering */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Centering in parent */
+  margin: auto;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes animloader {
+  0% {
+    border-color: white rgba(255, 255, 255, 0) rgba(255, 255, 255, 0)
+      rgba(255, 255, 255, 0);
+  }
+  33% {
+    border-color: white white rgba(255, 255, 255, 0) rgba(255, 255, 255, 0);
+  }
+  66% {
+    border-color: white white white rgba(255, 255, 255, 0);
+  }
+  100% {
+    border-color: white white white white;
+  }
+}
+
 .left-form-image {
   width: 35%;
   height: 100%;
@@ -1324,8 +1362,8 @@ blockquote:before {
 
 @media (min-width: 768px) and (max-width: 1899px) {
   /* Your iPad specific styles here */
-  .contact{
-    gap:3rem
+  .contact {
+    gap: 3rem;
   }
   .left-form-image {
     width: 50%;
