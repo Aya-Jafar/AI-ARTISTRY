@@ -1,32 +1,46 @@
 import React, { useState, useEffect } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { SLIDES, SLIDES_INTERVALS } from "../../../utils/constants";
 
-
-export default function ImageSlider(props) {
+/**
+ * @component
+ * @description
+ * The `ImageSlider` component is a responsive carousel slider that displays images in a slideshow format.
+ * - Uses the `react-responsive-carousel` library to display slides with smooth transitions.
+ * - Automatically advances to the next slide at intervals specified in `SLIDES_INTERVALS` from the `constants` file.
+ * - The slider supports swipe gestures and can be customized to show or hide arrows, indicators, and status.
+ *
+ * @example
+ * // Renders the image slider with automatically advancing slides
+ * <ImageSlider />
+ */
+export default function ImageSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  // const slides = [firstCover, secondCover, thirdCover];
 
-  const slides = [
-    "/cover.png",
-    "/2.png",
-    "/Untitled design (16).png",
-  ];
-
-  //   const slideInterval = 5000; // Time between slides in milliseconds
-
-  const slideIntervals = [3000, 9000, 9000];
-
+  /**
+   * @description
+   * The `useEffect` hook automatically advances the carousel to the next slide at a specified interval.
+   * - Uses the `currentIndex` state to determine the interval time for slide transitions.
+   * - Clears the interval on unmount to prevent memory leaks.
+   *
+   * @dependency - `currentIndex` is used as a dependency to ensure the interval is reset whenever the slide changes.
+   */
   useEffect(() => {
     // Automatically advance to the next slide at a specified interval
-    const interval = setInterval(goToNext, slideIntervals[currentIndex]);
+    const interval = setInterval(goToNext, SLIDES_INTERVALS[currentIndex]);
 
     // Clear the interval when the component unmounts
     return () => clearInterval(interval);
   }, [currentIndex]);
 
+  /**
+   * @description
+   * Advances the carousel to the next slide.
+   * - If the current slide is the last one, it loops back to the first slide.
+   */
   const goToNext = () => {
-    const isLastSlide = currentIndex === slides.length - 1;
+    const isLastSlide = currentIndex === SLIDES.length - 1;
     const newIndex = isLastSlide ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
   };
@@ -44,7 +58,7 @@ export default function ImageSlider(props) {
         showIndicators={false}
         // stopOnHover={true}
       >
-        {slides.map((item, index) => (
+        {SLIDES.map((item, index) => (
           <div key={index}>
             <img src={item} className="slide" alt={`Slide ${index}`} />
           </div>

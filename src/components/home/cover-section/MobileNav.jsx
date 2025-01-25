@@ -6,6 +6,30 @@ import { Link as ScrollLink } from "react-scroll";
 import UserSection from "./UserSection";
 import NavButton from "./NavButton";
 
+/**
+ * @component
+ * @description
+ * The `MobileNav` component represents the mobile version of the navigation menu.
+ * - It renders a dropdown menu with navigation links for "IMAGINE" and "CONTACT US".
+ * - Depending on the `showUserSection` prop, it conditionally renders either the user's info section (`UserSection`) or login/signup buttons.
+ * - It also includes a logout button when the user is signed in.
+ *
+ * @example
+ * <MobileNav
+ *   showUserSection={true}
+ *   signOutUser={signOutFunction}
+ *   contactNavigate={contactNavigateFunction}
+ *   menuActive={true}
+ * />
+ * 
+ * @param {Object} props - Component props.
+ * @param {boolean} props.showUserSection - Determines whether the user section (profile info) is shown.
+ * @param {function} props.signOutUser - Callback function for signing the user out.
+ * @param {function} props.contactNavigate - Callback function for navigating to the contact section.
+ * @param {boolean} props.menuActive - Determines if the menu is open or closed.
+ * @returns {JSX.Element} The rendered mobile navigation menu.
+ */
+
 function MobileNav({
   showUserSection,
   signOutUser,

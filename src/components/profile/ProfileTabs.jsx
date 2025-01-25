@@ -16,11 +16,26 @@ function Tab({ text, icon: Icon, isActive, onClick }) {
   );
 }
 
+/**
+ * @component ProfileTabs
+ * @description
+ * This component renders the tabs for the user profile (Activity, Saved, Posts). It dynamically handles the active tab 
+ * state, fetches the saved artworks, and displays the appropriate tab icons. It uses `motion` from `framer-motion` 
+ * to animate tab transitions. It also conditionally renders the "Saved" tab if the user has a valid access token.
+ * 
+ * @returns {JSX.Element} The profile tabs UI with clickable tabs for different profile sections.
+ *   - **Activity Tab:** Displays user activity.
+ *   - **Saved Tab (conditionally rendered):** Displays saved artworks, only if the user has a valid access token.
+ *   - **Posts Tab:** Displays user posts.
+ * 
+ * @example
+ * // Example usage of ProfileTabs component
+ * <ProfileTabs />
+ */
 function ProfileTabs() {
-  const { currentProfileTab, setProfileTab } = useContext(ProfileTabContext);
+  const { setProfileTab } = useContext(ProfileTabContext);
   const { currentUser } = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState("Activity");
-  const [token, setToken] = useState("")
 
   const [defaultImage, setActiveImage] = useState("");
 

@@ -4,6 +4,18 @@ import { slideAnimation, fadeIn, stagger } from "../../../utils/motion";
 import { Link as ScrollLink } from "react-scroll";
 import ImageSlider from "./ImageSlider";
 
+
+/**
+ * @component
+ * @description
+ * The `Cover` component represents the landing section of the page, which includes an image slider, a motto, and a button to explore the art grid section.
+ * - The component uses `framer-motion` for smooth animations.
+ * - Displays the logo image, a slogan, and an "Explore" button that smooth scrolls to the art grid section on click.
+ * 
+ * @example
+ * // Renders the cover section with logo, motto, and explore button
+ * <Cover />
+ */
 function Cover() {
  
   return (

@@ -1,6 +1,19 @@
 import React from "react";
 import ContactInput from "./ContactInput";
 
+/**
+ * @component
+ * @description
+ * The `ContactForm` component renders a contact form where users can submit their name, email, and a message. 
+ * - The form is connected to Formspree to handle form submission.
+ * - Includes custom `ContactInput` components for the "Name" and "Email" fields.
+ * - The "Message" field is a textarea input that allows users to type a message.
+ * - A submit button sends the form data to Formspree.
+ * 
+ * @example
+ * // Renders a contact form with Name, Email, and Message fields
+ * <ContactForm />
+ */
 function ContactForm() {
   return (
     <div className="contact" id="contact">

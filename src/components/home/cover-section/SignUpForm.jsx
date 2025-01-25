@@ -4,8 +4,21 @@ import { handleSignUp } from "../../../backend/auth";
 import { validateSignUpForm } from "../../../utils/validators";
 import { useNavigate } from "react-router-dom";
 
-
+/**
+ * @component
+ * @description
+ * The `SignUpForm` component handles user sign-up by collecting the email, username, and password, validating input fields, and handling form submission.
+ * After submission, the user is redirected and shown a success message.
+ *
+ * @example
+ * <SignUpForm />
+ *
+ */
 function SignUpForm() {
+  /**
+   * @description
+   * Destructures relevant functions and state from the AuthContext and local component state.
+   */
   const { signUpWithEmailAndPassword } = useContext(AuthContext);
 
   // Define state variables to store form data
@@ -20,12 +33,17 @@ function SignUpForm() {
     usernameError: "",
     passwordError: "",
   });
-
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Handle input changes and update the state
+  /**
+   * @function handleInputChange
+   * @description
+   * Handles changes in the input fields, validates each field, and updates the form data.
+   * @param {object} e - The event object from the input change.
+   * @returns {void}
+   */
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -37,7 +55,13 @@ function SignUpForm() {
     });
   };
 
-  // Handle form submission
+  /**
+   * @function handleSubmit
+   * @description
+   * Handles form submission, triggers sign-up logic, shows loading indicator, and redirects the user after a successful sign-up.
+   * @param {object} e - The event object for form submission.
+   * @returns {void}
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
 

@@ -1,6 +1,31 @@
 import { formatDate } from "../../utils/formaters";
 import { MessageSquareText } from 'lucide-react';
 
+/**
+ * @component
+ * @description
+ * The `CommentActivity` component displays a user's comment activity, showing the artwork they commented on, 
+ * the comment text, and the time the comment was made. It also displays the username and the creator of the artwork.
+ * 
+ * @param {number} index - The index of the activity, used as a key for rendering.
+ * @param {string} commentText - The text of the comment made by the user.
+ * @param {string} userName - The username of the user who commented.
+ * @param {object} artData - The data related to the artwork involved in the comment activity.
+ *   - `artData.image` (string): The image URL of the artwork.
+ * @param {string} time - The timestamp when the comment was made, used to display the time of the comment.
+ * @param {object} artworkData - The data related to the artwork being commented on.
+ *   - `artworkData.creator` (string): The name of the creator of the artwork.
+ * 
+ * @example
+ * <CommentActivity
+ *   index={0}
+ *   commentText="This is amazing!"
+ *   userName="User123"
+ *   artData={{ image: "https://example.com/art.jpg" }}
+ *   time="2025-01-25T10:00:00Z"
+ *   artworkData={{ creator: "ArtistXYZ" }}
+ * />
+ */
 function CommentActivity({
   index,
   commentText,

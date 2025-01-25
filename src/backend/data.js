@@ -14,14 +14,26 @@ import {
   limit,
   orderBy,
 } from "firebase/firestore";
-
 import db from "./firebaseConfig";
+import {
+  FIREBASE_MAIN_COLLECTION,
+  FIREBASE_USERS_COLLECTION,
+  FIREABSE_SAVED_POSTS_COLLECTION,
+  FIREBASE_ACTIVITY_COLLECTION,
+  FIREBASE_COMMENTS_COLLECTION,
+  FIREBASE_POSTS_COLLECTION,
+} from "../utils/constants";
 
-const allArtworksCollection = collection(db, "ai-art");
+const allArtworksCollection = collection(db, FIREBASE_MAIN_COLLECTION);
 
+/**
+ * Fetches user information from the 'users' collection in Firestore.
+ * @param {string} userId - The UID of the user.
+ * @returns {Promise<Object|null>} - The user data or null if not found.
+ */
 export const getUserInfo = async (userId) => {
   try {
-    const docRef = doc(db, "users", userId);
+    const docRef = doc(db, FIREBASE_USERS_COLLECTION, userId);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
@@ -34,6 +46,12 @@ export const getUserInfo = async (userId) => {
   }
 };
 
+/**
+ * Fetches all artworks, with optional filters for homepage and limiting the number of artworks.
+ * @param {Function} setArtworks - The state setter function to update the artworks.
+ * @param {number} limitCount - The number of artworks to fetch.
+ * @param {boolean} isHomePage - Flag to determine if it's the homepage.
+ */
 export const getAllArtworks = (setArtworks, limitCount, isHomePage) => {
   let allDocuments = [];
   let limitedQuery;
@@ -69,6 +87,11 @@ export const getAllArtworks = (setArtworks, limitCount, isHomePage) => {
     });
 };
 
+/**
+ * Fetches all artworks categorized as 'fantasy'.
+ * @param {Function} setArtworks - The state setter function to update the artworks.
+ * @param {number} limitCount - The number of artworks to fetch.
+ */
 export const getFantasyArtworks = (setArtworks, limitCount) => {
   const queryOptions = [
     query(
@@ -91,6 +114,11 @@ export const getFantasyArtworks = (setArtworks, limitCount) => {
     });
 };
 
+/**
+ * Fetches all artworks categorized as 'SCI-FI'.
+ * @param {Function} setArtworks - The state setter function to update the artworks.
+ * @param {number} limitCount - The number of artworks to fetch.
+ */
 export const getSciFiArtworks = (setArtworks, limitCount) => {
   const queryOptions = [
     query(
@@ -111,13 +139,23 @@ export const getSciFiArtworks = (setArtworks, limitCount) => {
     .catch((error) => {});
 };
 
+/**
+ * Saves an artwork to the user's saved posts.
+ * @param {Object} currentUser - The currently authenticated user.
+ * @param {string} artId - The ID of the artwork to be saved.
+ * @returns {Promise<void>} - Resolves once the save action is complete.
+ */
 export const saveArtwork = async (currentUser, artId) => {
   // Get the current user's UID
   if (currentUser) {
     const currentUserUid = currentUser.uid;
 
     // Create a reference to the user's document in the saved-posts collection
-    const userSavedPostsRef = doc(db, "saved-posts", currentUserUid);
+    const userSavedPostsRef = doc(
+      db,
+      FIREABSE_SAVED_POSTS_COLLECTION,
+      currentUserUid
+    );
 
     try {
       // Fetch the user's document to get the current saved artwork IDs
@@ -157,6 +195,17 @@ export const saveArtwork = async (currentUser, artId) => {
   }
 };
 
+/**
+ * Saves a generated image for the current user.
+ * @param {Object} currentUser - The currently authenticated user.
+ * @param {string} generatedImageUrl - The URL of the generated image.
+ * @param {string} prompt - The prompt used to generate the image.
+ * @param {number} brightness - The brightness value of the generated image.
+ * @param {number} contrast - The contrast value of the generated image.
+ * @param {Function} navigate - The navigation function to redirect the user if not logged in.
+ * @param {Function} setShowSnackBar - The function to show the snack bar on success.
+ * @returns {Promise<void>} - Resolves once the save action is complete.
+ */
 export const saveGeneratedImage = async (
   currentUser,
   generatedImageUrl,
@@ -171,7 +220,11 @@ export const saveGeneratedImage = async (
     const currentUserUid = currentUser.uid;
 
     // Create a reference to the user's document in the saved-images collection
-    const userSavedImagesRef = doc(db, "saved-posts", currentUserUid);
+    const userSavedImagesRef = doc(
+      db,
+      FIREABSE_SAVED_POSTS_COLLECTION,
+      currentUserUid
+    );
 
     try {
       // Fetch the user's document to get the current saved image data
@@ -201,7 +254,6 @@ export const saveGeneratedImage = async (
           await setDoc(userSavedImagesRef, {
             savedPosts: userData.savedPosts,
           });
-
         } else {
           // If the image data is not found, add it to the array
           userData.savedPosts.push(imageData);
@@ -228,13 +280,23 @@ export const saveGeneratedImage = async (
   }
 };
 
+/**
+ * Checks if an artwork is saved by the current user.
+ * @param {Object} currentUser - The current user object.
+ * @param {string} artId - The ID of the artwork.
+ * @returns {Promise<boolean>} - Returns true if the artwork is saved, false otherwise.
+ */
 export const isArtworkSaved = async (currentUser, artId) => {
   if (currentUser) {
     // Get the current user's UID
     const currentUserUid = currentUser.uid;
 
     // Create a reference to the user's document in the saved-posts collection
-    const userSavedPostsRef = doc(db, "saved-posts", currentUserUid);
+    const userSavedPostsRef = doc(
+      db,
+      FIREABSE_SAVED_POSTS_COLLECTION,
+      currentUserUid
+    );
 
     try {
       // Fetch the user's document to get the current savedPosts array
@@ -255,6 +317,13 @@ export const isArtworkSaved = async (currentUser, artId) => {
   }
 };
 
+/**
+ * Checks if an artwork is liked by the current user.
+ * @param {Object} currentUser - The current user object.
+ * @param {string} artId - The ID of the artwork.
+ * @returns {Promise<boolean>} - Returns true if the artwork is liked, false otherwise.
+ */
+
 export const isArtworkLiked = async (currentUser, artId) => {
   if (!currentUser || !currentUser.uid) {
     // Check if a user is authenticated and has a UID
@@ -265,7 +334,7 @@ export const isArtworkLiked = async (currentUser, artId) => {
   // const activityRef = collection(db, "activity",userId);
 
   try {
-    const userLikedActivity = doc(db, "activity", userId);
+    const userLikedActivity = doc(db, FIREBASE_ACTIVITY_COLLECTION, userId);
 
     // Fetch the user's document to get the current savedPosts array
     const userSavedPostsSnapshot = await getDoc(userLikedActivity);
@@ -289,25 +358,39 @@ export const isArtworkLiked = async (currentUser, artId) => {
   }
 };
 
+/**
+ * Fetches artwork data from the Firestore database.
+ * @param {string} artId - The ID of the artwork.
+ * @returns {Promise<Object>} - The artwork data.
+ */
 const fetchArtworkData = async (artId) => {
-  const photoRef = doc(db, "ai-art", artId);
+  const photoRef = doc(db, FIREBASE_MAIN_COLLECTION, artId);
   const photoDoc = await getDoc(photoRef);
   return { id: photoDoc.id, ...photoDoc.data() };
 };
-//
+
+/**
+ * Retrieves the list of saved artworks for the current user.
+ * @param {Object} currentUser - The current user object.
+ * @param {Function} setSavedPosts - Function to set the saved posts data.
+ * @returns {Promise<void>} - Updates the saved posts.
+ */
 export const getSavedArtworks = async (currentUser, setSavedPosts) => {
   if (currentUser) {
     // Get the current user's UID
     const currentUserUid = currentUser;
 
     // Create a reference to the user's document in the saved-posts collection
-    const userSavedPostsRef = doc(db, "saved-posts", currentUserUid);
+    const userSavedPostsRef = doc(
+      db,
+      FIREABSE_SAVED_POSTS_COLLECTION,
+      currentUserUid
+    );
 
     try {
       // Fetch the user's document to get the current saved artwork data
       const userSavedPostsSnapshot = await getDoc(userSavedPostsRef);
       const userData = userSavedPostsSnapshot.data();
-
 
       if (userData && userData.savedPosts) {
         const blobUrls = userData.savedPosts.filter(
@@ -331,6 +414,13 @@ export const getSavedArtworks = async (currentUser, setSavedPosts) => {
   }
 };
 
+/**
+ * Adds a like or other activity to the user's activity feed.
+ * @param {Object} currentUser - The current user object.
+ * @param {string} artId - The ID of the artwork.
+ * @param {string} activityType - The type of activity (e.g., "Like", "Comment").
+ * @returns {Promise<void>} - Updates the user's activity feed.
+ */
 export const addToLikedActivity = async (currentUser, artId, activityType) => {
   if (!currentUser || !currentUser.uid) {
     // Check if a user is authenticated and has a UID
@@ -338,7 +428,7 @@ export const addToLikedActivity = async (currentUser, artId, activityType) => {
   }
 
   const userId = currentUser.uid; // Get the user's UID
-  const activityRef = doc(db, "activity", userId); // Reference to the user's activity document in Firestore
+  const activityRef = doc(db, FIREBASE_ACTIVITY_COLLECTION, userId); // Reference to the user's activity document in Firestore
 
   const artData = await fetchArtworkData(artId);
 
@@ -376,13 +466,11 @@ export const addToLikedActivity = async (currentUser, artId, activityType) => {
         await updateDoc(activityRef, {
           activities: existingActivities,
         });
-
       } else {
         // If the activity doesn't exist, add the new activity
         await updateDoc(activityRef, {
           activities: [...existingActivities, newActivityObject],
         });
-
       }
     }
     await updateLikesCount(artId);
@@ -391,13 +479,17 @@ export const addToLikedActivity = async (currentUser, artId, activityType) => {
   }
 };
 
+/**
+ * Updates the likes count for a given artwork.
+ * @param {string} artId - The ID of the artwork.
+ * @returns {Promise<void>} - Updates the likes count in Firestore.
+ */
 async function updateLikesCount(artId) {
-  const artworkRef = doc(db, "ai-art", artId);
+  const artworkRef = doc(db, FIREBASE_MAIN_COLLECTION, artId);
 
   const artworkDoc = await getDoc(artworkRef);
 
   const currentLikesCount = artworkDoc.data()?.likesCount || 0;
-
 
   if (currentLikesCount === 0) {
     // If the current likesCount is 0, increment it by 1
@@ -412,6 +504,15 @@ async function updateLikesCount(artId) {
   }
 }
 
+/**
+ * Fetches artwork details from Firestore.
+ * @param {string} id - The ID of the artwork.
+ * @param {function} setArtworkDetail - State setter to store artwork details.
+ * @param {function} setLikesCount - State setter to store like count.
+ * @param {function} setCommentsCount - State setter to store comment count.
+ * @param {function} setAllComments - State setter to store all comments.
+ * @returns {function} Unsubscribe function to stop listening to comment updates.
+ */
 export const getArtworkDetails = async (
   id,
   setArtworkDetail,
@@ -419,7 +520,7 @@ export const getArtworkDetails = async (
   setCommentsCount,
   setAllComments
 ) => {
-  const documentRef = doc(db, "ai-art", id);
+  const documentRef = doc(db, FIREBASE_MAIN_COLLECTION, id);
   try {
     const documentSnapshot = await getDoc(documentRef);
 
@@ -449,16 +550,25 @@ export const getArtworkDetails = async (
   }
 };
 
+/**
+ * Adds a comment to a specific artwork and logs the activity.
+ * @param {Object} currentUser - The currently logged-in user.
+ * @param {string} artId - The ID of the artwork.
+ * @param {string} newComment - The content of the new comment.
+ */
 export const addCommentToActivity = async (currentUser, artId, newComment) => {
   if (currentUser) {
-    const docRef = doc(db, "ai-art", artId);
-    const userRefInActivity = doc(db, "activity", currentUser.uid);
+    const docRef = doc(db, FIREBASE_MAIN_COLLECTION, artId);
 
     try {
       // Get the current document data
       const docSnapshot = await getDoc(docRef);
 
-      const activityRef = doc(db, "activity", currentUser.uid);
+      const activityRef = doc(
+        db,
+        FIREBASE_ACTIVITY_COLLECTION,
+        currentUser.uid
+      );
 
       const activitySnapshot = await getDoc(activityRef);
 
@@ -469,7 +579,10 @@ export const addCommentToActivity = async (currentUser, artId, newComment) => {
         userId: currentUser.uid,
       };
 
-      const commentsCollectionRef = collection(docRef, "comments");
+      const commentsCollectionRef = collection(
+        docRef,
+        FIREBASE_COMMENTS_COLLECTION
+      );
 
       // Add the comment to the comments collection
       const commentDocRef = await addDoc(commentsCollectionRef, commentObject);
@@ -482,7 +595,6 @@ export const addCommentToActivity = async (currentUser, artId, newComment) => {
 
       const artData = await fetchArtworkData(artId);
 
-
       const newActivityObject = {
         artData: artData,
         activityType: "comment",
@@ -491,7 +603,6 @@ export const addCommentToActivity = async (currentUser, artId, newComment) => {
         userName: currentUser.displayName,
         timestamp: new Date().toISOString(),
       };
-
 
       if (
         !activitySnapshot.data() ||
@@ -517,9 +628,15 @@ export const addCommentToActivity = async (currentUser, artId, newComment) => {
   }
 };
 
+/**
+ * Fetches user activity for the specified user ID.
+ * @param {string} uid - The user ID.
+ * @param {function} setActivity - State setter to store the activity data.
+ */
+
 export const getUserActivity = async (uid, setActivity) => {
   if (uid) {
-    const activityCollection = collection(db, "activity");
+    const activityCollection = collection(db, FIREBASE_ACTIVITY_COLLECTION);
 
     let allActivity = [];
 
@@ -541,9 +658,21 @@ export const getUserActivity = async (uid, setActivity) => {
   }
 };
 
+/**
+ * Deletes a comment from an artwork and removes the activity entry.
+ * @param {string} artId - The ID of the artwork.
+ * @param {string} commentId - The ID of the comment to delete.
+ * @param {string} userId - The ID of the user who made the comment.
+ */
 export const deleteComment = async (artId, commentId, userId) => {
-  const commentDocRef = doc(db, "ai-art", artId, "comments", commentId);
-  const activityRef = doc(db, "activity", userId);
+  const commentDocRef = doc(
+    db,
+    FIREBASE_MAIN_COLLECTION,
+    artId,
+    FIREBASE_COMMENTS_COLLECTION,
+    commentId
+  );
+  const activityRef = doc(db, FIREBASE_ACTIVITY_COLLECTION, userId);
 
   try {
     await deleteDoc(commentDocRef);
@@ -577,9 +706,22 @@ export const deleteComment = async (artId, commentId, userId) => {
   }
 };
 
+/**
+ * Edits the text of an existing comment.
+ * @param {string} artId - The ID of the artwork.
+ * @param {string} commentId - The ID of the comment to edit.
+ * @param {string} userId - The ID of the user editing the comment.
+ * @param {string} newText - The new text for the comment.
+ */
 export const editComment = async (artId, commentId, userId, newText) => {
-  const commentDocRef = doc(db, "ai-art", artId, "comments", commentId);
-  const activityRef = doc(db, "activity", userId);
+  const commentDocRef = doc(
+    db,
+    FIREBASE_MAIN_COLLECTION,
+    artId,
+    FIREBASE_COMMENTS_COLLECTION,
+    commentId
+  );
+  const activityRef = doc(db, FIREBASE_ACTIVITY_COLLECTION, userId);
 
   try {
     // Update the comment text
@@ -614,6 +756,14 @@ export const editComment = async (artId, commentId, userId, newText) => {
   }
 };
 
+/**
+ * Posts an artwork and saves it to the current user's saved images.
+ * @param {Object} currentUser - The currently logged-in user.
+ * @param {string} postUrl - The URL of the generated artwork.
+ * @param {string} prompt - The prompt used for generating the artwork.
+ * @param {function} navigate - Navigation function to redirect users.
+ * @param {function} setShowSnackBar - State setter to control snack bar visibility.
+ */
 export const postArtwork = async (
   currentUser,
   postUrl,
@@ -626,7 +776,11 @@ export const postArtwork = async (
     const currentUserUid = currentUser.uid;
 
     // Create a reference to the user's document in the saved-images collection
-    const userSavedImagesRef = doc(db, "posts", currentUserUid);
+    const userSavedImagesRef = doc(
+      db,
+      FIREBASE_POSTS_COLLECTION,
+      currentUserUid
+    );
 
     try {
       // Fetch the user's document to get the current saved image data
@@ -650,7 +804,6 @@ export const postArtwork = async (
           await setDoc(userSavedImagesRef, {
             posts: userData.posts,
           });
-
         } else {
           // If the image data is not found, add it to the array
           userData.posts.push(imageData);
@@ -679,13 +832,22 @@ export const postArtwork = async (
   }
 };
 
+/**
+ * Fetches the saved posts for the current user.
+ * @param {string} currentUser - The current user's UID.
+ * @param {function} setPosts - State setter to store saved posts.
+ */
 export const getPosts = async (currentUser, setPosts) => {
   if (currentUser) {
     // Get the current user's UID
     const currentUserUid = currentUser;
 
     // Create a reference to the user's document in the saved-posts collection
-    const userSavedPostsRef = doc(db, "posts", currentUserUid);
+    const userSavedPostsRef = doc(
+      db,
+      FIREBASE_POSTS_COLLECTION,
+      currentUserUid
+    );
 
     try {
       // Fetch the user's document to get the current saved artwork data
@@ -701,6 +863,13 @@ export const getPosts = async (currentUser, setPosts) => {
   }
 };
 
+/**
+ * Fetches the details of generated artwork from the saved posts or saved generated.
+ * @param {Object} currentUser - The current user.
+ * @param {function} setArtworkDetail - State setter to store the artwork details.
+ * @param {string} generatedImageUrl - URL of the generated image.
+ * @param {string} whichTab - Which tab the artwork details belong to.
+ */
 export const getGeneratedArtworkDetails = async (
   currentUser,
   setArtworkDetail,
@@ -732,12 +901,23 @@ export const getGeneratedArtworkDetails = async (
   }
 };
 
+/**
+ * Fetches the details of a generated artwork from the user's saved posts.
+ * @param {string} currentUserUid - The unique ID of the current user.
+ * @param {string} generatedImageUrl - The URL of the generated image.
+ * @param {function} setArtworkDetail - The function to update the artwork details state.
+ * @returns {Promise<void>} - A promise that resolves when the artwork details are set.
+ */
 async function getGeneratedDetail(
   currentUserUid,
   generatedImageUrl,
   setArtworkDetail
 ) {
-  const userSavedImagesRef = doc(db, "saved-posts", currentUserUid);
+  const userSavedImagesRef = doc(
+    db,
+    FIREABSE_SAVED_POSTS_COLLECTION,
+    currentUserUid
+  );
   // Fetch the user's document
   const userSavedImagesSnapshot = await getDoc(userSavedImagesRef);
   const userData = userSavedImagesSnapshot.data();
@@ -764,6 +944,14 @@ async function getGeneratedDetail(
   }
 }
 
+
+/**
+ * Fetches the details of a post from the user's saved posts based on the post URL.
+ * @param {string} currentUserUid - The unique ID of the current user.
+ * @param {function} setArtworkDetail - The function to update the artwork details state.
+ * @param {string} postUrl - The URL of the post.
+ * @returns {Promise<void>} - A promise that resolves when the artwork details are set.
+ */
 async function getPostDetail(currentUserUid, setArtworkDetail, postUrl) {
   const userSavedImagesRef = doc(db, "posts", currentUserUid);
   // Fetch the user's document

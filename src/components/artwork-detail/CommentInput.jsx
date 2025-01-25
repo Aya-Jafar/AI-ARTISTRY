@@ -5,17 +5,36 @@ import AuthContext from "../../providers/Auth";
 import { isAuthenticated } from "../../backend/auth";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * @description
+ * The CommentInput component allows users to input comments on artwork.
+ * It checks if the user is authenticated, and if they are, it allows them to submit comments.
+ * The component uses state management to handle the comment input and loading state during submission.
+ * It displays a progress indicator while the comment is being added and resets the input field once the comment is submitted.
+ */
+
 function CommentInput({ artId, currentComment, setCurrentComment }) {
-  // const [commentInput, setCommentInput] = useState("");
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [isClicked, setIsClicked] = useState(false);
 
+  /**
+   * @function handleCommentIconClick
+   * @description
+   * Handles the comment submission when the comment icon is clicked.
+   * - Checks if the user is authenticated.
+   * - If the user is authenticated and the comment is non-empty, it calls `addCommentToActivity` to submit the comment.
+   * - Shows a progress indicator while the comment is being added.
+   * - Resets the input field after submission.
+   * @param {Event} e - The click event on the comment icon.
+   */
   const handleCommentIconClick = () => {
-    setIsClicked(true);
     if (isAuthenticated(currentUser)) {
-      if (currentComment.length > 0) {
+      if (currentComment.trim().length > 0) {
+        setIsClicked(true);
         addCommentToActivity(currentUser, artId, currentComment);
+      } else {
+        return;
       }
       setTimeout(() => {
         setIsClicked(false);
@@ -26,6 +45,13 @@ function CommentInput({ artId, currentComment, setCurrentComment }) {
       navigate("/login");
     }
   };
+  /**
+   * @function handleKeyPress
+   * @description
+   * Handles the key press event for the input field.
+   * - Submits the comment when the "Enter" key is pressed.
+   * @param {KeyboardEvent} e - The key press event.
+   */
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       e.preventDefault(); // Prevent Enter from adding a newline

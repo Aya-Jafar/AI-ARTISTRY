@@ -9,23 +9,41 @@ import { motion } from "framer-motion";
 import { Link as ScrollLink } from "react-scroll";
 import MobileNav from "./MobileNav";
 
+/**
+ * @component
+ * @description
+ * The `Nav` component represents the main navigation bar of the application.
+ * - It includes links for "IMAGINE", "CONTACT US", and conditional rendering of user-related sections.
+ * - If the user is authenticated (`currentUser` exists), the user's profile section and a logout button are shown.
+ * - If the user is not authenticated, buttons for login and signup are displayed.
+ * - On mobile, a responsive hamburger menu is used to toggle the visibility of the navigation links.
+ *
+ * @example
+ * <Nav />
+ *
+ * @returns {JSX.Element} The rendered navigation bar.
+ */
 function Nav() {
+  /**
+   * @description
+   * This section manages the navigation state, including the menu visibility,
+   * user authentication state, and navigating to the contact section.
+   */
   const { currentUser, signOutUser } = useContext(AuthContext);
-
   const [showUserSection, setShowUserSection] = useState(false);
-
   const [menuActive, setMenuActive] = useState(false);
-
   const [hoveredLogout, setHoveredLogout] = useState(false);
   const [navigateToContact, setNavigateToContact] = useState(false);
-
   const toggleMenu = () => setMenuActive(!menuActive);
-
   const token = localStorage.getItem("token");
-
   const currentLocation = useLocation();
   const navigate = useNavigate();
 
+  /**
+   * @description
+   * This section manages the navigation state, including the menu visibility,
+   * user authentication state, and navigating to the contact section.
+   */
   const contactNavigate = () => {
     if (currentLocation.pathname !== "/") {
       // Navigate to the homepage and set the state to true
@@ -34,6 +52,13 @@ function Nav() {
     }
   };
 
+  /**
+   * @effect
+   * @description
+   * Watches for the contact navigation state and triggers scrolling to the contact section.
+   * - Clears the navigate state after scrolling.
+   * @dependencies [currentLocation.pathname, navigateToContact]
+   */
   useEffect(() => {
     // Check if we need to scroll to the contact section after navigation
     if (navigateToContact && currentLocation.pathname === "/") {
@@ -43,6 +68,13 @@ function Nav() {
     }
   }, [currentLocation.pathname, navigateToContact]);
 
+  /**
+   * @effect
+   * @description
+   * Checks if the user is authenticated based on the presence of the token.
+   * - Updates `showUserSection` accordingly.
+   * @dependencies [token]
+   */
   useEffect(() => {
     token ? setShowUserSection(true) : setShowUserSection(false);
   }, [token]);

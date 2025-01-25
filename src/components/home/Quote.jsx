@@ -1,5 +1,15 @@
 import React from "react";
 
+/**
+ * @component
+ * @description
+ * The `Quote` component renders a quote section that includes a blockquote with a famous quote
+ * and the attribution to the author. The section is styled to take up 60% of the viewport height.
+ *
+ * @example
+ * <Quote />
+ *
+ */
 function Quote() {
   return (
     <div style={{ height: "60vh" }} className="quote">

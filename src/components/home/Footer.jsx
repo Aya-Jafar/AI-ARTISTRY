@@ -1,5 +1,16 @@
 import React from "react";
 
+/**
+ * @component
+ * @description
+ * The `Footer` component renders the footer section of the website, including contact information 
+ * and links to social media accounts. It displays a title, social media icons with links, 
+ * and a copyright notice.
+ * 
+ * @example
+ * <Footer />
+ * 
+ */
 function Footer() {
   return (
     <div className="footer">

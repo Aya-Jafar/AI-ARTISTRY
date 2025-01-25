@@ -10,10 +10,17 @@ import ArtworkDetail from "./pages/ArtWorkDetails";
 import MoreArtworks from "./pages/MoreArtworks";
 import { AlertProvider } from "./providers/Alert";
 
+/**
+ * @component App
+ * @description
+ * The main entry point for the application. It contains the routing logic and renders the appropriate components
+ * based on the current URL path. It also conditionally renders the `Home` page when the user is on certain routes.
+ */
+
 function App() {
   const location = useLocation();
 
-  // // Check if the current route is not the Imagine page and not the profile page
+  // Check if the current route is not the Imagine page and not the profile page
   const showHomePage =
     location.pathname !== "/imagine" &&
     !location.pathname.startsWith("/profile") &&
@@ -27,8 +34,6 @@ function App() {
       {showHomePage && <Home />}
 
       <Routes>
-        {/* {showHomePage && <Route path="/" element={<Home />} />} */}
-
         <Route path="/login" element={<Login />} />
 
         <Route path="/signup" element={<SignUp />} />
@@ -68,10 +73,7 @@ function App() {
           path="/post/:postUrl"
           element={
             <AlertProvider>
-              <ArtworkDetail 
-                isGeneratedArtwork={true} 
-                label="posts" 
-              />
+              <ArtworkDetail isGeneratedArtwork={true} label="posts" />
             </AlertProvider>
           }
         />

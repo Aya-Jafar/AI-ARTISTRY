@@ -18,6 +18,7 @@ import { getArtistsNameWithSimilarWork } from "../backend/gemini";
 import TypingEffect from "../components/imagine/TypingEffect";
 
 /**
+ * @component
  * @description
  * The Imagine component allows users to generate AI-driven images based on prompts.
  * It integrates with user authentication via the AuthContext and uses a navigation hook for routing.
@@ -27,8 +28,9 @@ import TypingEffect from "../components/imagine/TypingEffect";
  * - Display of a generated image.
  * - Loading and error states for user feedback.
  * Additional functionality includes toggling a chatbot interface and managing a list of artists.
+ * @example
+ * <Imagine />
  */
-
 function Imagine() {
   /**
    * @description

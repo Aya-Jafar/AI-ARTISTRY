@@ -5,11 +5,22 @@ import AuthBtn from "./AuthBtn";
 import LoginForm from "./LoginForm";
 import AuthPopupContext from "../../../providers/AuthPopup";
 
+/**
+ * @component
+ * @description
+ * The `LoginContent` component provides the UI and logic for the login screen.
+ * - Displays different login options, including Google, Facebook, and Email-based authentication.
+ * - If the user chooses to log in via email, it shows a form for email login.
+ * - Integrates with `AuthContext` for handling authentication and `AuthPopupContext` for controlling the visibility of the login popup.
+ * 
+ * @example
+ * // Renders the login content with available authentication options
+ * <LoginContent />
+ */
+
 function LoginContent() {
   const { signInWithGoogle, signInWithFacebook } = useContext(AuthContext);
-
   const [showEmailForm, setShowEmailSignIn] = useState(false);
-
   const { setLoginPopup } = useContext(AuthPopupContext);
 
   const handleEmailSignInClick = () => setShowEmailSignIn(true);

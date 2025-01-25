@@ -1,3 +1,9 @@
+/**
+ * Establishes a WebSocket connection to the chatbot server and sends the initial message.
+ * @param {function} setMessages - A function to update the state of messages.
+ * @param {string} initialMessage - The initial message to be sent to the chatbot.
+ * @returns {WebSocket} - The WebSocket connection instance.
+ */
 export const chatBotSocket = (setMessages, initialMessage) => {
   const chatSocket = new WebSocket(
     `${process.env.REACT_APP_WEBSOCKET_URL}/ws/chatbot/`
@@ -25,6 +31,12 @@ export const chatBotSocket = (setMessages, initialMessage) => {
   return chatSocket;
 };
 
+/**
+ * Fetches a list of artists with similar artworks based on the provided image.
+ * @param {string} base64Url - The base64 encoded image URL for which to find similar artists.
+ * @param {function} setArtists - A function to update the state with the list of artists.
+ * @returns {Promise<void>} - A promise that resolves when the artist names are fetched and set.
+ */
 export const getArtistsNameWithSimilarWork = async (base64Url, setArtists) => {
   if (base64Url) {
     const payload = {
@@ -35,7 +47,7 @@ export const getArtistsNameWithSimilarWork = async (base64Url, setArtists) => {
     try {
       // Send the POST request
       const response = await fetch(
-        `${process.env.REACT_APP_GEMINI_API_URL}get-artists/`,
+        `${process.env.REACT_APP_GEMINI_API_URL}/get-artists/`,
         {
           method: "POST",
           headers: {

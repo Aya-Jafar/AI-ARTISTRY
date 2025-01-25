@@ -1,3 +1,13 @@
+
+/**
+ * @function validateSignUpForm
+ * @description
+ * Validates the fields of the sign-up form. It checks the email, username, and password fields based on specific criteria and sets corresponding error messages.
+ * @param {string} name - The name of the form field being validated (e.g., "email", "username", "password").
+ * @param {string} value - The current value of the form field.
+ * @param {Object} error - The current error state object that holds validation errors.
+ * @param {Function} setError - The function used to update the error state object.
+ */
 export const validateSignUpForm = (name, value, error, setError) => {
   if (name === "email") {
     if (!validateEmail(value)) {
@@ -59,13 +69,29 @@ export const validateSignUpForm = (name, value, error, setError) => {
   }
 };
 
+
+/**
+ * @function validateEmail
+ * @description
+ * Validates an email string using a regular expression.
+ * @param {string} email - The email string to validate.
+ * @returns {boolean} Returns true if the email matches the pattern, false otherwise.
+ */
 export const validateEmail = (email) => {
   // use a regular expression or a library like 'validator' for more robust email validation
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 };
 
 
-
+/**
+ * @function validateLoginForm
+ * @description
+ * Validates the login form fields. It checks if the email and password fields are filled and sets corresponding error messages.
+ * @param {string} name - The name of the form field being validated (e.g., "email", "password").
+ * @param {string} value - The current value of the form field.
+ * @param {Object} errors - The current error state object that holds validation errors.
+ * @param {Function} setErrors - The function used to update the error state object.
+ */
 export const validateLoginForm = (name, value, errors, setErrors) => {
   if (name === "email") {
     if (!value) {

@@ -11,12 +11,15 @@ const prompts = [
   "futuristic city skyline, synthwave colors, neurocybernetics, neal asher, industrial light & magic, v - ray, tragic lighting, volumetric lighting, film noir lighting",
   "perspective, curious old secret town of Manila city, cascading armour shops and potion shops, art nouveau, animation art, dark fantasy, overgrown with lush vegetation, cinematic, smooth, detailed, hyperrealism, very small aperture, clear reflection, post production, post-processing, 8k, retouch, HDR, Super-Resolution, Soft Lighting, Ray Tracing Global Illumination, Lumen Reflections, pastel color palette, art deco, Bloodborne feeling",
   "nikkor 135 mm 1.8, depth of field, ultra realistic, fallen angel carved out of marble",
-  "a beautiful hyperrealistic detailed 3D render of a a masked assassin, borderlands, rendering by Jan Ditlev, Klaus Pillon, Abbott Fuller Graves, Atey Ghailan, genzoman"
+  "a beautiful hyperrealistic detailed 3D render of a a masked assassin, borderlands, rendering by Jan Ditlev, Klaus Pillon, Abbott Fuller Graves, Atey Ghailan, genzoman",
 ];
 
-
-const getRandomPropmt = ()=>{
-    return prompts[Math.floor(Math.random()*prompts.length)];
-}
+/**
+ * Returns a random prompt from the predefined list of prompts.
+ * @returns {string} A randomly selected prompt.
+ */
+const getRandomPropmt = () => {
+  return prompts[Math.floor(Math.random() * prompts.length)];
+};
 
 export default getRandomPropmt;

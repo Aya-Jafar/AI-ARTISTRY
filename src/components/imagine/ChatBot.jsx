@@ -8,7 +8,27 @@ import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import { ArrowUpRight } from "lucide-react";
 
+/**
+ * @component
+ * @description
+ * The `ChatBot` component renders a chat interface for brainstorming prompts. It connects to a WebSocket
+ * to handle real-time communication and allows the user to send and receive messages. It also provides
+ * recommended messages for the user to choose from.
+ *
+ * @param {Object} props
+ * @param {boolean} props.showChatBot - Determines whether the chatbot is visible.
+ * @param {Function} props.setShowChatBot - A function to control the visibility of the chatbot.
+ * @param {Function} props.setPrompt - A function to update the prompt for the chatbot.
+ *
+ * @example
+ * <ChatBot showChatBot={true} setShowChatBot={setShowChatBot} setPrompt={setPrompt} />
+ */
 function ChatBot({ showChatBot, setShowChatBot, setPrompt }) {
+  /**
+   * @constant RECOMMENDED_MESSAGES
+   * @description
+   * A list of predefined prompt ideas recommended for the user.
+   */
   const RECOMMENDED_MESSAGES = [
     "Give me a creative prompt for image generation about space",
     "Creative image generation prompts",
@@ -29,8 +49,12 @@ function ChatBot({ showChatBot, setShowChatBot, setPrompt }) {
   const selectedTextIndexRef = useRef(null); // Ref to manage selected message index
   const iconVisibleRef = useRef(false); // Ref to manage icon visibility
 
-
-  // Handle WebSocket connection
+  /**
+   * @effect
+   * @description
+   * Handles the WebSocket connection to the chatbot server. The connection is established when the chatbot is shown and closed when it's hidden.
+   * @dependencies [showChatBot]
+   */
   useEffect(() => {
     if (showChatBot) {
       // Reset states when chatbot is reopened
@@ -49,6 +73,12 @@ function ChatBot({ showChatBot, setShowChatBot, setPrompt }) {
     }
   }, [showChatBot]);
 
+  /**
+   * @effect
+   * @description
+   * Handles the WebSocket connection to the chatbot server. The connection is established when the chatbot is shown and closed when it's hidden.
+   * @dependencies [showChatBot]
+   */
   useEffect(() => {
     if (isConnected && pendingMessage) {
       chatSocketRef.current = chatBotSocket(setMessages, pendingMessage);
@@ -61,8 +91,11 @@ function ChatBot({ showChatBot, setShowChatBot, setPrompt }) {
     }
   }, [isConnected, pendingMessage]);
 
-
-  // Handle closing the chatbot
+  /**
+   * @function handleCloseChatBot
+   * @description
+   * Closes the chatbot, cleaning up WebSocket connections and resetting the states.
+   */
   const handleCloseChatBot = () => {
     if (chatSocketRef.current) {
       chatSocketRef.current.close();
@@ -73,7 +106,12 @@ function ChatBot({ showChatBot, setShowChatBot, setPrompt }) {
     setRecommendedMessages([...RECOMMENDED_MESSAGES]);
   };
 
-  // Send initial message
+  /**
+   * @function sendInitialMessage
+   * @description
+   * Sends a predefined or user-selected message as the initial prompt to the chatbot.
+   * @param {string} chosenText - The message to be sent.
+   */
   const sendInitialMessage = (chosenText) => {
     setInitialMessageNotSent(false);
     setPendingMessage(chosenText);
@@ -85,6 +123,13 @@ function ChatBot({ showChatBot, setShowChatBot, setPrompt }) {
     }, 3000);
   };
 
+  /**
+   * @function handleSendMessage
+   * @description
+   * Handles the sending of messages when the send button is clicked or the Enter key is pressed.
+   * - Validates if the initial message is not empty.
+   * @param {Event} event - The event triggered by the click or key press.
+   */
   const handleSendMessage = (event) => {
     if (
       (event.type === "click" || event.key === "Enter") &&
@@ -102,10 +147,19 @@ function ChatBot({ showChatBot, setShowChatBot, setPrompt }) {
     }
   };
 
-  const onSelectStart = () => {
-    iconVisibleRef.current = false; // Hide the icon on selection start
-  };
+  /**
+   * @function onSelectStart
+   * @description
+   * Hides the prompt icon when the text selection starts.
+   */
+  const onSelectStart = () => (iconVisibleRef.current = false); // Hide the icon on selection start
 
+  /**
+   * @function handleSelectionChange
+   * @description
+   * Handles the selection of text in the chat and positions the prompt icon accordingly.
+   * @param {number} index - The index of the selected message in the chat history.
+   */
   const handleSelectionChange = (index) => {
     const activeSelection = document.getSelection();
     const text = activeSelection?.toString().trim();
@@ -131,6 +185,11 @@ function ChatBot({ showChatBot, setShowChatBot, setPrompt }) {
     iconVisibleRef.current = true; // Show the icon
   };
 
+  /**
+   * @function insertPrompt
+   * @description
+   * Inserts the selected text into the prompt field when the prompt icon is clicked.
+   */
   const insertPrompt = () => {
     const textToInsert = selectedTextRef.current;
 
@@ -142,12 +201,24 @@ function ChatBot({ showChatBot, setShowChatBot, setPrompt }) {
     }
   };
 
+  /**
+   * @function handleMouseUp
+   * @description
+   * Handles mouse release event to show the prompt icon if text is selected.
+   */
   const handleMouseUp = () => {
     const text = selectedTextRef.current;
     if (text && text.length > 0) {
       iconVisibleRef.current = true; // Show the icon
     }
   };
+
+  /**
+   * @effect
+   * @description
+   * Adds event listeners for text selection and mouseup to manage prompt icon visibility and positioning.
+   * @dependencies [iconVisibleRef.current]
+   */
   useEffect(() => {
     document.addEventListener("selectstart", onSelectStart);
     document.addEventListener("selectionchange", handleSelectionChange);

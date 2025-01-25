@@ -10,9 +10,23 @@ import ContactForm from "../components/home/contact-section/ContactForm";
 import Quote from "../components/home/Quote";
 import Footer from "../components/home/Footer";
 
+/**
+ * @description
+ * The Home component serves as the landing page of the application.
+ * It incorporates various sections such as Cover, About Us, filters with tabs,
+ * a contact form, a quote, and a footer. Additionally, the background
+ * is conditionally blurred based on the user's location (on login or signup).
+ * The page also includes animations on mount and unmount for smooth transitions.
+ */
+
 function Home() {
   const location = useLocation();
 
+  /**
+   * @constant
+   * @description Determines if the background should be blurred based on the current route.
+   * @type {boolean}
+   */
   const isBlured =
     location.pathname === "/login" || location.pathname === "/signup";
 
@@ -25,14 +39,20 @@ function Home() {
       transition={{ duration: 0.5 }}
     >
       <>
+        {/* Section displaying cover image and title */}
         <Cover />
+        {/* About Us section */}
         <AboutUs />
+        {/* Tab content with filter options */}
         <TabContentProvider>
           <FilterTabs />
           <HomeTabContent isHomePage={true} />
         </TabContentProvider>
+        {/* Contact form section */}
         <ContactForm />
+        {/* Section displaying a quote */}
         <Quote />
+        {/* Footer section */}
         <Footer />
       </>
     </motion.div>
