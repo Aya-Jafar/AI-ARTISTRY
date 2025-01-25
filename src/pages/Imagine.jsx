@@ -17,7 +17,25 @@ import ChatBot from "../components/imagine/ChatBot";
 import { getArtistsNameWithSimilarWork } from "../backend/gemini";
 import TypingEffect from "../components/imagine/TypingEffect";
 
+/**
+ * @description
+ * The Imagine component allows users to generate AI-driven images based on prompts.
+ * It integrates with user authentication via the AuthContext and uses a navigation hook for routing.
+ * The component features state management for user interactions, including:
+ * - `prompt` input for the image generation request.
+ * - Error handling for empty prompts and API issues.
+ * - Display of a generated image.
+ * - Loading and error states for user feedback.
+ * Additional functionality includes toggling a chatbot interface and managing a list of artists.
+ */
+
 function Imagine() {
+  /**
+   * @description
+   * This section of the Imagine component contains state variables, context hooks,
+   * and core functionality for handling user interactions, image generation,
+   *  and artist recommendations.
+   **/
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [isClicked, setIsClicked] = useState(false);
@@ -25,15 +43,25 @@ function Imagine() {
   const [showChatBot, setShowChatBot] = useState(false);
   const [generatedImage, setGeneratedImage] = useState("");
   const [artists, setArtists] = useState([]);
-  const [error,setError] = useState(null)
-
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [emptyPromptError, setEmptyPromptError] = useState(null);
+  const [isTouched, setIsTouched] = useState(false);
   const [customOptions, setCustomOptions] = useState({
     brightness: 100,
     contrast: 100,
   });
+  const { setShowSnackBar } = useContext(AlertContext);
 
-  const { showSnackBar, setShowSnackBar } = useContext(AlertContext);
-
+  /**
+   * @function hangleGenerateClick
+   * @description
+   * Handles the "Generate" button click event to generate an image.
+   * - Marks the button as clicked.
+   * - Calls the `generateArt` function with the user's prompt.
+   * - Logs any errors that occur.
+   * @param {Event} e - The click event.
+   */
   const hangleGenerateClick = async (e) => {
     e.preventDefault();
     setIsClicked(true);
@@ -45,8 +73,15 @@ function Imagine() {
     }
   };
 
-  const [isLoading, setIsLoading] = useState(false);
-
+  /**
+   * @function getArtists
+   * @description
+   * Fetches a list of artists with similar works to the generated image.
+   * - Sets loading state during the API call.
+   * - Calls the `getArtistsNameWithSimilarWork` function with the generated image.
+   * - Updates the artists list and loading state.
+   * @param {Event} e - The click event.
+   */
   const getArtists = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -56,6 +91,22 @@ function Imagine() {
     }
     setIsLoading(false);
   };
+
+  /**
+   * @effect
+   * @description
+   * Validates the `prompt` field and updates the error message.
+   * - Sets `emptyPromptError` if the prompt is empty or contains only whitespace.
+   * - Clears the error if the prompt is valid.
+   * @dependencies [prompt, isTouched]
+   */
+  useEffect(() => {
+    if (isTouched && (!prompt || prompt.trim().length === 0)) {
+      setEmptyPromptError("Please type a prompt");
+    } else {
+      setEmptyPromptError(null);
+    }
+  }, [prompt, isTouched]);
 
   return (
     <>
@@ -81,7 +132,16 @@ function Imagine() {
             placeholder="Write your prompt here..."
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
+            onBlur={() => setIsTouched(true)}
+            style={{
+              border:
+                emptyPromptError !== null ? "2px solid rgb(248, 92, 92)" : "",
+            }}
           />
+          {emptyPromptError && (
+            <div style={{ color: "rgb(248, 92, 92)" }}>{emptyPromptError}</div>
+          )}
+
           <br />
           <div className="imagine-btns">
             <button
@@ -209,7 +269,7 @@ function Imagine() {
                     <ImagineGrid />
                   </div>
 
-                  <CustomizedProgressBars error={error}/>
+                  <CustomizedProgressBars error={error} />
                 </div>
               )}
             </>
