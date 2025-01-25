@@ -35,7 +35,7 @@ export const getArtistsNameWithSimilarWork = async (base64Url, setArtists) => {
     try {
       // Send the POST request
       const response = await fetch(
-        `${process.env.REACT_APP_GEMINI_API_URL}/get-artists/`,
+        `${process.env.REACT_APP_GEMINI_API_URL}get-artists/`,
         {
           method: "POST",
           headers: {

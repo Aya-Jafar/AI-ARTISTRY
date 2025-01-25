@@ -25,6 +25,7 @@ function Imagine() {
   const [showChatBot, setShowChatBot] = useState(false);
   const [generatedImage, setGeneratedImage] = useState("");
   const [artists, setArtists] = useState([]);
+  const [error,setError] = useState(null)
 
   const [customOptions, setCustomOptions] = useState({
     brightness: 100,
@@ -38,7 +39,7 @@ function Imagine() {
     setIsClicked(true);
 
     try {
-      await generateArt(setGeneratedImage, prompt);
+      await generateArt(setGeneratedImage, prompt, setError);
     } catch (e) {
       console.log(e);
     }
@@ -193,9 +194,6 @@ function Imagine() {
                         </div>
                       )}
                     </button>
-                    {/* <button id="get-artist-names-btn">
-                      Chat about the generated artwork
-                    </button> */}
                   </div>
                   <div style={{ paddingBottom: "70px", marginTop: "40px" }}>
                     {artists.length > 0 && (
@@ -211,18 +209,13 @@ function Imagine() {
                     <ImagineGrid />
                   </div>
 
-                  <CustomizedProgressBars />
+                  <CustomizedProgressBars error={error}/>
                 </div>
               )}
             </>
           )}
         </div>
       </motion.div>
-      {/* <footer className="footer-copywrite">
-        <div class="song-copyright">
-          &copy; Imagine-John Lennon. All rights reserved.
-        </div>
-      </footer> */}
     </>
   );
 }

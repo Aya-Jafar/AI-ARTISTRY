@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
+import { Typography } from "@mui/material";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
@@ -11,7 +12,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   borderRadius: 7,
   position: "absolute",
   top: "30vh",
-  left:"25px",
+  left: "25px",
   [`&.${linearProgressClasses.colorPrimary}`]: {
     backgroundColor:
       theme.palette.grey[theme.palette.mode === "light" ? 200 : 800],
@@ -23,7 +24,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-export default function CustomizedProgressBars() {
+export default function CustomizedProgressBars({ error = null }) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -38,8 +39,24 @@ export default function CustomizedProgressBars() {
   }, []);
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <BorderLinearProgress value={progress} />
+    <Box sx={{ flexGrow: 1, position: "relative", height: "50vh" }}>
+      {error !== null ? (
+        <Typography
+          variant="h6"
+          sx={{
+            position: "absolute",
+            top: "25vh",
+            left: "25px",
+            color: "white",
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
+        >
+          {error}
+        </Typography>
+      ) : (
+        <BorderLinearProgress value={progress} />
+      )}
     </Box>
   );
 }
