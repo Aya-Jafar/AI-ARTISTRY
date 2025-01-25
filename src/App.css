@@ -977,11 +977,10 @@ button[type="submit"] {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  border:none;
+  border: none;
   padding: 0;
   margin-top: 0;
 }
-
 
 button[type="submit"]:hover {
   background-color: #8ddef7;
@@ -1021,7 +1020,6 @@ button[type="submit"]:hover {
 .left-form-image {
   width: 35%;
   height: 100%;
-  background-color: #202024;
 }
 
 .left-form-image img {
@@ -1193,10 +1191,8 @@ blockquote:before {
   display: flex;
   justify-content: space-between;
   align-items: center;
- margin-top: 10px;
-
+  margin-top: 10px;
 }
-
 
 #comment-setting {
   margin-right: 25%;
@@ -1269,7 +1265,7 @@ blockquote:before {
 .icon-title {
   display: flex;
   align-items: center;
-  gap:10px;
+  gap: 10px;
   padding-right: 15px;
   color: white;
 }
@@ -1324,6 +1320,23 @@ blockquote:before {
 }
 .prompt-text {
   text-wrap: wrap;
+}
+
+@media (min-width: 768px) and (max-width: 1899px) {
+  /* Your iPad specific styles here */
+  .contact{
+    gap:3rem
+  }
+  .left-form-image {
+    width: 50%;
+  }
+  .left-form-image img {
+    width: 100%;
+  }
+
+  /* .left-form-image {
+     display: none;
+   } */
 }
 
 @media (min-width: 0px) and (max-width: 780px) {
@@ -1541,7 +1554,7 @@ blockquote:before {
     margin-top: 15vh;
   }
   .carousel {
-    height: 90vh;
+    /* height: 90vh; */
   }
   .slide {
     height: 35vh;

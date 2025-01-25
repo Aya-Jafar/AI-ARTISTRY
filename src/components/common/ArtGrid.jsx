@@ -1,11 +1,10 @@
-import React, { useState,useRef } from "react";
+import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { fadeIn, scaleOnHover } from "../../utils/motion";
 import { textVariants } from "../../utils/motion";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { useInView } from "react-intersection-observer";
 import { Link } from "react-router-dom";
-
 
 function ArtGrid({ artworks, label }) {
   const [hoveredArtwork, setHoveredArtwork] = useState(null);
@@ -16,11 +15,10 @@ function ArtGrid({ artworks, label }) {
 
   return (
     <>
-      {artworks && (
+      {artworks ? (
         <ResponsiveMasonry
           style={{ width: "100%" }}
           columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
-          // ref={wrapperRef}
         >
           <Masonry
             className="my-masonry-grid"
@@ -124,6 +122,8 @@ function ArtGrid({ artworks, label }) {
             ))}
           </Masonry>
         </ResponsiveMasonry>
+      ) : (
+        <>Loading...</>
       )}
     </>
   );
