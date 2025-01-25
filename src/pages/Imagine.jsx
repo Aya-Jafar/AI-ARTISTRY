@@ -64,6 +64,12 @@ function Imagine() {
    */
   const hangleGenerateClick = async (e) => {
     e.preventDefault();
+    // Check if the prompt is empty and prevent action
+    if (!prompt || prompt.trim().length === 0) {
+      setEmptyPromptError("Please type a prompt");
+      return; // Stop execution if prompt is empty
+    }
+
     setIsClicked(true);
 
     try {
