@@ -12,6 +12,7 @@ import CustomAlert from "../components/common/CustomAlert";
 import AlertContext from "../providers/Alert";
 import { infoStyle } from "../utils/formaters";
 import { Heart, MessageSquareText } from "lucide-react";
+import AuthPopupContext from "../providers/AuthPopup";
 
 /**
  * @description
@@ -47,6 +48,9 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
   const [allComments, setAllComments] = useState([]);
   const [currentComment, setCurrentComment] = useState("");
   const { showSnackBar } = useContext(AlertContext);
+  const { loginPopup, signupPopup, setLoginPopup } =
+    useContext(AuthPopupContext);
+  const isBlured = loginPopup || signupPopup;
 
   /**
    * @effect
@@ -114,7 +118,7 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5 }}
-        className="artwork-detail"
+        className={`artwork-detail ${isBlured ? "blur-background" : ""}`}
       >
         <>
           {currentArtwork && (

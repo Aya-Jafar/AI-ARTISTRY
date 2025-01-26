@@ -40,7 +40,6 @@ function Imagine() {
    *  and artist recommendations.
    **/
   const { currentUser } = useContext(AuthContext);
-  const navigate = useNavigate();
   const [isClicked, setIsClicked] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [showChatBot, setShowChatBot] = useState(false);
