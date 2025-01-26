@@ -16,7 +16,6 @@ import { Link, useNavigate } from "react-router-dom";
  * @param {Function} onClickOutside - The function to be executed when a click outside is detected.
  */
 function useClickOutside(ref, showPopup, onClickOutside) {
-  const navigate = useNavigate();
 
   /**
    * @effect
@@ -40,6 +39,8 @@ function useClickOutside(ref, showPopup, onClickOutside) {
         "username",
         "signup-btn",
         "signup-from-login",
+        "login",
+        "sign-up",
       ];
 
       if (
@@ -49,7 +50,6 @@ function useClickOutside(ref, showPopup, onClickOutside) {
         !excludedIds.includes(event.target.id)
       ) {
         onClickOutside();
-        navigate("/");
       }
     };
     // The event.target is anything is clicked outsite of the popup

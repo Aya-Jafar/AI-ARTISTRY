@@ -21,7 +21,7 @@ function Login() {
     setLoginPopup(true);
   }, [loginPopup]);
 
-  return <Popup />;
+  return <Popup type="login"/>;
 }
 
 export default Login;

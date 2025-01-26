@@ -1,6 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-
 
 /**
  * @component
@@ -17,14 +15,12 @@ import { useNavigate } from "react-router-dom";
  * <CloseButton setPopup={setPopupState} />
  */
 function CloseButton({ setPopup }) {
-  const navigate = useNavigate();
 
   return (
     <div
       className="close-btn"
       onClick={() => {
         setPopup(false);
-        navigate("/");
       }}
     >
       <img src={"/close.png"} alt="" />

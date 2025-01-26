@@ -11,14 +11,14 @@ import AuthPopupContext from "../../../providers/AuthPopup";
  * - It displays a button and closes any active popups (login/signup) when clicking outside of the button.
  *
  * @param {Object} props - The props passed to the component.
- * @param {string} props.path - The path the button should link to.
+ * @param {string} props.type - The type the button should link to.
  * @param {string} props.text - The text to be displayed inside the button.
  * @param {string} props.id - The ID to be assigned to the button.
  *
  * @example
- * <NavButton path="/signup" text="SIGN UP" id="sign-up" />
+ * <NavButton type="signup" text="SIGN UP" id="sign-up" />
  */
-function NavButton({ path, text, id }) {
+function NavButton({ type, text, id }) {
   /**
    * @description
    * This section manages the popups for login and signup and handles the click outside functionality.
@@ -27,7 +27,7 @@ function NavButton({ path, text, id }) {
     useContext(AuthPopupContext);
 
   const ref = useRef(null);
-  let popup = path === "/login" ? loginPopup : signupPopup;
+  let popup = type === "login" ? loginPopup : signupPopup;
 
   /**
    * @hook useClickOutside
@@ -36,15 +36,19 @@ function NavButton({ path, text, id }) {
    * - Listens for outside clicks and closes the respective popup based on the path.
    */
   useClickOutside(ref, popup, () => {
-    path === "/login" ? setLoginPopup(false) : setSignupPopup(false);
+    type === "login" ? setLoginPopup(false) : setSignupPopup(false);
   });
 
+  const handleClick = () => {
+    type === "login" ? setLoginPopup(true) : setSignupPopup(true);
+  };
+
   return (
-    <Link to={path}>
+    <div onClick={handleClick}>
       <button className="btn" id={id} ref={ref}>
         {text}
       </button>
-    </Link>
+    </div>
   );
 }
 export default NavButton;

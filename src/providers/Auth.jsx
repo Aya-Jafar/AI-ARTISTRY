@@ -15,6 +15,7 @@ import { doc, setDoc, getDoc } from "firebase/firestore";
 import { serverTimestamp } from "firebase/firestore";
 import db from "../backend/firebaseConfig";
 import { app } from "../backend/firebaseConfig";
+import { FIREBASE_USERS_COLLECTION } from "../utils/constants";
 
 /**
  * @description
@@ -72,12 +73,12 @@ export const AuthProvider = ({ children }) => {
       const user = result.user;
 
       // Check if the user document already exists
-      const docRef = doc(db, "users", user.uid);
+      const docRef = doc(db, FIREBASE_USERS_COLLECTION, user.uid);
       const docSnap = await getDoc(docRef);
 
       if (!docSnap.exists()) {
         // User doesn't exist, create a new user document
-        await setDoc(doc(db, "users", user.uid), {
+        await setDoc(doc(db, FIREBASE_USERS_COLLECTION, user.uid), {
           name: user.displayName,
           email: user.email,
           image: user.reloadUserInfo.photoUrl,
@@ -102,12 +103,12 @@ export const AuthProvider = ({ children }) => {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       // Check if the user document already exists
-      const docRef = doc(db, "users", user.uid);
+      const docRef = doc(db, FIREBASE_USERS_COLLECTION, user.uid);
       const docSnap = await getDoc(docRef);
 
       if (!docSnap.exists()) {
         // User doesn't exist, create a new user document
-        await setDoc(doc(db, "users", user.uid), {
+        await setDoc(doc(db, FIREBASE_USERS_COLLECTION, user.uid), {
           name: user.displayName,
           email: user.email,
           image: user.reloadUserInfo.photoUrl,

@@ -140,8 +140,8 @@ function Nav() {
             </>
           ) : (
             <div className="nav-btns">
-              <NavButton path="/signup" text="SIGN UP" id="sign-up" />
-              <NavButton path="/login" text="LOG IN" id="login" />
+              <NavButton type="signup" text="SIGN UP" id="sign-up" />
+              <NavButton type="login" text="LOG IN" id="login" />
             </div>
           )}
         </div>

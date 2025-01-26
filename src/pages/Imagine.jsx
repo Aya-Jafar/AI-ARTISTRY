@@ -16,6 +16,7 @@ import { CircularProgress, Tooltip } from "@mui/material";
 import ChatBot from "../components/imagine/ChatBot";
 import { getArtistsNameWithSimilarWork } from "../backend/gemini";
 import TypingEffect from "../components/imagine/TypingEffect";
+import AuthPopupContext from "../providers/AuthPopup";
 
 /**
  * @component
@@ -54,6 +55,8 @@ function Imagine() {
     contrast: 100,
   });
   const { setShowSnackBar } = useContext(AlertContext);
+  const { loginPopup, signupPopup } = useContext(AuthPopupContext);
+  const isBlured = loginPopup || signupPopup;
 
   /**
    * @function hangleGenerateClick
@@ -129,7 +132,7 @@ function Imagine() {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5 }}
-        className="imagine-container"
+        className={`imagine-container ${isBlured ? "blur-background" : ""}`}
       >
         <div className="prompt-section">
           <motion.h1 {...slideAnimation("left")}>

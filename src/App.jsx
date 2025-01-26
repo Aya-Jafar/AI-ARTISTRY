@@ -1,17 +1,17 @@
 import "./App.css";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useContext, useEffect, createPortal } from "react";
 import Nav from "./components/home/cover-section/Nav";
 import { AlertProvider } from "./providers/Alert";
+import AuthPopupContext from "./providers/AuthPopup";
 
 // Lazy load the pages
 const Home = lazy(() => import("./pages/Home"));
-const Login = lazy(() => import("./pages/Login"));
-const SignUp = lazy(() => import("./pages/Signup"));
 const Profile = lazy(() => import("./pages/Profile"));
 const Imagine = lazy(() => import("./pages/Imagine"));
 const ArtworkDetail = lazy(() => import("./pages/ArtWorkDetails"));
 const MoreArtworks = lazy(() => import("./pages/MoreArtworks"));
+const Popup = lazy(() => import("./components/home/cover-section/Popup"));
 
 /**
  * @component App
@@ -21,43 +21,35 @@ const MoreArtworks = lazy(() => import("./pages/MoreArtworks"));
  */
 
 function App() {
-  const location = useLocation();
+  const { loginPopup, signupPopup } = useContext(AuthPopupContext);
 
-  // Check if the current route is not the Imagine page and not the profile page
-  const showHomePage =
-    location.pathname !== "/imagine" &&
-    !location.pathname.startsWith("/profile") &&
-    !location.pathname.startsWith("/artwork/") &&
-    !location.pathname.startsWith("/post/") &&
-    location.pathname !== "/artworks/more/";
+  useEffect(() => {
+    console.log(loginPopup);
+  }, [loginPopup]);
 
   return (
     <>
       <Nav />
 
-      {/* Conditionally show Home page */}
-      {showHomePage && (
+      {/* Login Modal rendered above all routes */}
+      {loginPopup && (
         <Suspense fallback={<span class="loader"></span>}>
-          <Home />
+          <Popup type="login" />
+        </Suspense>
+      )}
+      {/* Signup Modal rendered above all routes */}
+      {signupPopup && (
+        <Suspense fallback={<span class="loader"></span>}>
+          <Popup type="signup" />
         </Suspense>
       )}
 
       <Routes>
-        {/* Using Suspense with lazy-loaded components */}
         <Route
-          path="/login"
+          path="/"
           element={
             <Suspense fallback={<span class="loader"></span>}>
-              <Login />
-            </Suspense>
-          }
-        />
-
-        <Route
-          path="/signup"
-          element={
-            <Suspense fallback={<span class="loader"></span>}>
-              <SignUp />
+              <Home />
             </Suspense>
           }
         />

@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
-import AuthContext from "../providers/Auth";
 import { getSavedArtworks, getUserInfo } from "../backend/data";
 import { ProfileTabProvider } from "../providers/ProfileTabContent";
 import ProfileTabs from "../components/profile/ProfileTabs";
 import ProfileTabContent from "../components/profile/ProfileTabContent";
 import { useParams } from "react-router-dom";
+import AuthPopupContext from "../providers/AuthPopup";
 
 /**
  * @description
@@ -26,6 +26,8 @@ function Profile() {
    **/
   const [savedArtworks, setSavedArtworks] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
+  const { loginPopup, signupPopup } = useContext(AuthPopupContext);
+  const isBlured = loginPopup || signupPopup;
   const { uid } = useParams();
 
   /**
@@ -42,7 +44,7 @@ function Profile() {
   }, [uid]);
 
   return (
-    <div className="profile">
+    <div className={`profile ${isBlured ? "blur-background" : ""}`}>
       <div>
         {userInfo ? (
           <img src={userInfo.image} alt="" className="profile-image" />

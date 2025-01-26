@@ -20,7 +20,7 @@ function SignUp() {
     setSignupPopup(true);
   }, [signupPopup]);
 
-  return <Popup />;
+  return <Popup type="signup"/>;
 }
 
 export default SignUp;

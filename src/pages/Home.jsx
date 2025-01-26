@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { TabContentProvider } from "../providers/TabContent";
 import { motion } from "framer-motion";
+import AuthPopupContext from "../providers/AuthPopup";
 
 // Lazy load the components
 const Cover = React.lazy(() =>
@@ -32,15 +33,14 @@ const Footer = React.lazy(() => import("../components/home/Footer"));
  */
 
 function Home() {
-  const location = useLocation();
+  const { loginPopup, signupPopup } = useContext(AuthPopupContext);
 
   /**
    * @constant
    * @description Determines if the background should be blurred based on the current route.
    * @type {boolean}
    */
-  const isBlured =
-    location.pathname === "/login" || location.pathname === "/signup";
+  const isBlured = loginPopup || signupPopup;
 
   return (
     <motion.div
