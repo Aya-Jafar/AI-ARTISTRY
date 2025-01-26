@@ -27,7 +27,7 @@ const generateArt = async (setGeneratedImage, prompt, setError) => {
     // setGeneratedImage(response);
   } catch (error) {
     console.error("Error making API request:", error);
-    setError("An error occurred, Please trxy again");
+    setError("An error occurred, Please try again");
   }
 };
 

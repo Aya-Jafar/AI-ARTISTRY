@@ -152,7 +152,7 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
                 )}
 
                 <br />
-                <div className="artwork-detail-btns">
+                <div className="artwork-detail-btns" id="artwork-detail-btns">
                   <ArtworkDetailBtn
                     text="Like"
                     artId={id}

@@ -202,7 +202,6 @@ export const saveArtwork = async (currentUser, artId) => {
  * @param {string} prompt - The prompt used to generate the image.
  * @param {number} brightness - The brightness value of the generated image.
  * @param {number} contrast - The contrast value of the generated image.
- * @param {Function} navigate - The navigation function to redirect the user if not logged in.
  * @param {Function} setShowSnackBar - The function to show the snack bar on success.
  * @returns {Promise<void>} - Resolves once the save action is complete.
  */
@@ -212,7 +211,6 @@ export const saveGeneratedImage = async (
   prompt,
   brightness,
   contrast,
-  navigate,
   setShowSnackBar
 ) => {
   // Get the current user's UID
@@ -275,9 +273,7 @@ export const saveGeneratedImage = async (
     } catch (error) {
       console.error("Error updating saved-images:", error);
     }
-  } else {
-    navigate("/login");
-  }
+  } 
 };
 
 /**
@@ -761,14 +757,12 @@ export const editComment = async (artId, commentId, userId, newText) => {
  * @param {Object} currentUser - The currently logged-in user.
  * @param {string} postUrl - The URL of the generated artwork.
  * @param {string} prompt - The prompt used for generating the artwork.
- * @param {function} navigate - Navigation function to redirect users.
  * @param {function} setShowSnackBar - State setter to control snack bar visibility.
  */
 export const postArtwork = async (
   currentUser,
   postUrl,
   prompt,
-  navigate,
   setShowSnackBar
 ) => {
   // Get the current user's UID
@@ -827,9 +821,7 @@ export const postArtwork = async (
     } catch (error) {
       console.error("Error updating saved-images:", error);
     }
-  } else {
-    navigate("/login");
-  }
+  } 
 };
 
 /**

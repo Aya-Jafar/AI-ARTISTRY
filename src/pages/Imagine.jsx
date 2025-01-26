@@ -55,7 +55,8 @@ function Imagine() {
     contrast: 100,
   });
   const { setShowSnackBar } = useContext(AlertContext);
-  const { loginPopup, signupPopup } = useContext(AuthPopupContext);
+  const { loginPopup, signupPopup, setLoginPopup } =
+    useContext(AuthPopupContext);
   const isBlured = loginPopup || signupPopup;
 
   /**
@@ -202,32 +203,38 @@ function Imagine() {
               <div className="artwork-detail-btn" id="imagine-custome-btns">
                 <button
                   className="btn"
-                  onClick={() =>
-                    postArtwork(
-                      currentUser,
-                      generatedImage,
-                      prompt,
-                      navigate,
-                      setShowSnackBar
-                    )
-                  }
+                  onClick={() => {
+                    if (currentUser && currentUser?.uid) {
+                      postArtwork(
+                        currentUser,
+                        generatedImage,
+                        prompt,
+                        setShowSnackBar
+                      );
+                    } else {
+                      setLoginPopup(true);
+                    }
+                  }}
                 >
                   Post
                 </button>
 
                 <button
                   className="btn"
-                  onClick={() =>
-                    saveGeneratedImage(
-                      currentUser,
-                      generatedImage,
-                      prompt,
-                      customOptions.brightness,
-                      customOptions.contrast,
-                      navigate,
-                      setShowSnackBar
-                    )
-                  }
+                  onClick={() => {
+                    if (currentUser && currentUser?.uid) {
+                      saveGeneratedImage(
+                        currentUser,
+                        generatedImage,
+                        prompt,
+                        customOptions.brightness,
+                        customOptions.contrast,
+                        setShowSnackBar
+                      );
+                    } else {
+                      setLoginPopup(true);
+                    }
+                  }}
                 >
                   Save
                 </button>

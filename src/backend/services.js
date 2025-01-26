@@ -12,7 +12,6 @@ import { ICONS } from "../utils/constants";
  * @param {Object} currentUser - The current authenticated user.
  * @param {string} artId - The unique ID of the artwork to be saved.
  * @param {Function} setSaveIcon - Function to update the save icon.
- * @param {Function} navigate - Function to navigate to another route.
  * @param {Function} setShowSnackBar - Function to control the visibility of the snack bar.
  * @returns {Promise<void>} Resolves after saving artwork and updating UI.
  */
@@ -20,8 +19,7 @@ export const saveToProfile = async (
   currentUser,
   artId,
   setSaveIcon,
-  navigate,
-  setShowSnackBar
+  setShowSnackBar,
 ) => {
   if (currentUser) {
     await saveArtwork(currentUser, artId); // Wait for the artwork to be saved
@@ -34,8 +32,6 @@ export const saveToProfile = async (
       setSaveIcon(ICONS.unsave);
       setShowSnackBar(false)
     }
-  } else {
-    navigate("/login");
   }
 };
 
@@ -46,7 +42,6 @@ export const saveToProfile = async (
  * @param {string} artId - The unique ID of the artwork to be liked.
  * @param {Function} setLikeIcon - Function to update the like icon.
  * @param {Function} setLikesCount - Function to update the likes count.
- * @param {Function} navigate - Function to navigate to another route.
  * @param {Function} setShowSnackBar - Function to control the visibility of the snack bar.
  * @returns {Promise<void>} Resolves after the like action and UI update.
  */
@@ -55,8 +50,7 @@ export const handleLikeClick = async (
   artId,
   setLikeIcon,
   setLikesCount,
-  navigate,
-  setShowSnackBar
+  setShowSnackBar,
 ) => {
   if (currentUser) {
     await addToLikedActivity(currentUser, artId, "Like");
@@ -66,14 +60,12 @@ export const handleLikeClick = async (
     if (isFavourite) {
       setLikeIcon(ICONS.liked);
       setLikesCount((prevLikesCount) => prevLikesCount + 1);
-      setShowSnackBar(true)
+      setShowSnackBar(true);
     } // Update the displayed icon}
     else {
       setLikeIcon(ICONS.unliked);
       setLikesCount((prevLikesCount) => prevLikesCount - 1);
-      setShowSnackBar(false)
+      setShowSnackBar(false);
     }
-  } else {
-    navigate("/login");
-  }
+  } 
 };

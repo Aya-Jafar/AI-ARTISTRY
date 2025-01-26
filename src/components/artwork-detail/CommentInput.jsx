@@ -4,6 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import AuthContext from "../../providers/Auth";
 import { isAuthenticated } from "../../backend/auth";
 import { useNavigate } from "react-router-dom";
+import AuthPopupContext from "../../providers/AuthPopup";
 
 /**
  * @description
@@ -15,8 +16,9 @@ import { useNavigate } from "react-router-dom";
 
 function CommentInput({ artId, currentComment, setCurrentComment }) {
   const { currentUser } = useContext(AuthContext);
-  const navigate = useNavigate();
   const [isClicked, setIsClicked] = useState(false);
+  const { loginPopup, signupPopup, setLoginPopup } =
+    useContext(AuthPopupContext);
 
   /**
    * @function handleCommentIconClick
@@ -42,7 +44,7 @@ function CommentInput({ artId, currentComment, setCurrentComment }) {
 
       setCurrentComment("");
     } else {
-      navigate("/login");
+      setLoginPopup(true);
     }
   };
   /**

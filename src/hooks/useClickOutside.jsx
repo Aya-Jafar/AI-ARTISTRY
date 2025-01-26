@@ -16,7 +16,6 @@ import { Link, useNavigate } from "react-router-dom";
  * @param {Function} onClickOutside - The function to be executed when a click outside is detected.
  */
 function useClickOutside(ref, showPopup, onClickOutside) {
-
   /**
    * @effect
    * @description
@@ -41,13 +40,32 @@ function useClickOutside(ref, showPopup, onClickOutside) {
         "signup-from-login",
         "login",
         "sign-up",
+        "like-btn",
+        "save-btn",
+        "artwork-detail-btns",
+        "imagine-custome-btns",
       ];
+      const excludedClasses = [
+        "artwork-detail-btn",
+        "shake",
+        "artwork-detail-btn shake",
+        "icon-img-btn",
+        "btn",
+        ""
+      ];
+      console.log(event.target.classList);
+
+      // Check if the clicked element has an excluded class
+      const hasExcludedClass = excludedClasses.some((className) =>
+        event.target.classList.contains(className)
+      );
 
       if (
         ref.current &&
         !ref.current.contains(event.target) &&
         showPopup &&
-        !excludedIds.includes(event.target.id)
+        !excludedIds.includes(event.target.id) &&
+        !hasExcludedClass
       ) {
         onClickOutside();
       }

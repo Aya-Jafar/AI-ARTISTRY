@@ -1,4 +1,3 @@
-
 /**
  * @function isAuthenticated
  * @description
@@ -7,7 +6,7 @@
  * @returns {boolean} Returns true if the user is authenticated, false otherwise.
  */
 export const isAuthenticated = (currentUser) => {
-  return currentUser ? true : false;
+  return currentUser && currentUser !== null ? true : false;
 };
 
 /**
