@@ -17,7 +17,7 @@ const Popup = lazy(() => import("./components/home/cover-section/Popup"));
  * @component App
  * @description
  * The main entry point for the application. It contains the routing logic and renders the appropriate components
- * based on the current URL path. It also conditionally renders the `Home` page when the user is on certain routes.
+ * based on the current URL path.
  */
 
 function App() {
