@@ -10,7 +10,9 @@ export const FIREBASE_COMMENTS_COLLECTION = "comments";
 
 export const FIREBASE_POSTS_COLLECTION = "posts";
 
-export const HF_MODEL = "Lykon/art-diffusion-xl-0.9";
+// export const HF_MODEL = "Lykon/art-diffusion-xl-0.9";
+export const HF_MODEL = "CompVis/stable-diffusion-v1-4";
+
 
 export const ICONS = {
   save: "/bookmark.png",
