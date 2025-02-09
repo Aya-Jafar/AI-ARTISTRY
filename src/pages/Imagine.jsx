@@ -76,6 +76,7 @@ function Imagine() {
     }
 
     setIsClicked(true);
+    setGeneratedImage(""); // Reset previous image before generating a new one
 
     try {
       await generateArt(setGeneratedImage, prompt, setError);
