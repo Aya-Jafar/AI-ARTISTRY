@@ -47,6 +47,8 @@ function AllComments({ comments, artId, setAllComments }) {
    */
 
   useEffect(() => {
+    getUserInfo(comments[0] && comments[0].userId);
+
     const unsubscribe = onSnapshot(
       collection(
         db,
@@ -60,19 +62,9 @@ function AllComments({ comments, artId, setAllComments }) {
         );
       }
     );
-    return () => unsubscribe();
-  }, [comments, artId]);
 
-  /**
-   * @effect
-   * @description
-   * Fetches user information for the first comment's userId when comments change.
-   * The user information is used to display the comment author's profile link.
-   * @dependencies [comments]
-   */
-  useEffect(() => {
-    getUserInfo(comments[0] && comments[0].userId);
-  }, [comments]);
+    return () => unsubscribe();
+  }, []);
 
   /**
    * @function handleToggle

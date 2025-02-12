@@ -41,16 +41,17 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
    * - `showSnackBar` from `AlertContext` provides feedback messages (snack bars) to the user.
    **/
   const { id, generatedImageUrl, postUrl } = useParams();
-  const { currentUser } = useContext(AuthContext);
   const [currentArtwork, setCurrentArtwork] = useState(null);
   const [likesCount, setLikesCount] = useState(0);
   const [commentsCount, setCommentsCount] = useState(0);
   const [allComments, setAllComments] = useState([]);
   const [currentComment, setCurrentComment] = useState("");
   const { showSnackBar } = useContext(AlertContext);
-  const { loginPopup, signupPopup, setLoginPopup } =
+  
+  const { loginPopup, signupPopup, setLoginPopup, currentUser } =
     useContext(AuthPopupContext);
   const isBlured = loginPopup || signupPopup;
+
 
   /**
    * @effect
@@ -61,8 +62,11 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
    * @dependencies [id, generatedImageUrl, currentArtwork, allComments]
    */
   useEffect(() => {
+    console.log("Render");
+    
+    if (!id || currentArtwork) return; // Only fetch if the id exists and currentArtwork isn't set yet
     // if it's not generated artwork then get it's data by it's id
-    if (!isGeneratedArtwork) {
+    if (id && !isGeneratedArtwork) {
       getArtworkDetails(
         id,
         setCurrentArtwork,
@@ -89,7 +93,7 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
         );
       }
     }
-  }, [id, generatedImageUrl, currentArtwork, allComments]);
+  }, [id, generatedImageUrl, label]);
 
   /**
    * @function imageMaker

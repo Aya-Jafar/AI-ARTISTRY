@@ -273,7 +273,7 @@ export const saveGeneratedImage = async (
     } catch (error) {
       console.error("Error updating saved-images:", error);
     }
-  } 
+  }
 };
 
 /**
@@ -521,30 +521,52 @@ export const getArtworkDetails = async (
     const documentSnapshot = await getDoc(documentRef);
 
     if (documentSnapshot.exists()) {
-      // The document exists
       const documentData = documentSnapshot.data();
-      setArtworkDetail(documentData);
-      setLikesCount(documentData.likesCount);
-      // setCommentsCount(documentData.comments.length);
-      // Fetch comments from the subcollection
-      const commentsQuery = query(collection(documentRef, "comments"));
-      const unsubscribe = onSnapshot(commentsQuery, (snapshot) => {
-        const commentsData = snapshot.docs.map((doc) => ({
-          id: doc.id, // Include the comment ID
-          ...doc.data(), // Include the comment data
-        }));
-        setCommentsCount(commentsData.length);
-        setAllComments(commentsData);
+      console.log("Setting artwork detail:", documentData);
+
+      // Only update if the data has actually changed
+      setArtworkDetail((prev) => {
+        if (
+          !prev ||
+          prev.prompt !== documentData.prompt ||
+          prev.likesCount !== documentData.likesCount ||
+          prev.image !== documentData.image ||
+          prev.type !== documentData.type
+        ) {
+          return documentData;
+        }
+        return prev; // No change, return previous state
       });
 
-      return () => unsubscribe();
-    } else {
-      console.log("Document does not exist.");
+      setLikesCount((prev) => {
+        if (prev !== documentData.likesCount) return documentData.likesCount;
+        return prev; // No change
+      });
+
+      const commentsQuery = query(collection(documentRef, "comments"));
+      const commentsSnapshot = await getDocs(commentsQuery);
+      const commentsData = commentsSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      setCommentsCount((prev) => {
+        if (prev !== commentsData.length) return commentsData.length;
+        return prev; // No change
+      });
+
+      setAllComments((prev) => {
+        if (JSON.stringify(prev) !== JSON.stringify(commentsData))
+          return commentsData;
+        return prev; // No change
+      });
     }
   } catch (error) {
     console.error("Error getting document:", error);
   }
 };
+
+
 
 /**
  * Adds a comment to a specific artwork and logs the activity.
@@ -821,7 +843,7 @@ export const postArtwork = async (
     } catch (error) {
       console.error("Error updating saved-images:", error);
     }
-  } 
+  }
 };
 
 /**
@@ -935,7 +957,6 @@ async function getGeneratedDetail(
     // Handle the case where user data or savedPosts array is missing.
   }
 }
-
 
 /**
  * Fetches the details of a post from the user's saved posts based on the post URL.

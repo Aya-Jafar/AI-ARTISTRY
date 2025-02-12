@@ -21,6 +21,7 @@ function CommentImage({ comment }) {
    * @dependencies [] 
    */
   useEffect(() => {
+    
     getUserInfo(comment.userId).then((result) => setProfileImage(result.image));
   },[]);
 
