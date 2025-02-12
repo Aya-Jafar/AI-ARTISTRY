@@ -74,6 +74,7 @@ function CommentInput({ artId, currentComment, setCurrentComment }) {
         <CircularProgress className="comment-progress-indicator" size="35px" />
       ) : (
         <img
+          loading="lazy"
           src={"/send.png"}
           alt="Comment Icon"
           className="comment-icon"

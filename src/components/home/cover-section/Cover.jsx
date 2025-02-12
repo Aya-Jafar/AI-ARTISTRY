@@ -25,11 +25,11 @@ function Cover() {
       animate="visible"
       variants={fadeIn}
     >
-      <ImageSlider/>
+      <ImageSlider />
 
       <motion.div className="cover-text" variants={stagger}>
         <motion.div variants={fadeIn} {...slideAnimation("left")}>
-          <img src="/logo-without-bg.png" alt="" id="logo" />
+          <img src="/logo-without-bg.png" alt="" id="logo" loading="lazy" />
         </motion.div>
 
         <motion.h2
@@ -39,7 +39,7 @@ function Cover() {
         >
           Create & Collect
         </motion.h2>
-        
+
         <motion.div id="explore-btn" variants={fadeIn}>
           <ScrollLink
             to="art-grid-section"

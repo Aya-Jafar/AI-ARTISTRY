@@ -47,9 +47,19 @@ function Profile() {
     <div className={`profile ${isBlured ? "blur-background" : ""}`}>
       <div>
         {userInfo ? (
-          <img src={userInfo.image} alt="" className="profile-image" />
+          <img
+            src={userInfo.image}
+            alt=""
+            className="profile-image"
+            loading="lazy"
+          />
         ) : (
-          <img src={"/profile-user.png"} alt="" className="profile-image" />
+          <img
+            src={"/profile-user.png"}
+            alt=""
+            className="profile-image"
+            loading="lazy"
+          />
         )}
       </div>
 

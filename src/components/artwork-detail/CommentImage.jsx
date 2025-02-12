@@ -9,7 +9,7 @@ import { getUserInfo } from "../../backend/data";
  * The component uses the `getUserInfo` function to retrieve the user's information and update the state.
  */
 function CommentImage({ comment }) {
-  const [profileImag, setProfileImage] = useState(null);
+  const [profileImage, setProfileImage] = useState(null);
 
   /**
    * @effect
@@ -18,19 +18,20 @@ function CommentImage({ comment }) {
    * It fetches the user's profile image by calling the `getUserInfo` function,
    * and updates the `profileImag` state with the retrieved image.
    * If the user's image is not available, the default `/profile-user.png` is shown.
-   * @dependencies [comment.userId]
+   * @dependencies [] 
    */
   useEffect(() => {
     getUserInfo(comment.userId).then((result) => setProfileImage(result.image));
-  });
+  },[]);
 
   return (
     <>
       <div className="mini-profile-img">
         {comment.userId && (
           <img
-            src={profileImag !== null ? profileImag : "/profile-user.png"}
+            src={profileImage !== null ? profileImage : "/profile-user.png"}
             alt=""
+            loading="lazy"
             className="profile-image comment"
           />
         )}

@@ -21,6 +21,7 @@ function AboutUsPic({ src, inView }) {
   return (
     <motion.div className="about-us-pic" variants={fadeIn}>
       <motion.img
+        loading="lazy"
         src={src}
         alt=""
         initial="hidden"

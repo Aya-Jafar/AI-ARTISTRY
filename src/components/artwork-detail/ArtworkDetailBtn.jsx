@@ -84,6 +84,7 @@ function ArtworkDetailBtn({ text, artId, id, setLikesCount }) {
           className={`artwork-detail-btn ${isShaking ? "shake" : ""}`}
         >
           <motion.img
+            loading="lazy"
             src={text === "Save" ? saveIcon : likeIcon}
             alt=""
             animate={{ rotate: isShaking ? [0, -10, 10, -10, 10, -10, 0] : 0 }}

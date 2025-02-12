@@ -72,6 +72,7 @@ function AllComments({ comments, artId }) {
                     {currentUser && currentUser.uid === comment.userId ? (
                       <div className="edit-comment-icon">
                         <img
+                          loading="lazy"
                           src={"/more.png"}
                           alt=""
                           id="comment-setting"

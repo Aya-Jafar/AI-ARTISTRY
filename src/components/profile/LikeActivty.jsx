@@ -28,7 +28,12 @@ import { Heart } from "lucide-react";
 function LikeActivity({ index, userName, artData, time, artworkData }) {
   return (
     <div className="activty-item" key={index}>
-      <img src={artData && artData.image} alt="" id="activity-image" />
+      <img
+        src={artData && artData.image}
+        alt=""
+        id="activity-image"
+        loading="lazy"
+      />
       <div className="comment-detail">
         <h4 className="icon-title">
           <Heart size={30} />

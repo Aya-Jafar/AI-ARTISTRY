@@ -23,6 +23,7 @@ function GeneratedImage({ generatedImage, customOptions }) {
     <img
       src={generatedImage}
       alt="placeholder..."
+      loading="lazy"
       className="generated-img"
       style={{
         filter: `brightness(${customOptions.brightness}%) contrast(${customOptions.contrast}%)`,

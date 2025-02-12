@@ -57,6 +57,7 @@ function ArtGrid({ artworks, label }) {
                   // Artworks in home page
                   <Link to={`/artwork/${artwork.id}`}>
                     <motion.img
+                      loading="lazy"
                       src={artwork.image}
                       alt=""
                       initial="hidden"
@@ -77,6 +78,7 @@ function ArtGrid({ artworks, label }) {
                             )}`}
                           >
                             <motion.img
+                              loading="lazy"
                               src={artwork.postUrl}
                               alt=""
                               initial="hidden"
@@ -100,6 +102,7 @@ function ArtGrid({ artworks, label }) {
                             <motion.img
                               src={artwork.generatedImageUrl}
                               alt=""
+                              loading="lazy"
                               initial="hidden"
                               animate={inView ? "visible" : "hidden"}
                               className="artwork-image"
@@ -113,6 +116,7 @@ function ArtGrid({ artworks, label }) {
                           // if it's normal saved artwork from home page
                           <Link to={`/artwork/${artwork.id}`}>
                             <motion.img
+                              loading="lazy"
                               src={artwork.image}
                               alt=""
                               initial="hidden"

@@ -60,7 +60,12 @@ export default function ImageSlider() {
       >
         {SLIDES.map((item, index) => (
           <div key={index}>
-            <img src={item} className="slide" alt={`Slide ${index}`} />
+            <img
+              src={item}
+              className="slide"
+              alt={`Slide ${index}`}
+              loading="lazy"
+            />
           </div>
         ))}
       </Carousel>

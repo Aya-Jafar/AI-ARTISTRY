@@ -10,13 +10,13 @@ function Footer() {
         <p className="footer-title">Contact our team</p>
         <div className="social-media">
           <a href="https://www.instagram.com/_aya.jaffar_/">
-            <img src={igIcon} alt="" />
+            <img src={igIcon} alt="" loading="lazy" />
           </a>
           <a href="https://www.facebook.com/AyaJaffar002">
-            <img src={fbIcon} alt="" />
+            <img src={fbIcon} alt="" loading="lazy" />
           </a>
           <a href="mailto:aya.jafar002@gmail.com">
-            <img src={emailIcon} alt="" />
+            <img src={emailIcon} alt="" loading="lazy" />
           </a>
         </div>
       </div>

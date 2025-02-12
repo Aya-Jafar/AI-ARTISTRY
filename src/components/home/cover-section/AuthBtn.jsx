@@ -23,7 +23,7 @@ function AuthBtn({ icon, onClick, text, id }) {
   return (
     <button className="signup-btns" id={id} onClick={onClick}>
       <div>
-        <img src={icon} alt="" className="auth-icon" />
+        <img src={icon} alt="" className="auth-icon" loading="lazy" />
       </div>
       {text}
     </button>

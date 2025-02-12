@@ -124,6 +124,7 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
           {currentArtwork && (
             <>
               <motion.img
+                loading="lazy"
                 src={imageMaker()}
                 alt=""
                 className="artwork-detail-img"

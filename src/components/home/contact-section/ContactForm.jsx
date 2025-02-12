@@ -18,7 +18,7 @@ function ContactForm() {
   return (
     <div className="contact" id="contact">
       <div className="left-form-image">
-        <img src={"/contact-image.png"} alt="" />
+        <img src={"/contact-image.png"} alt="" loading="lazy" />
       </div>
       <form
         className="form"

@@ -245,7 +245,12 @@ function ChatBot({ showChatBot, setShowChatBot, setPrompt }) {
           <div className="chatbot-header">
             <motion.h1 className="chatbot-title">Brainstorm prompts</motion.h1>
             <div className="close-btn" onClick={handleCloseChatBot}>
-              <img src="/close.png" alt="Close Chatbot" id="chatbot-close" />
+              <img
+                src="/close.png"
+                alt="Close Chatbot"
+                id="chatbot-close"
+                loading="lazy"
+              />
             </div>
           </div>
           <hr />
@@ -330,6 +335,7 @@ function ChatBot({ showChatBot, setShowChatBot, setPrompt }) {
               />
             ) : (
               <img
+                loading="lazy"
                 src={"/send.png"}
                 alt="Comment Icon"
                 className="comment-icon"

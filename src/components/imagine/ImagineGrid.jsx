@@ -21,6 +21,7 @@ function ImagineGrid() {
       {IMAGES.map((image, index) => (
         <motion.div className="imagine-image-container" key={index}>
           <motion.img
+            loading="lazy"
             className="imagine-image"
             src={image}
             whileHover={scaleOnHover}

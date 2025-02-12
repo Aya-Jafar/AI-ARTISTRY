@@ -84,7 +84,6 @@ function Nav() {
       <div className="nav">
         <div>
           <Link to="/" style={{ ...linkStyles }}>
-            {/* <img src={logo} alt="" id="logo"/> */}
             <strong className="nav-title">{"ai Artistry".toUpperCase()}</strong>
           </Link>
         </div>
@@ -130,6 +129,7 @@ function Nav() {
                 onMouseLeave={() => setHoveredLogout(false)}
               >
                 <img
+                  loading="lazy"
                   src={"/logout.png"}
                   alt=""
                   className="logout-btn"

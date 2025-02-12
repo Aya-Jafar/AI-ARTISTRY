@@ -37,7 +37,7 @@ function MobileNav({
   menuActive,
 }) {
   return (
-    <div class={ menuActive ? "drop-down-menu open" : "drop-down-menu"}>
+    <div class={menuActive ? "drop-down-menu open" : "drop-down-menu"}>
       <li>
         <Link to="/imagine" style={{ ...linkStyles }}>
           <div className="nav-link">IMAGINE</div>
@@ -66,6 +66,7 @@ function MobileNav({
             <li>
               <div className="logout-section mobile">
                 <img
+                  loading="lazy"
                   src={"/logout.png"}
                   alt=""
                   className="logout-btn"

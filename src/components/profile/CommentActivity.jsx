@@ -36,11 +36,16 @@ function CommentActivity({
 }) {
   return (
     <div className="activty-item comment" key={index}>
-      <img src={artData && artData.image} alt="" id="activity-image" />
+      <img
+        src={artData && artData.image}
+        alt=""
+        id="activity-image"
+        loading="lazy"
+      />
 
       <div className="comment-detail">
         <h4 className="icon-title">
-          <MessageSquareText size={35}/>
+          <MessageSquareText size={35} />
           {userName} commented on {artworkData?.creator}'s post
         </h4>
 

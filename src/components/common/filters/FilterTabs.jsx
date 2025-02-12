@@ -9,6 +9,7 @@ function Tab({ img, text, isActive, onClick }) {
     <div className={`filter ${isActive ? "clicked" : ""}`} onClick={onClick}>
       <motion.img
         src={img}
+        loading="lazy"
         alt=""
         className="filter-images"
         variants={fadeIn}

@@ -57,6 +57,7 @@ function AllComments({ comments, artId }) {
                         <img
                           src={moreIcon}
                           alt=""
+                          loading="lazy"
                           id="comment-setting"
                           // ref={anchorRef}
                           aria-controls={open ? "composition-menu" : undefined}

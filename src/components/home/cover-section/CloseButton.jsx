@@ -23,7 +23,7 @@ function CloseButton({ setPopup }) {
         setPopup(false);
       }}
     >
-      <img src={"/close.png"} alt="" />
+      <img src={"/close.png"} alt="" loading="lazy" />
     </div>
   );
 }

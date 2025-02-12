@@ -177,6 +177,7 @@ function Imagine() {
             <Tooltip title="Brainstorm prompts ideas" placement="right">
               <div className="chat-circle" onClick={() => setShowChatBot(true)}>
                 <img
+                  loading="lazy"
                   src={"/chatbot-init.png"}
                   alt=""
                   className="icon-fit-container"
