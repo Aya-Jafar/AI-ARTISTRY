@@ -61,6 +61,7 @@ export default function ImageSlider() {
         {SLIDES.map((item, index) => (
           <div key={index}>
             <img
+              fetchPriority="high"
               src={item}
               className="slide"
               alt={`Slide ${index}`}
