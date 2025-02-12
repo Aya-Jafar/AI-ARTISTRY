@@ -35,6 +35,17 @@ function AllComments({ comments, artId, setAllComments }) {
   const [editedComment, setEditedComment] = useState("");
   const [activeCommentId, setActiveCommentId] = useState(null);
 
+  /**
+   * @effect useEffect
+   * @description
+   * Listens for real-time updates to comments in the Firestore database for a specific artwork.
+   * When a change occurs (new comment, edit, or deletion), the state is updated with the latest comments.
+   *
+   * @dependencies [comments, artId]
+   *
+   * @returns {Function} Cleanup function to unsubscribe from Firestore listener when the component unmounts or `artId` changes.
+   */
+
   useEffect(() => {
     const unsubscribe = onSnapshot(
       collection(
