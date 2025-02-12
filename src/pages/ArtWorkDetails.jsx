@@ -180,7 +180,11 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
                   setCurrentComment={setCurrentComment}
                   currentComment={currentComment}
                 />
-                <AllComments comments={allComments} artId={id} />
+                <AllComments
+                  comments={allComments}
+                  artId={id}
+                  setAllComments={setAllComments}
+                />
               </motion.div>
             </>
           )}

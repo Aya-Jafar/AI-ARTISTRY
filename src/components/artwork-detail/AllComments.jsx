@@ -8,6 +8,12 @@ import { deleteComment, editComment } from "../../backend/data";
 import { getUserInfo } from "../../backend/data";
 import CommentImage from "./CommentImage";
 import { Trash, Pencil } from "lucide-react";
+import { collection, onSnapshot } from "firebase/firestore";
+import db from "../../backend/firebaseConfig";
+import {
+  FIREBASE_COMMENTS_COLLECTION,
+  FIREBASE_MAIN_COLLECTION,
+} from "../../utils/constants";
 
 /**
  * @description
@@ -17,7 +23,7 @@ import { Trash, Pencil } from "lucide-react";
  * to modify or remove their own comments. The component uses state management for toggling comment options,
  * tracking the active comment being edited, and handling user interactions such as editing and deleting.
  */
-function AllComments({ comments, artId }) {
+function AllComments({ comments, artId, setAllComments }) {
   /**
    * @description
    * This section of the AllComments component contains state variables, context hooks,
@@ -30,11 +36,31 @@ function AllComments({ comments, artId }) {
   const [activeCommentId, setActiveCommentId] = useState(null);
 
   /**
-   * @function handleToggle
+   * @effect useEffect
    * @description
-   * Toggles the state of the comment options menu (edit/delete).
+   * Listens for real-time updates to comments in the Firestore database for a specific artwork.
+   * When a change occurs (new comment, edit, or deletion), the state is updated with the latest comments.
+   *
+   * @dependencies [,artId]
+   *
+   * @returns {Function} Cleanup function to unsubscribe from Firestore listener when the component unmounts or `artId` changes.
    */
-  const handleToggle = () => setOpen((prevOpen) => !prevOpen);
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      collection(
+        db,
+        FIREBASE_MAIN_COLLECTION,
+        artId,
+        FIREBASE_COMMENTS_COLLECTION
+      ),
+      (snapshot) => {
+        setAllComments(
+          snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+        );
+      }
+    );
+    return () => unsubscribe();
+  }, [comments, artId]);
 
   /**
    * @effect
