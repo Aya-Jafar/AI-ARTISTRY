@@ -65,7 +65,6 @@ export default function ImageSlider() {
               src={item}
               className="slide"
               alt={`Slide ${index}`}
-              loading="lazy"
             />
           </div>
         ))}
