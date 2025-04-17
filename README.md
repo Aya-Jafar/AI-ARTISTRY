@@ -21,8 +21,7 @@
 ## 🧠 Features
 
 - 🎨 **AI Image Generation** with `Lykon/art-diffusion-xl-0.9` from [Hugging Face](https://huggingface.co/)
-- 🤖 **Real-time Chatbot** for brainstorming (Powered by Django & Gemini)  
-  [Backend Repo](https://github.com/Aya-Jafar/Gemini-API)
+- 🤖 **Real-time Chatbot with [Gemini](https://ai.google.dev/gemini-api/docs)** for brainstorming [(Backend Repo)](https://github.com/Aya-Jafar/Gemini-API)
 - 🔐 **Firebase Authentication** for secure sign-in
 - ☁️ **Cloud Storage** for posts, comments & interactive features with firestore
 - 🧑‍💻 **Gemini Artist Matching** — Get suggestions for similar artistic styles
