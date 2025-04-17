@@ -19,7 +19,7 @@
 
 ## 🧠 Features
 
-- 🎨 **AI Image Generation** with `Lykon/art-diffusion-xl-0.9` from [Hugging Face](https://huggingface.co/)
+- 🎨 **AI Image Generation** with `stabilityai/stable-diffusion-3.5-large` from [Hugging Face](https://huggingface.co/)
 - 🤖 **Real-time Chatbot with [Gemini](https://ai.google.dev/gemini-api/docs)** for brainstorming [(Backend Repo)](https://github.com/Aya-Jafar/Gemini-API)
 - 🔐 **Firebase Authentication** for secure sign-in
 - ☁️ **Cloud Storage** for posts, comments & interactive features with firestore
