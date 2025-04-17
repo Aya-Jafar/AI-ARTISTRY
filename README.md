@@ -16,4 +16,5 @@
 If this project sparked a little joy (or at least made your jaw drop a bit), show some love:
 
 > 👉 Star this repo to keep the inspiration flowing!
+
 > 💌 Share it with fellow AI or art lovers.
