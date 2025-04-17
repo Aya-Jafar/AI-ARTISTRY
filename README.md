@@ -18,8 +18,6 @@
 
 ---
 🎥 **[Watch Demo](https://youtu.be/S6q8nif6SgM?si=dwtFJwTAmQo5aWCl)**
-
-🚀 **[Live Site](https://your-live-url.com)**
 ---
 
 ## 🧠 Features
