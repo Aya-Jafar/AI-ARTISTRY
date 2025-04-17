@@ -1,7 +1,7 @@
 # AI ARTISTRY 🪄
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub Stars](https://img.shields.io/github/stars/Aya-Jafar/AI-ARTISTRY?style=social)](https://github.com/Aya-Jafar/AI-ARTISTRY/stargazers)
-[![Forks](https://img.shields.io/github/forks/Aya-Jafar/AI-ARTISTRY?style=social)](https://github.com/Aya-Jafar/AI-ARTISTRY/network/members)
+[![GitHub Stars](https://img.shields.io/github/stars/Aya-Jafar/AI-ARTISTRY?style=flat-square)](https://github.com/Aya-Jafar/AI-ARTISTRY/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/Aya-Jafar/AI-ARTISTRY?style=flat-square)](https://github.com/Aya-Jafar/AI-ARTISTRY/network/members)
 [![Issues](https://img.shields.io/github/issues/Aya-Jafar/AI-ARTISTRY)](https://github.com/Aya-Jafar/AI-ARTISTRY/issues)
 
 
