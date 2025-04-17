@@ -1,10 +1,11 @@
 # AI ARTISTRY 🪄
 
-> ## _"The function of art is to hold a mirror up to nature."_  
-> — **Douglas Adams**
+<div align="center">
 
+<h2><em>"The function of art is to hold a mirror up to nature."</em></h2>  
+<p><strong>— Douglas Adams</strong></p>
 
-
+</div>
 
 
 <div align="center">
