@@ -1,15 +1,10 @@
 # AI ARTISTRY 🪄
 
-<div align="center">
-
-<h2><em>"The function of art is to hold a mirror up to nature."</em></h2>  
-<p><strong>— Douglas Adams</strong></p>
-
-</div>
+> ## _"The function of art is to hold a mirror up to nature."_  
+> — **Douglas Adams**
+> 
 
 
-<div align="center">
-  
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![GitHub Stars](https://img.shields.io/github/stars/Aya-Jafar/AI-ARTISTRY?style=for-the-badge)](https://github.com/Aya-Jafar/AI-ARTISTRY/stargazers)
 [![GitHub Forks](https://img.shields.io/github/forks/Aya-Jafar/AI-ARTISTRY?style=for-the-badge)](https://github.com/Aya-Jafar/AI-ARTISTRY/network/members)  
@@ -17,7 +12,7 @@
 [![Backend with Django](https://img.shields.io/badge/Backend-Django-092E20?logo=django&logoColor=white&style=for-the-badge)](https://github.com/Aya-Jafar/Gemini-API)
 [![Powered by Firebase](https://img.shields.io/badge/Powered%20by-Firebase-FFCA28?logo=firebase&logoColor=white&style=for-the-badge)](https://firebase.google.com/)
 
-</div>
+
 
 ---
 🎥 **[Watch Demo](https://youtu.be/S6q8nif6SgM?si=dwtFJwTAmQo5aWCl)**
