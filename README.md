@@ -4,7 +4,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![GitHub Stars](https://img.shields.io/github/stars/Aya-Jafar/AI-ARTISTRY?style=for-the-badge)](https://github.com/Aya-Jafar/AI-ARTISTRY/stargazers)
 [![GitHub Forks](https://img.shields.io/github/forks/Aya-Jafar/AI-ARTISTRY?style=for-the-badge)](https://github.com/Aya-Jafar/AI-ARTISTRY/network/members)  
-[![Issues](https://img.shields.io/github/issues/Aya-Jafar/AI-ARTISTRY?style=for-the-badge)](https://github.com/Aya-Jafar/AI-ARTISTRY/issues)
 [![Last Commit](https://img.shields.io/github/last-commit/Aya-Jafar/AI-ARTISTRY?style=for-the-badge)](https://github.com/Aya-Jafar/AI-ARTISTRY/commits/main)  
 [![Made With React](https://img.shields.io/badge/Made%20with-React-61DAFB?logo=react&logoColor=white&style=for-the-badge)](https://reactjs.org/)
 [![Backend with Django](https://img.shields.io/badge/Backend-Django-092E20?logo=django&logoColor=white&style=for-the-badge)](https://github.com/Aya-Jafar/Gemini-API)
