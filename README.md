@@ -1,4 +1,7 @@
 # AI ARTISTRY 🪄
+---
+> _"The function of art is to hold a mirror up to nature."_  
+---
 
 <div align="center">
 
@@ -12,11 +15,8 @@
 </div>
 
 ---
-
 🎥 **[Watch Demo](https://youtu.be/S6q8nif6SgM?si=dwtFJwTAmQo5aWCl)**
-
-> _"The function of art is to hold a mirror up to nature."_  
-
+🚀 **[Live Site](https://your-live-url.com)**
 ---
 
 ## 🧠 Features
