@@ -1,4 +1,5 @@
-# AI ARTISTRY 🪄
+# ✨ AI ARTISTRY 🪄
+
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](https://opensource.org/licenses/MIT)
@@ -10,29 +11,42 @@
 
 </div>
 
+---
 
-▶️ [Demo Link](https://youtu.be/S6q8nif6SgM?si=dwtFJwTAmQo5aWCl)
+🎥 **[Watch Demo](https://youtu.be/S6q8nif6SgM?si=dwtFJwTAmQo5aWCl)**
 
-> ### "The function of art is to hold a mirror up to nature" 
+> _"The function of art is to hold a mirror up to nature."_  
 
-### 🧠 Features
-- 🧑‍🎨 AI image generation (Huggingface Lykon/art-diffusion-xl-0.9)
-- 🤖 Real-time chatbot for brainstorming with Django & Gemini [(Backend repo)](https://github.com/Aya-Jafar/Gemini-API)
-- 🔒 Secure authentication via Firebase
-- ☁️ Cloud storage with post, comment, and interaction features
-- 👩‍🎨 Get artist names with similar styles using Gemini
+---
 
+## 🧠 Features
 
-![alt-text](https://github.com/Aya-Jafar/AI-ARTISTRY/blob/main/result.jpg)
+- 🎨 **AI Image Generation** with `Lykon/art-diffusion-xl-0.9` from Hugging Face  
+- 🤖 **Real-time Chatbot** for brainstorming (Powered by Django & Gemini)  
+  👉 [Backend Repo](https://github.com/Aya-Jafar/Gemini-API)
+- 🔐 **Firebase Authentication** for secure sign-in  
+- ☁️ **Cloud Storage** for posts, comments & interactive features  
+- 🧑‍💻 **Gemini Artist Matching** — Get suggestions for similar artistic styles  
 
+---
 
-![imagin-page](/imagin.jpg)
-![imagin-page](/with-chatbot.jpg)
+## 🖼️ Screenshots
 
+![Generated Art](https://github.com/Aya-Jafar/AI-ARTISTRY/blob/main/result.jpg)
 
-⭐️ Like What You See?
-If this project sparked a little joy (or at least made your jaw drop a bit), show some love:
+<div align="center">
+  <img src="/imagin.jpg" width="47%" />
+  <img src="/with-chatbot.jpg" width="47%" />
+</div>
 
-- 👉 Star this repo to keep the inspiration flowing!
+---
 
-- 💌 Share it with fellow AI or art lovers.
+## ⭐ Like What You See?
+
+If this project sparked a little joy (or at least made your jaw drop a bit) 😲, show some love:
+
+- ⭐ Star this repo to keep the inspiration flowing!
+- 💌 Share it with fellow AI or art lovers!
+
+---
+
