@@ -24,7 +24,7 @@
 - 🤖 **Real-time Chatbot** for brainstorming (Powered by Django & Gemini)  
   [Backend Repo](https://github.com/Aya-Jafar/Gemini-API)
 - 🔐 **Firebase Authentication** for secure sign-in
-- ☁️ **Cloud Storage** for posts, comments & interactive features
+- ☁️ **Cloud Storage** for posts, comments & interactive features with firestore
 - 🧑‍💻 **Gemini Artist Matching** — Get suggestions for similar artistic styles
 
 ---
