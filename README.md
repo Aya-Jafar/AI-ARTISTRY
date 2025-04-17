@@ -1,9 +1,11 @@
 # AI ARTISTRY 🪄
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub Stars](https://img.shields.io/github/stars/Aya-Jafar/AI-ARTISTRY?style=flat-square)](https://github.com/Aya-Jafar/AI-ARTISTRY/stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/Aya-Jafar/AI-ARTISTRY?style=flat-square)](https://github.com/Aya-Jafar/AI-ARTISTRY/network/members)
-[![Issues](https://img.shields.io/github/issues/Aya-Jafar/AI-ARTISTRY)](https://github.com/Aya-Jafar/AI-ARTISTRY/issues)
-
+[![GitHub Stars](https://img.shields.io/github/stars/Aya-Jafar/AI-ARTISTRY?style=for-the-badge)](https://github.com/Aya-Jafar/AI-ARTISTRY/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/Aya-Jafar/AI-ARTISTRY?style=for-the-badge)](https://github.com/Aya-Jafar/AI-ARTISTRY/network/members)
+[![Issues](https://img.shields.io/github/issues/Aya-Jafar/AI-ARTISTRY?style=for-the-badge)](https://github.com/Aya-Jafar/AI-ARTISTRY/issues)
+[![Last Commit](https://img.shields.io/github/last-commit/Aya-Jafar/AI-ARTISTRY?style=for-the-badge)](https://github.com/Aya-Jafar/AI-ARTISTRY/commits/main)
+[![Made With Vue](https://img.shields.io/badge/Made%20with-Vue.js-42b883?logo=vue.js&logoColor=white&style=for-the-badge)](https://vuejs.org/)
+[![Backend with Django](https://img.shields.io/badge/Backend-Django-092E20?logo=django&logoColor=white&style=for-the-badge)](https://github.com/Aya-Jafar/AI-ARTISTRY-Backend)
 
 
 ▶️ [Demo Link](https://youtu.be/S6q8nif6SgM?si=dwtFJwTAmQo5aWCl)
