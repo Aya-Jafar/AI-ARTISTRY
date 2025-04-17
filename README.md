@@ -1,4 +1,4 @@
-# ✨ AI ARTISTRY 🪄
+# AI ARTISTRY 🪄
 
 <div align="center">
 
