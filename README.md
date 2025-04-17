@@ -4,6 +4,13 @@
 
 > ### "The function of art is to hold a mirror up to nature" 
 
+### 🧠 Features
+- 🧑‍🎨 AI image generation (Huggingface Lykon/art-diffusion-xl-0.9)
+- 🤖 Real-time chatbot for brainstorming with Django & Gemini [(Backend repo)](https://github.com/Aya-Jafar/Gemini-API)
+- 🔒 Secure authentication via Firebase
+- ☁️ Cloud storage with post, comment, and interaction features
+- 👩‍🎨 Get artist names with similar styles using Gemini
+
 
 ![alt-text](https://github.com/Aya-Jafar/AI-ARTISTRY/blob/main/result.jpg)
 
