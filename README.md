@@ -31,10 +31,10 @@
 
 ![Generated Art](https://github.com/Aya-Jafar/AI-ARTISTRY/blob/main/result.jpg)
 
-<div align="center">
-  <img src="/imagin.jpg" width="47%" />
-  <img src="/with-chatbot.jpg" width="47%" />
-</div>
+
+## Imagine page
+<img src="/imagin.jpg" />
+<img src="/with-chatbot.jpg"  />
 
 ---
 
