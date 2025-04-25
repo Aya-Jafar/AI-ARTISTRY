@@ -18,9 +18,9 @@ import AlertContext from "../../providers/Alert";
 export default function CustomAlert({ message }) {
   const snackContainerStyle = {
     position: "absolute",
-    top: 70, // Adjust top and left values to position the snack bar as needed
-    left: "80%", // You can adjust this value to horizontally center the snack bar
-    zIndex: 9999, // Adjust the z-index to control stacking order
+    top: 70, 
+    left: "80%", 
+    zIndex: 9999, 
   };
   const { showSnackBar, setShowSnackBar } = React.useContext(AlertContext);
 
