@@ -21,9 +21,9 @@
 
 - 🎨 **AI Image Generation** with `stabilityai/stable-diffusion-3.5-large` from [Hugging Face](https://huggingface.co/)
 - 🤖 **Real-time Chatbot with [Gemini](https://ai.google.dev/gemini-api/docs)** for brainstorming [(Backend Repo)](https://github.com/Aya-Jafar/Gemini-API)
-- 🔐 **Firebase Authentication** for secure sign-in
+- 🔐 **[Firebase](https://firebase.google.com/) Authentication** for secure sign-in
 - ☁️ **Cloud Storage** for posts, comments & interactive features with firestore
-- 🧑‍💻 **Gemini Artist Matching** — Get suggestions for similar artistic styles
+- 🧑‍💻 **[Gemini](https://ai.google.dev/gemini-api/docs/text-generation#image-input) Artist Matching** — Get suggestions for similar artistic styles with `gemini-1.5-flash` model
 
 ---
 
