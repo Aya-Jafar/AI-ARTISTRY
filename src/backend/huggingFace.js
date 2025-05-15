@@ -13,13 +13,11 @@ const generateArt = async (setGeneratedImage, prompt, setError) => {
 
   try {
     const response = await huggingFace.textToImage({
-      data: prompt.trim(),
+      inputs: prompt.trim(), // Changed from 'data' to 'inputs'
       model: HF_MODEL,
       parameters: {
-        do_sample: true,
         guidance_scale: 7.5,
         num_inference_steps: 50,
-        temperature: 0.7, // Increase for more randomness
         seed: Math.floor(Math.random() * 1000000),
       },
     });
@@ -30,8 +28,6 @@ const generateArt = async (setGeneratedImage, prompt, setError) => {
       setGeneratedImage(myDataUrl);
     };
     reader.readAsDataURL(response);
-
-    // setGeneratedImage(response);
   } catch (error) {
     console.error("Error making API request:", error);
     setError("An error occurred, Please try again");
