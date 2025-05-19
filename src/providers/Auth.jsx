@@ -50,13 +50,19 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
+      
       if (user) {
         localStorage.setItem("token", user.accessToken);
       }
     });
-
+    
     return unsubscribe;
   }, [auth]);
+
+  useEffect(() => {
+    console.log("Updated user:", currentUser);
+  }, [currentUser]);
+
 
   /**
    * @function signInWithGoogle

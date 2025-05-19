@@ -23,9 +23,6 @@ const Popup = lazy(() => import("./components/home/cover-section/Popup"));
 function App() {
   const { loginPopup, signupPopup } = useContext(AuthPopupContext);
 
-  useEffect(() => {
-    console.log(loginPopup);
-  }, [loginPopup]);
 
   return (
     <>
@@ -33,13 +30,13 @@ function App() {
 
       {/* Login Modal rendered above all routes */}
       {loginPopup && (
-        <Suspense fallback={<span class="loader"></span>}>
+        <Suspense fallback={<span className="loader"></span>}>
           <Popup type="login" />
         </Suspense>
       )}
       {/* Signup Modal rendered above all routes */}
       {signupPopup && (
-        <Suspense fallback={<span class="loader"></span>}>
+        <Suspense fallback={<span className="loader"></span>}>
           <Popup type="signup" />
         </Suspense>
       )}
@@ -48,7 +45,7 @@ function App() {
         <Route
           path="/"
           element={
-            <Suspense fallback={<span class="loader"></span>}>
+            <Suspense fallback={<span className="loader"></span>}>
               <Home />
             </Suspense>
           }
@@ -57,7 +54,7 @@ function App() {
         <Route
           path="/imagine"
           element={
-            <Suspense fallback={<span class="loader"></span>}>
+            <Suspense fallback={<span className="loader"></span>}>
               <AlertProvider>
                 <Imagine />
               </AlertProvider>
@@ -68,7 +65,7 @@ function App() {
         <Route
           path="/profile/:uid"
           element={
-            <Suspense fallback={<span class="loader"></span>}>
+            <Suspense fallback={<span className="loader"></span>}>
               <Profile />
             </Suspense>
           }
@@ -77,7 +74,7 @@ function App() {
         <Route
           path="/artwork/:id"
           element={
-            <Suspense fallback={<span class="loader"></span>}>
+            <Suspense fallback={<span className="loader"></span>}>
               <AlertProvider>
                 <ArtworkDetail />
               </AlertProvider>
@@ -88,7 +85,7 @@ function App() {
         <Route
           path="/artwork/generated/:generatedImageUrl"
           element={
-            <Suspense fallback={<span class="loader"></span>}>
+            <Suspense fallback={<span className="loader"></span>}>
               <AlertProvider>
                 <ArtworkDetail
                   isGeneratedArtwork={true}
@@ -102,7 +99,7 @@ function App() {
         <Route
           path="/post/:postUrl"
           element={
-            <Suspense fallback={<span class="loader"></span>}>
+            <Suspense fallback={<span className="loader"></span>}>
               <AlertProvider>
                 <ArtworkDetail isGeneratedArtwork={true} label="posts" />
               </AlertProvider>
@@ -113,7 +110,7 @@ function App() {
         <Route
           path="/artworks/more/"
           element={
-            <Suspense fallback={<span class="loader"></span>}>
+            <Suspense fallback={<span className="loader"></span>}>
               <MoreArtworks />
             </Suspense>
           }

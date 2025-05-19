@@ -41,6 +41,7 @@ function UserActivity({ activities }) {
                 userName={activity.userName}
                 artData={activity.artData}
                 time={activity.timestamp}
+                key={index}
               />
             ) : (
               <CommentActivity

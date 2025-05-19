@@ -37,7 +37,7 @@ function MobileNav({
   menuActive,
 }) {
   return (
-    <div class={menuActive ? "drop-down-menu open" : "drop-down-menu"}>
+    <div className={menuActive ? "drop-down-menu open" : "drop-down-menu"}>
       <li>
         <Link to="/imagine" style={{ ...linkStyles }}>
           <div className="nav-link">IMAGINE</div>

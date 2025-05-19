@@ -44,7 +44,7 @@ function HomeTabContent({ isHomePage }) {
   };
 
   return (
-    <Suspense fallback={<span class="loader"></span>}>
+    <Suspense fallback={<span className="loader"></span>}>
       {generateTabContent()}
     </Suspense>
   );

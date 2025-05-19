@@ -47,7 +47,7 @@ function AllComments({ comments, artId, setAllComments }) {
    */
 
   useEffect(() => {
-    getUserInfo(comments[0] && comments[0].userId);
+    if (!artId) return;
 
     const unsubscribe = onSnapshot(
       collection(
@@ -58,13 +58,13 @@ function AllComments({ comments, artId, setAllComments }) {
       ),
       (snapshot) => {
         setAllComments(
-          snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+          snapshot?.docs?.map((doc) => ({ id: doc?.id, ...doc.data() }))
         );
       }
     );
 
     return () => unsubscribe();
-  }, []);
+  }, [artId]);
 
   /**
    * @function handleToggle

@@ -73,7 +73,7 @@ function ProfileTabContent({ uid }) {
   };
 
   return (
-    <Suspense fallback={<span class="loader"></span>}>
+    <Suspense fallback={<span className="loader"></span>}>
       {generateProfileContent()}
     </Suspense>
   );

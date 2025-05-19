@@ -6,6 +6,7 @@ import useArtworkIcons from "../../hooks/useArtworkIcons";
 import { motion } from "framer-motion";
 import AlertContext from "../../providers/Alert";
 import AuthPopupContext from "../../providers/AuthPopup";
+import { unsaveFromProfile } from "../../backend/data";
 
 /**
  * @description
@@ -35,6 +36,7 @@ function ArtworkDetailBtn({ text, artId, id, setLikesCount }) {
     artId
   );
   const [isShaking, setIsShaking] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   /**
    * @function handleButtonClick
@@ -45,41 +47,43 @@ function ArtworkDetailBtn({ text, artId, id, setLikesCount }) {
    * - Resets the shake animation after a short delay.
    */
   const handleButtonClick = async () => {
-    if (!currentUser || !currentUser?.uid || currentUser === null) {
+    if (!artId || isLoading) return; // ✋ No clicky while loading
+    if (!currentUser || !currentUser?.uid) {
       setLoginPopup(true);
-    }
-    console.log(currentUser);
-
-    setIsShaking(true);
-
-    if (text === "Save") {
-      await saveToProfile(
-        currentUser,
-        artId,
-        setSaveIcon,
-        setShowSnackBar
-      );
-    } else {
-      // Trigger the shaking animation
-      setIsShaking(true);
-      await handleLikeClick(
-        currentUser,
-        artId,
-        setLikeIcon,
-        setLikesCount,
-        setShowSnackBar
-      );
+      return;
     }
 
-    // Reset the animation after a short delay
-    setTimeout(() => {
-      setIsShaking(false);
-    }, 500); // 500 milliseconds
+    setIsLoading(true); // 🕒 Start loading
+    setIsShaking(true); // 💃 Dance time
+
+    try {
+      if (text === "Save") {
+        await saveToProfile(currentUser, artId, setSaveIcon, setShowSnackBar);
+      } else {
+        await handleLikeClick(
+          currentUser,
+          artId,
+          setLikeIcon,
+          setLikesCount,
+          setShowSnackBar
+        );
+      }
+    } catch (err) {
+      console.error(`Error during ${text} action:`, err);
+    } finally {
+      setTimeout(() => setIsShaking(false), 500); // Reset shake
+      setIsLoading(false);
+    }
   };
 
   return (
     <>
-      <motion.button className="btn" onClick={handleButtonClick} id={id}>
+      <motion.button
+        className="btn"
+        onClick={handleButtonClick}
+        id={id}
+        disabled={isLoading}
+      >
         <motion.div
           className={`artwork-detail-btn ${isShaking ? "shake" : ""}`}
         >
@@ -91,7 +95,7 @@ function ArtworkDetailBtn({ text, artId, id, setLikesCount }) {
             transition={{ duration: 0.5 }}
             className="icon-img-btn"
           />
-          <motion.span>{text}</motion.span>
+          <motion.span>{isLoading ? "Loading..." : text}</motion.span>
         </motion.div>
       </motion.button>
     </>

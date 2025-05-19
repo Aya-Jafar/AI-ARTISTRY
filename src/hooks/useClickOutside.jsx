@@ -53,8 +53,7 @@ function useClickOutside(ref, showPopup, onClickOutside) {
         "btn",
         ""
       ];
-      console.log(event.target.classList);
-
+      
       // Check if the clicked element has an excluded class
       const hasExcludedClass = excludedClasses.some((className) =>
         event.target.classList.contains(className)

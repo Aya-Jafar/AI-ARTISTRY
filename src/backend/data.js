@@ -164,7 +164,7 @@ export const saveArtwork = async (currentUser, artId) => {
 
       if (userData && userData.savedPosts) {
         // Check if the artwork ID is already in the array
-        const index = userData.savedPosts.indexOf(artId);
+        const index = userData?.savedPosts?.indexOf(artId);
 
         if (index !== -1) {
           // If the artwork ID is found, remove it from the array
@@ -522,7 +522,6 @@ export const getArtworkDetails = async (
 
     if (documentSnapshot.exists()) {
       const documentData = documentSnapshot.data();
-      console.log("Setting artwork detail:", documentData);
 
       // Only update if the data has actually changed
       setArtworkDetail((prev) => {
@@ -565,8 +564,6 @@ export const getArtworkDetails = async (
     console.error("Error getting document:", error);
   }
 };
-
-
 
 /**
  * Adds a comment to a specific artwork and logs the activity.
@@ -671,8 +668,6 @@ export const getUserActivity = async (uid, setActivity) => {
       .catch((error) => {
         console.error("Error getting documents:", error);
       });
-  } else {
-    console.log("Current user is not logged in");
   }
 };
 
@@ -829,7 +824,6 @@ export const postArtwork = async (
             posts: userData.posts,
           });
 
-          console.log("Image added to saved-images");
           setShowSnackBar(true);
         }
       } else {
@@ -957,6 +951,32 @@ async function getGeneratedDetail(
     // Handle the case where user data or savedPosts array is missing.
   }
 }
+
+// TODO: For future use
+export const unsaveFromProfile = async (
+  currentUser,
+  artId,
+  generatedImageUrl = null
+) => {
+  if (!currentUser) return;
+
+  try {
+    if (artId) {
+      const savedArtworkRef = doc(
+        db,
+        "saved-posts",
+        currentUser.uid,
+        "savedPosts",
+        artId
+      );
+      await deleteDoc(savedArtworkRef);
+    }
+
+    router.go(-1);
+  } catch (error) {
+    console.error("🔥 Error unsaving artwork:", error);
+  }
+};
 
 /**
  * Fetches the details of a post from the user's saved posts based on the post URL.

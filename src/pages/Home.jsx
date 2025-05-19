@@ -52,7 +52,7 @@ function Home() {
     >
       <>
         {/* Lazy loaded components wrapped with Suspense */}
-        <React.Suspense fallback={<span class="loader"></span>}>
+        <React.Suspense fallback={<span className="loader"></span>}>
           <Cover />
           <AboutUs />
           <TabContentProvider>

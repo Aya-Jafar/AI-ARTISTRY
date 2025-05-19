@@ -47,11 +47,14 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
   const [allComments, setAllComments] = useState([]);
   const [currentComment, setCurrentComment] = useState("");
   const { showSnackBar } = useContext(AlertContext);
-  
-  const { loginPopup, signupPopup, setLoginPopup, currentUser } =
+
+  const { loginPopup, signupPopup, setLoginPopup } =
     useContext(AuthPopupContext);
+
+  const { currentUser } = useContext(AuthContext);
   const isBlured = loginPopup || signupPopup;
 
+  const [isOwnArtwork, setIsOwnArtwork] = useState(false);
 
   /**
    * @effect
@@ -62,9 +65,8 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
    * @dependencies [id, generatedImageUrl, currentArtwork, allComments]
    */
   useEffect(() => {
-    console.log("Render");
-    
-    if (!id || currentArtwork) return; // Only fetch if the id exists and currentArtwork isn't set yet
+    if (!id && !currentUser) return;
+
     // if it's not generated artwork then get it's data by it's id
     if (id && !isGeneratedArtwork) {
       getArtworkDetails(
@@ -93,7 +95,18 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
         );
       }
     }
-  }, [id, generatedImageUrl, label]);
+  }, [id, generatedImageUrl, label, currentUser, isOwnArtwork]);
+
+  useEffect(() => {
+    if (
+      currentArtwork?.creator &&
+      currentUser?.displayName &&
+      !id &&
+      (label === "posts" || label === "saved-generated")
+    ) {
+      setIsOwnArtwork(currentArtwork.creator === currentUser.displayName);
+    }
+  }, [currentArtwork, currentUser]);
 
   /**
    * @function imageMaker
@@ -106,12 +119,12 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
    */
   const imageMaker = () => {
     if (id) {
-      return currentArtwork.image;
+      return currentArtwork?.image;
     }
-    if (currentArtwork.generatedImageUrl) {
-      return currentArtwork.generatedImageUrl;
+    if (currentArtwork?.generatedImageUrl) {
+      return currentArtwork?.generatedImageUrl;
     } else {
-      return currentArtwork.postUrl;
+      return currentArtwork?.postUrl;
     }
   };
 
@@ -154,7 +167,7 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
                   {currentArtwork.prompt}
                 </motion.h3>
 
-                {currentArtwork.creator ? (
+                {currentArtwork?.creator ? (
                   <motion.p>{`Prompt was created by ${currentArtwork.creator}`}</motion.p>
                 ) : (
                   <motion.p>unknown prompt creator</motion.p>
@@ -162,13 +175,24 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
 
                 <br />
                 <div className="artwork-detail-btns" id="artwork-detail-btns">
-                  <ArtworkDetailBtn
-                    text="Like"
-                    artId={id}
-                    id="like-btn"
-                    setLikesCount={setLikesCount}
-                  />
-                  <ArtworkDetailBtn text="Save" artId={id} id="save-btn" />
+                  {!isOwnArtwork && (
+                    <>
+                      <ArtworkDetailBtn
+                        text="Like"
+                        artId={id}
+                        id="like-btn"
+                        setLikesCount={setLikesCount}
+                      />
+                      <ArtworkDetailBtn text="Save" artId={id} id="save-btn" />
+                    </>
+                  )}
+                  {/* {isOwnArtwork && label === "saved-generated" && (
+                    <ArtworkDetailBtn
+                      text="Unsave"
+                      artId={id}
+                      id="unsave-btn"
+                    />
+                  )} */}
                 </div>
 
                 <div className="likes-comments-count">
@@ -179,11 +203,14 @@ const ArtworkDetail = ({ isGeneratedArtwork = false, label = "" }) => {
                   />
                 </div>
 
-                <CommentInput
-                  artId={id}
-                  setCurrentComment={setCurrentComment}
-                  currentComment={currentComment}
-                />
+                {!isOwnArtwork && (
+                  <CommentInput
+                    artId={id}
+                    setCurrentComment={setCurrentComment}
+                    currentComment={currentComment}
+                  />
+                )}
+
                 <AllComments
                   comments={allComments}
                   artId={id}
