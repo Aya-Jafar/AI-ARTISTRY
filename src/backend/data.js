@@ -23,10 +23,10 @@ import {
   FIREBASE_COMMENTS_COLLECTION,
   FIREBASE_POSTS_COLLECTION,
 } from "../utils/constants";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const allArtworksCollection = collection(db, FIREBASE_MAIN_COLLECTION);
-const navigate = useNavigate();
+// const navigate = useNavigate();
 
 /**
  * Fetches user information from the 'users' collection in Firestore.
@@ -974,7 +974,7 @@ export const unsaveFromProfile = async (
       await deleteDoc(savedArtworkRef);
     }
 
-    navigate(-1);
+    // navigate(-1);
   } catch (error) {
     console.error("🔥 Error unsaving artwork:", error);
   }
